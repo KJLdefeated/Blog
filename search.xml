@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/03/29/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>交大修課心得(110–1)</title>
+    <url>/2022/03/29/Myfisrtpost-By-Hexo/</url>
+    <content><![CDATA[<p>背景：交大應用數學系大一</p>
+<h2 id="必修"><a href="#必修" class="headerlink" title="必修"></a>必修</h2><h3 id="微積分"><a href="#微積分" class="headerlink" title="微積分"></a>微積分</h3><h4 id="講師：王國仲-x2F-學分數：4"><a href="#講師：王國仲-x2F-學分數：4" class="headerlink" title="講師：王國仲&#x2F;學分數：4"></a>講師：王國仲&#x2F;學分數：4</h4><p>上課方式是用自製講義，每次上課會把講義的內容直接複製到黑板上，上課前都會上傳pdf到E3，內容跟課本差別不大，不過會帶到一些課本不會講到的證明（畢竟是數學系？）。每次上課前都有小考，佔總成績20%，難度不難，考前複習一下應該都能拿滿。期中考難度不難，常考一些大會考考古題和一些基本證明題，最後全班平均都有六十幾，以數學系來講算非常佛。<br>期末就比較狠了，題目比較難，雖然我都會寫，但是最後還是只有65…?真的很難寫出完善的證明啊XD<br>最後是大會考，由交大的微積分教授們原創，佔總成績30%，我覺得難度比較偏計算以及考驗你的解題能力，而應數系的段考比較理論。<br>期末不調分，要好好把握每一次考試。</p>
+<h3 id="物理"><a href="#物理" class="headerlink" title="物理"></a>物理</h3><h4 id="講師：羅志偉-x2F-學分數：4"><a href="#講師：羅志偉-x2F-學分數：4" class="headerlink" title="講師：羅志偉&#x2F;學分數：4"></a>講師：羅志偉&#x2F;學分數：4</h4><p>期中期末各佔40%，考證明題，非常的理論，而且很難，基本上都要提早一點準備，而且認真讀也不一定會有回報…（尤其像我這種對物理沒興趣的人…）期中平均四十幾，超級硬，期末比較好一點，應該有五、六十？（沒去問不太清楚），剩下20％是課後小考，大概是唯一比較把握得住的分數，題目不難，大多都問課本觀念，上課有聽都會。<br>總而言之，如果你是物理超好，然後又超喜歡物理，那請你快點去選這堂課，反之請不要，阿如果你是籤運不好像我，那只好請你認真讀。<br>學期剛開始前教授還信誓旦旦的說不調分，但最後還是調了20分…志偉哥你真的是太無情了……</p>
+<h3 id="計算機概論（一）"><a href="#計算機概論（一）" class="headerlink" title="計算機概論（一）"></a>計算機概論（一）</h3><h4 id="講師：張書銘-x2F-學分數：3"><a href="#講師：張書銘-x2F-學分數：3" class="headerlink" title="講師：張書銘&#x2F;學分數：3"></a>講師：張書銘&#x2F;學分數：3</h4><p>教C++，因為本人高中寫過程式，所以這堂算是爽課(?，有六次程式作業，佔總成績60％，一次期末考，其他一些出席率等等佔剩下40%，要過應該不難，但教授的教學方式老實說不是很好，上課隨便帶過課本上的內容，作業也出課本上的練習題，有些還是超級麻煩難以實作，對於初學的人來說真的不適合，不過畢竟是數學系教授來講資工的內容，可能也難為他了…<br>神奇的是，這堂課有分上下兩學期，其他系都只有一學期而已。</p>
+<h3 id="線性代數（一）"><a href="#線性代數（一）" class="headerlink" title="線性代數（一）"></a>線性代數（一）</h3><h4 id="講師：吳金典-x2F-學分數：3"><a href="#講師：吳金典-x2F-學分數：3" class="headerlink" title="講師：吳金典&#x2F;學分數：3"></a>講師：吳金典&#x2F;學分數：3</h4><p>線代教的東西…就是線代（？，向量空間、對角化、矩陣等等內容。<br>btw我很喜歡線代，因為他討論了多維空間下的數學，對於很多領域都有巨大的應用<br>有三次期考，很多次作業（課本習題），前兩次期中不難，最後一次直接屍橫片野（？，老師講課節奏不太好，有時候算到一半還會自己卡住XD，然後拖到下課時間，助教也常常把作業出錯，期考也沒掌握難度，讓我對這堂課印像超差QQ<br>跟其他系不太一樣的是，數學系線代有兩個學期，內容教得比較完整。<br>不過還是不建議外系對數學有興趣的人來修這個，有可能會不小心踩雷(?<br>期末不調分</p>
+<h3 id="大一英文（一）"><a href="#大一英文（一）" class="headerlink" title="大一英文（一）"></a>大一英文（一）</h3><h4 id="講師：吳思葦-x2F-學分：3"><a href="#講師：吳思葦-x2F-學分：3" class="headerlink" title="講師：吳思葦&#x2F;學分：3"></a>講師：吳思葦&#x2F;學分：3</h4><p>英文課，難度不難，整學期都是線上，不用跑教室，期末還可以抱團一起考試(?，算是蠻涼的課</p>
+<h3 id="導師時間"><a href="#導師時間" class="headerlink" title="導師時間"></a>導師時間</h3><h4 id="講師：吳金典-王國仲-張書銘-x2F-學分：1"><a href="#講師：吳金典-王國仲-張書銘-x2F-學分：1" class="headerlink" title="講師：吳金典;王國仲;張書銘&#x2F;學分：1"></a>講師：吳金典;王國仲;張書銘&#x2F;學分：1</h4><p>免費拿到一學分，應數系師生全體爬十八尖山(?</p>
+<h3 id="服務學習（一）"><a href="#服務學習（一）" class="headerlink" title="服務學習（一）"></a>服務學習（一）</h3><h4 id="講師：康明軒-x2F-學分數：1"><a href="#講師：康明軒-x2F-學分數：1" class="headerlink" title="講師：康明軒&#x2F;學分數：1"></a>講師：康明軒&#x2F;學分數：1</h4><p>免費得到一學分的爽課，教小學生Scratch程式，最後的收穫就是知道自己不適合教學別人（？</p>
+<h2 id="選修"><a href="#選修" class="headerlink" title="選修"></a>選修</h2><h3 id="微積分學而班理論組"><a href="#微積分學而班理論組" class="headerlink" title="微積分學而班理論組"></a>微積分學而班理論組</h3><h4 id="講師：王國仲-x2F-學分數：1"><a href="#講師：王國仲-x2F-學分數：1" class="headerlink" title="講師：王國仲&#x2F;學分數：1"></a>講師：王國仲&#x2F;學分數：1</h4><p>這堂課很棒，時間是在禮拜五中午，老師會出九道題目，分成九宮格，學生分成三組，解出題目就在那提的格子上寫上自己的組別，成功連成一條線則獲勝。我很享受這個競爭的過程，成功解出題目的成就感真的很棒，而且也在其中學到很多東西，困難的題目也可以透過和組員合作解出，真的是蠻好玩的課。不過每兩週會出一次作業，而那個作業才是數學系原本的樣子XD，四題證明題，如果高中沒有比過數學競試，我覺得一題都要思考個一兩天，然後要找同學一起思考激盪，最後才能寫出證明，這種訓練對我很有幫助，讓我暸解數學不只是計算，而是推導思考的過程。</p>
+<h3 id="基礎數學"><a href="#基礎數學" class="headerlink" title="基礎數學"></a>基礎數學</h3><h4 id="講師：林奕亘-x2F-學分數：3"><a href="#講師：林奕亘-x2F-學分數：3" class="headerlink" title="講師：林奕亘&#x2F;學分數：3"></a>講師：林奕亘&#x2F;學分數：3</h4><p>首先這堂課一點都不基礎，這是進入純數大門之前，必須知道的先備知識的課，主要教一些數學的用語、邏輯、集合，還有一點離散數學（？，算是蠻不錯的課，有兩次期考和四次作業，期中總共160分，有60分是上課特別講過但課本沒有的（上課要認真？），他上課說會考，我還不信邪想說應該不會考太多XD，結果期中就爆了，期末有救回來一點，期末是120分，還叫我們證明巴賽爾問題，跟本跟這次範圍無關XDD，幸好考前有看過維基的證明，這堂課好像大家分數都蠻高的，就只有我在搞QQQ</p>
+<h3 id="財務管理（通識）"><a href="#財務管理（通識）" class="headerlink" title="財務管理（通識）"></a>財務管理（通識）</h3><h4 id="講師：蔡璧徽-x2F-學分數：3"><a href="#講師：蔡璧徽-x2F-學分數：3" class="headerlink" title="講師：蔡璧徽&#x2F;學分數：3"></a>講師：蔡璧徽&#x2F;學分數：3</h4><p>管科碩開的課，學長推的就去了，課程內容很涼，只要高中統計就夠，因為選此課的人總共有180人（超級多），甚至還有楊明的，所以整學期都是線上課，有三次作業，都是老師自己講義上的題目，期末有一個報告佔蠻多的分數，主要是報告事件日分析，但其實跟財金相關的主題也可以，像我是用機器學習預測股票，但是最後那個模型根本train爛了（？，不過還是得到老師稱讚XD。有一次期末考，都是考講義題目，雖然都是高中統計，但是計算量很大，還是要讀一下書。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="基礎程式設計-GPE"><a href="#基礎程式設計-GPE" class="headerlink" title="基礎程式設計(GPE)"></a>基礎程式設計(GPE)</h3><h4 id="講師：吳凱強、洪瑞鴻、林政寬-x2F-學分數：0"><a href="#講師：吳凱強、洪瑞鴻、林政寬-x2F-學分數：0" class="headerlink" title="講師：吳凱強、洪瑞鴻、林政寬&#x2F;學分數：0"></a>講師：吳凱強、洪瑞鴻、林政寬&#x2F;學分數：0</h4><p>其實我根本沒修這個XDD，不過還是去考了，超級難報名，這學期只有考到一次，算是輕鬆通過，畢竟高中有接觸過競程，因為要轉資工所以才去考的，希望下學期能夠順利轉到資工。</p>
+<h3 id="總GPA：3-7"><a href="#總GPA：3-7" class="headerlink" title="總GPA：3.7"></a>總GPA：3.7</h3><h3 id="總結心得"><a href="#總結心得" class="headerlink" title="總結心得"></a>總結心得</h3><p>在交大的第一個學期，真的是增廣見聞，也學到了很多事，我覺得最重要的就是知道自己果然還是很喜歡數學，而且喜歡寫程式，不過還是有些遺憾，像是有些課應該拿A但是卻沒有，希望下學期也能夠順利!</p>
+<h4 id="這是我第一個Blog，以後會多多分享生活、學業和其他有趣的事"><a href="#這是我第一個Blog，以後會多多分享生活、學業和其他有趣的事" class="headerlink" title="這是我第一個Blog，以後會多多分享生活、學業和其他有趣的事"></a>這是我第一個Blog，以後會多多分享生活、學業和其他有趣的事</h4>]]></content>
+  </entry>
+</search>
