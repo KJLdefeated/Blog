@@ -1,10 +1,261 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>AlexNet Paper Note</title>
-    <url>/2022/07/22/Alexnet-paper-review/</url>
-    <content><![CDATA[<h1 id="imagenet-classification-with-deep-convolutional-neural-networksalexnet">ImageNet Classification with Deep Convolutional Neural Networks(AlexNet)</h1>
-<p>Published Year : 2012 <a href="https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">Paper URL</a></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 6.1.0">
+
+  
+
+  
+
+  
+    <meta name="author" content="KJL">
+  
+
+  
+
+  
+
+  <title>AlexNet Paper Note | KJ&#39;s Blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.3/index.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles/monokai.css">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://images5.alphacoders.com/495/495521.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          KJ&#39;s Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首頁</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">關於</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">AlexNet Paper Note</h1>
+          <h2 class="title-sub-wrap">
+            <strong>KJL</strong>
+            <span>發佈於</span>
+            <time  class="article-date" datetime="2022-07-22T09:45:26.000Z" itemprop="datePublished">2022-07-22</time>
+          </h2>
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/paper-notes/">🏷️ paper_notes</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2728M4QDJ7');
+  </script>
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h1 id="imagenet-classification-with-deep-convolutional-neural-networksalexnet">ImageNet Classification with Deep Convolutional Neural Networks(AlexNet)</h1>
+<p>Published Year : 2012 <a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">Paper URL</a></p>
 <p>Note:這是關於讀paper時所做的筆記以及insight，之後應該會每週更個兩三篇吧，一開始先來一些經典的paper。</p>
 <h2 id="what">What</h2>
 <ul>
@@ -39,124 +290,238 @@
 <ul>
 <li>The result of this neural network structure might not be seen good today, but it was the state of art in 2012. Although it was ten years ago paper, we still can find that it has impacted a lot of paper and research in machine learning and computer vision field.</li>
 </ul>
-]]></content>
-      <tags>
-        <tag>paper_notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>交大修課心得(110–1)</title>
-    <url>/2022/03/29/Myfisrtpost-By-Hexo/</url>
-    <content><![CDATA[<p>背景：交大應用數學系大一 ## 必修 ### 微積分 #### 講師：王國仲/學分數：4 上課方式是用自製講義，每次上課會把講義的內容直接複製到黑板上，上課前都會上傳pdf到E3，內容跟課本差別不大，不過會帶到一些課本不會講到的證明（畢竟是數學系？）。每次上課前都有小考，佔總成績20%，難度不難，考前複習一下應該都能拿滿。期中考難度不難，常考一些大會考考古題和一些基本證明題，最後全班平均都有六十幾，以數學系來講算非常佛。 期末就比較狠了，題目比較難，雖然我都會寫，但是最後還是只有65…?真的很難寫出完善的證明啊XD 最後是大會考，由交大的微積分教授們原創，佔總成績30%，我覺得難度比較偏計算以及考驗你的解題能力，而應數系的段考比較理論。 期末不調分，要好好把握每一次考試。</p>
-<h3 id="物理">物理</h3>
-<h4 id="講師羅志偉學分數4">講師：羅志偉/學分數：4</h4>
-<p>期中期末各佔40%，考證明題，非常的理論，而且很難，基本上都要提早一點準備，而且認真讀也不一定會有回報…（尤其像我這種對物理沒興趣的人…）期中平均四十幾，超級硬，期末比較好一點，應該有五、六十？（沒去問不太清楚），剩下20％是課後小考，大概是唯一比較把握得住的分數，題目不難，大多都問課本觀念，上課有聽都會。 總而言之，如果你是物理超好，然後又超喜歡物理，那請你快點去選這堂課，反之請不要，阿如果你是籤運不好像我，那只好請你認真讀。 學期剛開始前教授還信誓旦旦的說不調分，但最後還是調了20分…志偉哥你真的是太無情了……</p>
-<h3 id="計算機概論一">計算機概論（一）</h3>
-<h4 id="講師張書銘學分數3">講師：張書銘/學分數：3</h4>
-<p>教C++，因為本人高中寫過程式，所以這堂算是爽課(?，有六次程式作業，佔總成績60％，一次期末考，其他一些出席率等等佔剩下40%，要過應該不難，但教授的教學方式老實說不是很好，上課隨便帶過課本上的內容，作業也出課本上的練習題，有些還是超級麻煩難以實作，對於初學的人來說真的不適合，不過畢竟是數學系教授來講資工的內容，可能也難為他了… 神奇的是，這堂課有分上下兩學期，其他系都只有一學期而已。</p>
-<h3 id="線性代數一">線性代數（一）</h3>
-<h4 id="講師吳金典學分數3">講師：吳金典/學分數：3</h4>
-<p>線代教的東西…就是線代（？，向量空間、對角化、矩陣等等內容。 btw我很喜歡線代，因為他討論了多維空間下的數學，對於很多領域都有巨大的應用 有三次期考，很多次作業（課本習題），前兩次期中不難，最後一次直接屍橫片野（？，老師講課節奏不太好，有時候算到一半還會自己卡住XD，然後拖到下課時間，助教也常常把作業出錯，期考也沒掌握難度，讓我對這堂課印像超差QQ 跟其他系不太一樣的是，數學系線代有兩個學期，內容教得比較完整。 不過還是不建議外系對數學有興趣的人來修這個，有可能會不小心踩雷(? 期末不調分</p>
-<h3 id="大一英文一">大一英文（一）</h3>
-<h4 id="講師吳思葦學分2">講師：吳思葦/學分：2</h4>
-<p>英文課，難度不難，整學期都是線上，不用跑教室，期末還可以抱團一起考試(?，算是蠻涼的課</p>
-<h3 id="導師時間">導師時間</h3>
-<h4 id="講師吳金典王國仲張書銘學分1">講師：吳金典;王國仲;張書銘/學分：1</h4>
-<p>免費拿到一學分，應數系師生全體爬十八尖山(?</p>
-<h3 id="服務學習一">服務學習（一）</h3>
-<h4 id="講師康明軒學分數1">講師：康明軒/學分數：1</h4>
-<p>免費得到一學分的爽課，教小學生Scratch程式，最後的收穫就是知道自己不適合教學別人（？</p>
-<h2 id="選修">選修</h2>
-<h3 id="微積分學而班理論組">微積分學而班理論組</h3>
-<h4 id="講師王國仲學分數1">講師：王國仲/學分數：1</h4>
-<p>這堂課很棒，時間是在禮拜五中午，老師會出九道題目，分成九宮格，學生分成三組，解出題目就在那提的格子上寫上自己的組別，成功連成一條線則獲勝。我很享受這個競爭的過程，成功解出題目的成就感真的很棒，而且也在其中學到很多東西，困難的題目也可以透過和組員合作解出，真的是蠻好玩的課。不過每兩週會出一次作業，而那個作業才是數學系原本的樣子XD，四題證明題，如果高中沒有比過數學競試，我覺得一題都要思考個一兩天，然後要找同學一起思考激盪，最後才能寫出證明，這種訓練對我很有幫助，讓我暸解數學不只是計算，而是推導思考的過程。</p>
-<h3 id="基礎數學">基礎數學</h3>
-<h4 id="講師林奕亘學分數3">講師：林奕亘/學分數：3</h4>
-<p>首先這堂課一點都不基礎，這是進入純數大門之前，必須知道的先備知識的課，主要教一些數學的用語、邏輯、集合，還有一點離散數學（？，算是蠻不錯的課，有兩次期考和四次作業，期中總共160分，有60分是上課特別講過但課本沒有的（上課要認真？），他上課說會考，我還不信邪想說應該不會考太多XD，結果期中就爆了，期末有救回來一點，期末是120分，還叫我們證明巴賽爾問題，跟本跟這次範圍無關XDD，幸好考前有看過維基的證明，這堂課好像大家分數都蠻高的，就只有我在搞QQQ</p>
-<h3 id="財務管理通識">財務管理（通識）</h3>
-<h4 id="講師蔡璧徽學分數3">講師：蔡璧徽/學分數：3</h4>
-<p>管科碩開的課，學長推的就去了，課程內容很涼，只要高中統計就夠，因為選此課的人總共有180人（超級多），甚至還有楊明的，所以整學期都是線上課，有三次作業，都是老師自己講義上的題目，期末有一個報告佔蠻多的分數，主要是報告事件日分析，但其實跟財金相關的主題也可以，像我是用機器學習預測股票，但是最後那個模型根本train爛了（？，不過還是得到老師稱讚XD。有一次期末考，都是考講義題目，雖然都是高中統計，但是計算量很大，還是要讀一下書。</p>
-<h2 id="其他">其他</h2>
-<h3 id="基礎程式設計gpe">基礎程式設計(GPE)</h3>
-<h4 id="講師吳凱強洪瑞鴻林政寬學分數0">講師：吳凱強、洪瑞鴻、林政寬/學分數：0</h4>
-<p>其實我根本沒修這個XDD，不過還是去考了，超級難報名，這學期只有考到一次，算是輕鬆通過，畢竟高中有接觸過競程，因為要轉資工所以才去考的，希望下學期能夠順利轉到資工。</p>
-<h3 id="總gpa3.7">總GPA：3.7</h3>
-<h3 id="總結心得">總結心得</h3>
-<p>在交大的第一個學期，真的是增廣見聞，也學到了很多事，我覺得最重要的就是知道自己果然還是很喜歡數學，而且喜歡寫程式，不過還是有些遺憾，像是有些課應該拿A但是卻沒有，希望下學期也能夠順利!</p>
-<h4 id="這是我第一個blog以後會多多分享生活學業和其他有趣的事">這是我第一個Blog，以後會多多分享生活、學業和其他有趣的事</h4>
-]]></content>
-      <tags>
-        <tag>School</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>交大修課心得(110-2)</title>
-    <url>/2022/06/07/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-110-2/</url>
-    <content><![CDATA[<p>這學期loading偏重，22學分0通識，系內的課也一點都不涼也不甜，又修了資工的硬課，加上 SITCON 議程組，最後還是撐過來了，雖然表現的不盡滿意，但在時間規劃上倒是頗有心得。</p>
-<p>背景：交大應用數學系大一 ## 必修 ### 微積分（二） #### 講師：王國仲/學分數：4 上課方式跟去年差不多，只是作業變成每週出個三、四題帶回去寫，有佔總分三分的bonus，期末的時候還破例稍微調了1.5分，幸運的讓我被救上A-，期末考考完後就有點鬆懈，沒有讀微積分（畢盡當週還有其他科），所以學期考就爆炸了，這種容易得意忘形的毛病還是要改一改。 這學期主要教的是數列及與級數、重積分等等，難度比上學期提高了，我覺得這次沒有上學期那麼認真讀，考前也變得容易鬆懈，不過當時期末考考87分時，還是有點期待這學期能不能到A，結果小丑竟是我自己。</p>
-<h3 id="物理二">物理（二）</h3>
-<h4 id="講師鍾介文學分數4">講師：鍾介文/學分數：4</h4>
-<p>這學期換了一個教授，因為上學期的教授沒開課，所以自動被選到這個女教授，教授的理念是「上課有認真學到東西，考試成績不太重要」，所以期中考考完之後還給我們訂正，訂正完可以把分數加回去，超爽XDD，考題是給你一個教過的定理或物理現象，然後要你解釋他，有點申論題或是主題研究的感覺，期末因為疫情的關係改成線上，期末考時限是整整兩天，因為期末範圍的內容我沒什麼準備，所以花了很多時間找Google，最後寫了9頁的手寫報告交了上去（要趕緊學Latex了...）。 期中期末各佔50%，聽起來感覺很硬，但老師提供很多加分機會，上台解題、上課點名等，所以我覺得算甜吧。</p>
-<h3 id="計算機概論二">計算機概論（二）</h3>
-<h4 id="講師張書銘學分數3">講師：張書銘/學分數：3</h4>
-<p>這學期教了C++物件導向和一些基礎資料結構，上課規則跟上學期差不多，不過老師本人是數學主修，不太會教課，雖然他感覺蠻認真準備的，不過大多數人還是沒有理他。撇除教學部分，我感覺還是有學到一些東西，要不然我以前根本沒什麼在碰物件導向，最後我還是不知道為什麼我沒有A+。</p>
-<h3 id="線性代數二">線性代數（二）</h3>
-<h4 id="講師吳金典學分數3">講師：吳金典/學分數：3</h4>
-<p>我對這堂的抱怨太多了，剛開學時修課人數是65個人，到學期末變成30，超過一半的人退掉，最後我是留下來了，這門課不是特別難，只是教授和助教特別的搞，以正常數學系的線代課來說，線代二的課程應該要以理論和證明為主，但是第二次期中考教了矩陣的應用...？用矩陣算彈簧系統和電路？我讀的是數學系對吧，連教授自己都不清楚要教的內容是什麼，我覺得就沒什麼好說的了，爛課一門。</p>
-<h3 id="大一英文二">大一英文（二）</h3>
-<h4 id="講師李麥德學分2">講師：李麥德/學分：2</h4>
-<p>教授是外師，還蠻有趣的，他很喜歡跟學生對話，不過大家都怕生不太敢講話（？</p>
-<h2 id="選修">選修</h2>
-<h3 id="微積分學而班理論組二">微積分學而班理論組（二）</h3>
-<h4 id="講師王國仲學分數1">講師：王國仲/學分數：1</h4>
-<p>相比上學期，這堂課的作業似乎沒有那麼難了（？，不知道是國仲放水還是我們真的變強了，心得跟上學期差不多，這門也是讓我收穫蠻多的，但如果是外系仔不太建議修，因為不會的題目找人討論比較難，像我都抱系上電神的大腿（？</p>
-<h3 id="競技程式設計">競技程式設計</h3>
-<h4 id="講師謝旻錚學分數3">講師：謝旻錚/學分數：3</h4>
-<p>上學期因為物理成績太爛怕影響轉系，所以就有人推薦去修一些資工系的硬課，現在想起來真是個超棒的選擇。這堂光是名字就讓人知道大概會有多硬，學期一開始時有超過90人修課，到了學期末只剩30個，雖然感覺很可怕，但其實如果有乖乖考上機考然後不作弊，基本上老師都會讓你過，而且最後還調了蠻多分的。 教學內容是一些競賽會用到的演算法，Dp、Segment Tree、BIT、DSU、Computational Geometry、LCA，每週都會給7-8題的題單練習，大概只有兩三題需要真正去想，其他幾乎都是基礎題或模板題，這些正是進步的關鍵，一定要認真刷，以前我一直在研究到底怎麼練競程比較好，結果還是要給一份符合自己難度的題單，並在一週時間內刷完，這種練習方法讓我進步很多，以前不太懂的一些Topic也搞懂了，雖然到後期其實有點累，因為有些 topic 以前根本沒練過，期中考還超級難，幸好期末沒有跟其他科目撞，讓我有很多時間準備要用到的模板和複習不熟悉的主題，最後期末的時候還真的給我矇對一題模板（最優矩陣鏈乘），運氣好獲得期末總成績 A+，優質的課就是要像這樣吧，能夠學到許多東西，還能獲得好成績。 不過還是不建議沒程式競技或演算法基礎的人去修，大概率會很慘，建議有競程經驗的去修，應該都能拿到不錯的分數，我修這堂課以前也只有 Codeforces green or cyan 的等級而已，就是懂一些競程，但離真正的大神還有一大段距離的那種人。</p>
-<h3 id="基礎程式設計gpe">基礎程式設計（GPE）</h3>
-<h4 id="講師吳凱強洪瑞鴻林政寬學分數0">講師：吳凱強、洪瑞鴻、林政寬/學分數：0</h4>
-<p>這學期都跑去現場排隊，事先報名根本搶不到，基本上去排隊都考得到啦，這學期去考了兩次都是五百多，沒有破台真的好可惜，不過轉系應該是穩了（？ 推薦所有需要考 gpe 但又自覺實力不夠的人都去考，不管有沒有報名到都去考考看，反正就當練習，其實沒想像中難，說不定某一次就考過了也說不定。</p>
-<h2 id="其他有趣的事">其他有趣的事</h2>
-<h3 id="確診課">確診課</h3>
-<h4 id="學分數0">學分數：0</h4>
-<p>五月多時真的中獎XDD，而且還是生日當天，真的是雖小，不過發燒幾天就好了，後來也沒怎麼樣，沒有後遺症什麼的，希望台灣趕緊開放解封啊&gt;&lt;，好想出國喔。</p>
-<h3 id="sitcon">SITCON</h3>
-<p>今年有機會進入 SITCON 擔任議程組組員，雖然我大部分時間都在耍廢滑水，沒有什麼貢獻XDD，</p>
-<h3 id="動漫">動漫</h3>
-<p>這學期看得好少，感覺都在看舊番，然後賽馬娘s2真的是神作，超期待之後手遊。</p>
-<h2 id="總結與大二展望">總結與大二展望</h2>
-<p>大一也過得太快了吧，這學期漸漸對校園、同學、老師熟悉了許多，也變得更怠惰了，雖然成績比上學期好，但感覺沒有上學期認真，也許是找到比較有效率的方法（？。之後就要大二了，希望能轉系成功，找到自己可以做的專題，找到一起打 ICPC 的隊友，希望修到許多優質課程，雖然我沒有對自己一定要拿卷的要求，因為比起一些好得分的奇怪通識課，我還是比較去想修硬一點的課，不過畢業以前還是希望有機會撿到卷XD，這樣申請研究所也比較有幫助。 暑假要開始讀托福了，最近寫了一份模考，感覺沒有想像中那麼難，可能是因為之前一直寫 Codeforces 的題目，也對英文閱讀蠻上手的（？，聽力的部分因為平常有看一些國外教授線上課程，感覺也還可以，只剩下說寫了，大概策略就是多找一些模板然後瘋狂刷題練習吧，目前目標定在 90 ，也許之後還會提高。預計大三時準備 GRE 之後也會再考一次托福，希望大四有機會申請國外研究所。 最近開始看一些 ML/DL 的課程，努力墊高自己，希望能夠做出不錯的 project。</p>
-]]></content>
-      <tags>
-        <tag>School</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VGG Paper Note</title>
-    <url>/2022/07/28/VGG-paper-note/</url>
-    <content><![CDATA[<h1 id="very-deep-convolutional-networks-for-large-scale-image-recognitionvgg">Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1>
-<p>Published year : 2015</p>
-<h2 id="what">What</h2>
-<p>A neural networks using an architecture with 3 by 3 convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers.</p>
-<h2 id="how">How</h2>
-<p><img src="https://img.onl/joxTW1"> 1. Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model. 2. The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers. 3. To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</p>
-<h4 id="from-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better.">From the result below we can see that as the network goes deeper the performance would be better.</h4>
-<p><img src="https://img.onl/QJTArc"></p>
-<ul>
-<li>Note:
-<ul>
-<li>VGG stands for Vision Geometry Group of Oxford University</li>
-<li>VGG16 means 13 conv. layers + 3 FC layers.</li>
-<li>VGG19 means 16 conv. layers + 3 FC layers</li>
-</ul></li>
-</ul>
-<h2 id="and">And?</h2>
-<p>The defect of VGG network is that the number of parameters is too large and the training time is long. Thus we usually do not train this by scratch instead we can get the pre-trained model from tensorflow. Use these pr-trained model to do other project.</p>
-]]></content>
-      <tags>
-        <tag>paper_notes</tag>
-      </tags>
-  </entry>
-</search>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+      <div class="card-cover" background-image-lazy data-img="https://images.theconversation.com/files/374303/original/file-20201210-18-elk4m.jpg?ixlib=rb-1.1.0&amp;rect=0%2C22%2C7500%2C5591&amp;q=45&amp;auto=format&amp;w=926&amp;fit=clip"></div>
+    
+    <div class="card-text">
+      
+        <a href="/2022/07/28/VGG-paper-note/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">VGG Paper Note</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+      <div class="card-cover" background-image-lazy data-img="https://images8.alphacoders.com/118/1184688.jpg"></div>
+    
+    <div class="card-text">
+      
+        <a href="/2022/06/07/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-110-2/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">交大修課心得(110-2)</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://en.gravatar.com/userimage/217528008/c39b1feaf15a34f72e9a1eea2bc2e8d2.jpg" class="soft-size--round soft-style--box" alt="KJL">
+    
+    
+      <h2>KJL</h2>
+    
+    
+      <p>喜歡Coding的菜雞</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>4</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        3
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/Life/" style="font-size: 10px;" class="tags-cloud-0">Life</a> <a href="/tags/School/" style="font-size: 10px;" class="tags-cloud-0">School</a> <a href="/tags/paper-notes/" style="font-size: 10px;" class="tags-cloud-0">paper_notes</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+          <a href="https://www.instagram.com/kjl0508/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-ins" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 0C372.906667 0 355.541333 0.64 300.928 3.072 246.4 5.632 209.28 14.208 176.64 26.88c-33.664 13.056-62.250667 30.592-90.709333 59.050667S39.893333 142.933333 26.88 176.64C14.208 209.28 5.589333 246.4 3.072 300.928 0.512 355.541333 0 372.906667 0 512s0.64 156.458667 3.072 211.072c2.56 54.485333 11.136 91.648 23.808 124.288a251.093333 251.093333 0 0 0 59.050667 90.709333A250.368 250.368 0 0 0 176.64 997.12c32.682667 12.629333 69.802667 21.290667 124.288 23.808C355.541333 1023.488 372.906667 1024 512 1024s156.458667-0.64 211.072-3.072c54.485333-2.56 91.648-11.178667 124.288-23.808a251.648 251.648 0 0 0 90.709333-59.050667 250.026667 250.026667 0 0 0 59.050667-90.709333c12.629333-32.64 21.290667-69.802667 23.808-124.288 2.56-54.613333 3.072-71.978667 3.072-211.072s-0.64-156.458667-3.072-211.072c-2.56-54.485333-11.178667-91.690667-23.808-124.288a251.306667 251.306667 0 0 0-59.050667-90.709333A249.472 249.472 0 0 0 847.36 26.88c-32.64-12.672-69.802667-21.290667-124.288-23.808C668.458667 0.512 651.093333 0 512 0z m0 92.16c136.661333 0 152.96 0.682667 206.933333 3.029333 49.92 2.346667 77.013333 10.624 95.018667 17.706667 23.978667 9.258667 40.96 20.352 58.965333 38.229333 17.877333 17.92 28.970667 34.944 38.229334 58.922667 6.997333 18.005333 15.36 45.098667 17.621333 95.018667 2.432 54.016 2.986667 70.229333 2.986667 206.933333s-0.64 152.96-3.157334 206.933333c-2.602667 49.92-10.922667 77.013333-17.962666 95.018667a162.56 162.56 0 0 1-38.357334 58.965333 159.744 159.744 0 0 1-58.88 38.229334c-17.92 6.997333-45.44 15.36-95.36 17.621333-54.357333 2.432-70.357333 2.986667-207.317333 2.986667-137.002667 0-153.002667-0.64-207.317333-3.157334-49.962667-2.602667-77.482667-10.922667-95.402667-17.962666a158.549333 158.549333 0 0 1-58.837333-38.357334 155.477333 155.477333 0 0 1-38.4-58.88c-7.04-17.92-15.317333-45.44-17.92-95.36-1.92-53.76-2.602667-70.357333-2.602667-206.677333 0-136.362667 0.682667-153.002667 2.602667-207.402667 2.602667-49.92 10.88-77.397333 17.92-95.317333 8.96-24.32 20.437333-40.96 38.4-58.922667 17.877333-17.877333 34.56-29.397333 58.837333-38.314666 17.92-7.082667 44.842667-15.402667 94.762667-17.962667 54.4-1.92 70.4-2.56 207.317333-2.56l1.92 1.28z m0 156.928a262.912 262.912 0 1 0 0 525.824 262.912 262.912 0 1 0 0-525.824zM512 682.666667c-94.293333 0-170.666667-76.373333-170.666667-170.666667s76.373333-170.666667 170.666667-170.666667 170.666667 76.373333 170.666667 170.666667-76.373333 170.666667-170.666667 170.666667z m334.762667-443.946667a61.482667 61.482667 0 0 1-122.88 0 61.44 61.44 0 0 1 122.88 0z"></path>
+</svg>
+
+          </a>
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/KJLdefeated" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>&copy; 2022 <a href="/" target="_blank">KJL</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 light</a>
+      <a href="javascript:;" id="theme-dark">🌛 dark</a>
+      <a href="javascript:;" id="theme-auto">🤖️ auto</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+
+
+  
+
+
+  <!-- Google Analytics START -->
+  <script type="text/javascript">
+    (function() {
+      if (window.location.hostname === "localhost" || window.location.hostname.startsWith("192.168")) {
+        return console.log("本地调试");
+      }
+
+      window.dataLayer = window.dataLayer || [];
+      
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      let script = document.createElement("script")
+
+      script.onload = function() {
+        gtag('js', new Date());
+        gtag('config', "G-2728M4QDJ7");
+      }
+
+      script.src = "https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(script, s);
+    })()
+  </script>
+  <!-- Google Analytics End -->
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
+</html>
