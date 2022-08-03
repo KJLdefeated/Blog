@@ -1,37 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Inception Paper Note</title>
-    <url>/2022/07/31/Inception-paper-note/</url>
-    <content><![CDATA[<h1 id="going-deeper-with-convolutions-inception-googlenet">Going deeper with convolutions (Inception, GoogLeNet)</h1>
-<p>Published Year : 2014 <a href="https://arxiv.org/abs/1409.4842">Paper URL</a> <img src="https://img.onl/MLL6vl" alt="image alt"></p>
-<h2 id="what">What</h2>
-<p>This architecture improved utilization of the computing resources inside the network which is achieved by a carefully crafted design that allows for increasing the depth and width of the network while keeping the computational budget constant.</p>
-<h2 id="why">Why</h2>
-<ul>
-<li>The most straightforward way of improving the performance of deep neural networks is by increasing their depth and width, but this way comes two drawbacks:
-<ol type="1">
-<li>Overfitting</li>
-<li>High Computaional Complexity</li>
-</ol></li>
-<li>Although the way of solving both problems is by ultimately moving from fully connected to sparsely connected architecture, but todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures. ## How <img src="https://img.onl/PRfS4q"></li>
-<li>In order avoid patchalignment issues, current incarnations of the Inception architectue are restricted to the filter sizes 1x1, 3x3 and 5x5.</li>
-<li>The problem with the above architecture is that even a modest number of 5x5 convolutions can be expensive on top of a convolutional layer with a large number of filters. <img src="https://img.onl/u5jJLX"></li>
-<li>To make computational complexity cheaper, adding the 1x1 conv. layers as role of reduction which reduced the number of input channels. <img src="https://img.onl/WMREHx"></li>
-<li>The network is 22 layers(27 layers with pooling).</li>
-<li>Adding auxiliary classifiers connected to these nitermediate layers to ecourage discrimination in the lower stages in the classifier, increse the gradient signal that gets propagated back, and provide additional regularization.</li>
-<li>The final result of the architecture reach to 6.67% in the ILSVRC 2014 Classification Challenge. <img src="https://img.onl/WPoo2v"></li>
-</ul>
-<h2 id="and">And?</h2>
-<ul>
-<li>There are v2 ,v3 and v4 version of Inception Neural Network. We can review these states of art in later blogs.</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>paper_notes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AlexNet Paper Note</title>
     <url>/2022/07/22/Alexnet-paper-review/</url>
     <content><![CDATA[<h1 id="imagenet-classification-with-deep-convolutional-neural-networksalexnet">ImageNet Classification with Deep Convolutional Neural Networks(AlexNet)</h1>
@@ -69,6 +38,37 @@
 <h2 id="and">And?</h2>
 <ul>
 <li>The result of this neural network structure might not be seen good today, but it was the state of art in 2012. Although it was ten years ago paper, we still can find that it has impacted a lot of paper and research in machine learning and computer vision field.</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>paper_notes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Inception Paper Note</title>
+    <url>/2022/07/31/Inception-paper-note/</url>
+    <content><![CDATA[<h1 id="going-deeper-with-convolutions-inception-googlenet">Going deeper with convolutions (Inception, GoogLeNet)</h1>
+<p>Published Year : 2014 <a href="https://arxiv.org/abs/1409.4842">Paper URL</a> <img src="https://img.onl/MLL6vl" alt="image alt"></p>
+<h2 id="what">What</h2>
+<p>This architecture improved utilization of the computing resources inside the network which is achieved by a carefully crafted design that allows for increasing the depth and width of the network while keeping the computational budget constant.</p>
+<h2 id="why">Why</h2>
+<ul>
+<li>The most straightforward way of improving the performance of deep neural networks is by increasing their depth and width, but this way comes two drawbacks:
+<ol type="1">
+<li>Overfitting</li>
+<li>High Computaional Complexity</li>
+</ol></li>
+<li>Although the way of solving both problems is by ultimately moving from fully connected to sparsely connected architecture, but todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures. ## How <img src="https://img.onl/PRfS4q"></li>
+<li>In order avoid patchalignment issues, current incarnations of the Inception architectue are restricted to the filter sizes 1x1, 3x3 and 5x5.</li>
+<li>The problem with the above architecture is that even a modest number of 5x5 convolutions can be expensive on top of a convolutional layer with a large number of filters. <img src="https://img.onl/u5jJLX"></li>
+<li>To make computational complexity cheaper, adding the 1x1 conv. layers as role of reduction which reduced the number of input channels. <img src="https://img.onl/WMREHx"></li>
+<li>The network is 22 layers(27 layers with pooling).</li>
+<li>Adding auxiliary classifiers connected to these nitermediate layers to ecourage discrimination in the lower stages in the classifier, increse the gradient signal that gets propagated back, and provide additional regularization.</li>
+<li>The final result of the architecture reach to 6.67% in the ILSVRC 2014 Classification Challenge. <img src="https://img.onl/WPoo2v"></li>
+</ul>
+<h2 id="and">And?</h2>
+<ul>
+<li>There are v2 ,v3 and v4 version of Inception Neural Network. We can review these states of art in later blogs.</li>
 </ul>
 ]]></content>
       <tags>
