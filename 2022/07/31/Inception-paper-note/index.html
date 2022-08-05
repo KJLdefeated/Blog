@@ -255,7 +255,7 @@ mjx-container[display="true"] + br {
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
         <h1 id="going-deeper-with-convolutions-inception-googlenet">Going deeper with convolutions (Inception, GoogLeNet)</h1>
-<p>Published Year : 2014 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.4842">Paper URL</a> <img src="https://img.onl/MLL6vl" alt="image alt"></p>
+<p>Published Year : 2014 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.4842">Paper URL</a> <img src="https://imgur.com/VSkET31.png" alt="image alt"></p>
 <h2 id="what">What</h2>
 <p>This architecture improved utilization of the computing resources inside the network which is achieved by a carefully crafted design that allows for increasing the depth and width of the network while keeping the computational budget constant.</p>
 <h2 id="why">Why</h2>
@@ -265,13 +265,13 @@ mjx-container[display="true"] + br {
 <li>Overfitting</li>
 <li>High Computaional Complexity</li>
 </ol></li>
-<li>Although the way of solving both problems is by ultimately moving from fully connected to sparsely connected architecture, but todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures. ## How <img src="https://img.onl/PRfS4q"></li>
-<li>In order avoid patchalignment issues, current incarnations of the Inception architectue are restricted to the filter sizes 1x1, 3x3 and 5x5.</li>
-<li>The problem with the above architecture is that even a modest number of 5x5 convolutions can be expensive on top of a convolutional layer with a large number of filters. <img src="https://img.onl/u5jJLX"></li>
-<li>To make computational complexity cheaper, adding the 1x1 conv. layers as role of reduction which reduced the number of input channels. <img src="https://img.onl/WMREHx"></li>
+<li>Although the way of solving both problems is by ultimately moving from fully connected to sparsely connected architecture, but todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures. ## How <img src="https://imgur.com/9F2lBEm.png"></li>
+<li>In order avoid patch alignment issues, current incarnations of the Inception architectue are restricted to the filter sizes 1x1, 3x3 and 5x5.</li>
+<li>The problem with the above architecture is that even a modest number of 5x5 convolutions can be expensive on top of a convolutional layer with a large number of filters. <img src="https://imgur.com/jwvz6eq.png"></li>
+<li>To make computational complexity cheaper, adding the 1x1 conv. layers as role of reduction which reduced the number of input channels. <img src="https://imgur.com/a5bDHKy.png"></li>
 <li>The network is 22 layers(27 layers with pooling).</li>
 <li>Adding auxiliary classifiers connected to these nitermediate layers to ecourage discrimination in the lower stages in the classifier, increse the gradient signal that gets propagated back, and provide additional regularization.</li>
-<li>The final result of the architecture reach to 6.67% in the ILSVRC 2014 Classification Challenge. <img src="https://img.onl/WPoo2v"></li>
+<li>The final result of the architecture reach to 6.67% in the ILSVRC 2014 Classification Challenge. <img src="https://imgur.com/ec7hdwJ.png"></li>
 </ul>
 <h2 id="and">And?</h2>
 <ul>

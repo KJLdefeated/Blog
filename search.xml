@@ -48,7 +48,7 @@
     <title>Inception Paper Note</title>
     <url>/2022/07/31/Inception-paper-note/</url>
     <content><![CDATA[<h1 id="going-deeper-with-convolutions-inception-googlenet">Going deeper with convolutions (Inception, GoogLeNet)</h1>
-<p>Published Year : 2014 <a href="https://arxiv.org/abs/1409.4842">Paper URL</a> <img src="https://img.onl/MLL6vl" alt="image alt"></p>
+<p>Published Year : 2014 <a href="https://arxiv.org/abs/1409.4842">Paper URL</a> <img src="https://imgur.com/VSkET31.png" alt="image alt"></p>
 <h2 id="what">What</h2>
 <p>This architecture improved utilization of the computing resources inside the network which is achieved by a carefully crafted design that allows for increasing the depth and width of the network while keeping the computational budget constant.</p>
 <h2 id="why">Why</h2>
@@ -58,13 +58,13 @@
 <li>Overfitting</li>
 <li>High Computaional Complexity</li>
 </ol></li>
-<li>Although the way of solving both problems is by ultimately moving from fully connected to sparsely connected architecture, but todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures. ## How <img src="https://img.onl/PRfS4q"></li>
-<li>In order avoid patchalignment issues, current incarnations of the Inception architectue are restricted to the filter sizes 1x1, 3x3 and 5x5.</li>
-<li>The problem with the above architecture is that even a modest number of 5x5 convolutions can be expensive on top of a convolutional layer with a large number of filters. <img src="https://img.onl/u5jJLX"></li>
-<li>To make computational complexity cheaper, adding the 1x1 conv. layers as role of reduction which reduced the number of input channels. <img src="https://img.onl/WMREHx"></li>
+<li>Although the way of solving both problems is by ultimately moving from fully connected to sparsely connected architecture, but todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures. ## How <img src="https://imgur.com/9F2lBEm.png"></li>
+<li>In order avoid patch alignment issues, current incarnations of the Inception architectue are restricted to the filter sizes 1x1, 3x3 and 5x5.</li>
+<li>The problem with the above architecture is that even a modest number of 5x5 convolutions can be expensive on top of a convolutional layer with a large number of filters. <img src="https://imgur.com/jwvz6eq.png"></li>
+<li>To make computational complexity cheaper, adding the 1x1 conv. layers as role of reduction which reduced the number of input channels. <img src="https://imgur.com/a5bDHKy.png"></li>
 <li>The network is 22 layers(27 layers with pooling).</li>
 <li>Adding auxiliary classifiers connected to these nitermediate layers to ecourage discrimination in the lower stages in the classifier, increse the gradient signal that gets propagated back, and provide additional regularization.</li>
-<li>The final result of the architecture reach to 6.67% in the ILSVRC 2014 Classification Challenge. <img src="https://img.onl/WPoo2v"></li>
+<li>The final result of the architecture reach to 6.67% in the ILSVRC 2014 Classification Challenge. <img src="https://imgur.com/ec7hdwJ.png"></li>
 </ul>
 <h2 id="and">And?</h2>
 <ul>
@@ -92,7 +92,7 @@
 <li>Avoiding representaional bottlenecks.</li>
 <li>Using smart factorization methods, convolutions can be more efficient in terms of computational complexity. ## How ### Inception V1</li>
 </ul></li>
-<li>Here is inception v1 module. <img src="https://img.onl/WGiZj0"></li>
+<li>Here is inception v1 module. <img src="https://imgur.com/mvvgsZN.png"></li>
 </ul>
 <h3 id="inception-v2">Inception V2</h3>
 <ul>
@@ -100,16 +100,17 @@
 <ul>
 <li>Factorization into smaller convolution
 <ul>
-<li>From the picture below we can find that one 5x5 conv. layer can be replaced by two 3x3 layers. <img src="https://img.onl/RaP1Q5"></li>
-<li>Below is Inception v2 module where 5x5 layer is replaced by two 3x3 layers contrast to Figure 4 above. <img src="https://img.onl/WGiZj0"></li>
+<li>From the picture below we can find that one 5x5 conv. layer can be replaced by two 3x3 layers. <img src="https://imgur.com/ZlVhmCU.png"></li>
+<li>Below is Inception v2 module where 5x5 layer is replaced by two 3x3 layers contrast to Figure 4 above. <img src="https://imgur.com/QPFCBiS.png"></li>
 </ul></li>
 <li>Spatial Factorization into Asymmetric Convolutions
 <ul>
-<li>Using asymmetric convolutions can be 33% cheaper than the symmetric conv. Ex: Using a 3x1 conv. followed by a 1x3 conv. is equivalent to sliding a two layer network with the same receptive field as in a 3x3 conv. like the picture below. <img src="https://img.onl/9BLxoT"> <img src="https://img.onl/9Ey18L"> <img src="https://img.onl/AUTUUf"></li>
+<li>Using asymmetric convolutions can be 33% cheaper than the symmetric conv. Ex: Using a 3x1 conv. followed by a 1x3 conv. is equivalent to sliding a two layer network with the same receptive field as in a 3x3 conv. like the picture below. <img src="https://imgur.com/h24V4OJ.png"></li>
 </ul></li>
 </ul></li>
-<li>The overall v2 architecture: <img src="https://img.onl/nhLM0w"></li>
 </ul>
+<p><img src="https://imgur.com/2WRC35l.png"></p>
+<p><img src="https://imgur.com/NxxfKLS.png"> - The overall v2 architecture: <img src="https://imgur.com/WXjfPBW.png"></p>
 <h3 id="inception-v3">Inception V3</h3>
 <ul>
 <li>Inception v3 Net incorpoeated all of the above upgrade stated for Inception v2, and in addition used the following:
@@ -190,32 +191,6 @@
       </tags>
   </entry>
   <entry>
-    <title>VGG Paper Note</title>
-    <url>/2022/07/28/VGG-paper-note/</url>
-    <content><![CDATA[<h1 id="very-deep-convolutional-networks-for-large-scale-image-recognitionvgg">Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1>
-<p>Published year : 2014 <a href="https://arxiv.org/abs/1409.1556">Paper URL</a></p>
-<h2 id="what">What</h2>
-<p>A neural networks using an architecture with 3 by 3 convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers.</p>
-<h2 id="how">How</h2>
-<p><img src="https://img.onl/joxTW1"> 1. Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model. 2. The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers. 3. To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</p>
-<h4 id="from-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better.">From the result below we can see that as the network goes deeper the performance would be better.</h4>
-<p><img src="https://img.onl/QJTArc"></p>
-<ul>
-<li>Note:
-<ul>
-<li>VGG stands for Vision Geometry Group of Oxford University</li>
-<li>VGG16 means 13 conv. layers + 3 FC layers.</li>
-<li>VGG19 means 16 conv. layers + 3 FC layers</li>
-</ul></li>
-</ul>
-<h2 id="and">And?</h2>
-<p>The defect of VGG network is that the number of parameters is too large and the training time is long. Thus we usually do not train this by scratch instead we can get the pre-trained model from tensorflow. Use these pr-trained model to do other project.</p>
-]]></content>
-      <tags>
-        <tag>paper_notes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>交大修課心得(110-2)</title>
     <url>/2022/06/07/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-110-2/</url>
     <content><![CDATA[<h5 id="這學期loading偏重22學分0通識系內的課也一點都不涼也不甜又修了資工的硬課加上-sitcon-議程組最後還是撐過來了雖然表現的不盡滿意但在時間規劃上倒是頗有心得">這學期loading偏重，22學分0通識，系內的課也一點都不涼也不甜，又修了資工的硬課，加上 SITCON 議程組，最後還是撐過來了，雖然表現的不盡滿意，但在時間規劃上倒是頗有心得。</h5>
@@ -260,6 +235,32 @@
       <tags>
         <tag>School</tag>
         <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VGG Paper Note</title>
+    <url>/2022/07/28/VGG-paper-note/</url>
+    <content><![CDATA[<h1 id="very-deep-convolutional-networks-for-large-scale-image-recognitionvgg">Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1>
+<p>Published year : 2014 <a href="https://arxiv.org/abs/1409.1556">Paper URL</a></p>
+<h2 id="what">What</h2>
+<p>A neural networks using an architecture with 3 by 3 convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers.</p>
+<h2 id="how">How</h2>
+<p><img src="https://i.imgur.com/FRUaYPq.png"> 1. Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model. 2. The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers. 3. To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</p>
+<h4 id="from-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better.">From the result below we can see that as the network goes deeper the performance would be better.</h4>
+<p><img src="https://imgur.com/WXbSJAn.png"></p>
+<ul>
+<li>Note:
+<ul>
+<li>VGG stands for Vision Geometry Group of Oxford University</li>
+<li>VGG16 means 13 conv. layers + 3 FC layers.</li>
+<li>VGG19 means 16 conv. layers + 3 FC layers</li>
+</ul></li>
+</ul>
+<h2 id="and">And?</h2>
+<p>The defect of VGG network is that the number of parameters is too large and the training time is long. Thus we usually do not train this by scratch instead we can get the pre-trained model from tensorflow. Use these pr-trained model to do other project.</p>
+]]></content>
+      <tags>
+        <tag>paper_notes</tag>
       </tags>
   </entry>
 </search>
