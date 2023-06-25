@@ -620,6 +620,32 @@ Prove this by induction. Suppose <span class="math inline"><mjx-container class=
       </tags>
   </entry>
   <entry>
+    <title>VGG Paper Note</title>
+    <url>/2022/07/28/VGG-paper-note/</url>
+    <content><![CDATA[<h1 id="very-deep-convolutional-networks-for-large-scale-image-recognitionvgg">Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1>
+<p>Published year : 2014 <a href="https://arxiv.org/abs/1409.1556">Paper URL</a></p>
+<h2 id="what">What</h2>
+<p>A neural networks using an architecture with 3 by 3 convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers.</p>
+<h2 id="how">How</h2>
+<p><img src="https://i.imgur.com/FRUaYPq.png"> 1. Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model. 2. The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers. 3. To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</p>
+<h4 id="from-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better.">From the result below we can see that as the network goes deeper the performance would be better.</h4>
+<p><img src="https://imgur.com/WXbSJAn.png"></p>
+<ul>
+<li>Note:
+<ul>
+<li>VGG stands for Vision Geometry Group of Oxford University</li>
+<li>VGG16 means 13 conv. layers + 3 FC layers.</li>
+<li>VGG19 means 16 conv. layers + 3 FC layers</li>
+</ul></li>
+</ul>
+<h2 id="and">And?</h2>
+<p>The defect of VGG network is that the number of parameters is too large and the training time is long. Thus we usually do not train this by scratch instead we can get the pre-trained model from tensorflow. Use these pr-trained model to do other project.</p>
+]]></content>
+      <tags>
+        <tag>paper_notes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ResNet Paper Note</title>
     <url>/2022/08/07/ResNet/</url>
     <content><![CDATA[<h1 id="deep-residual-learning-for-image-recognition">Deep residual Learning for Image Recognition</h1>
@@ -646,32 +672,6 @@ Prove this by induction. Suppose <span class="math inline"><mjx-container class=
 <li>This idea works extremely well in practice. There is still many computer vision use the concept of ResNet util today.</li>
 <li>I think this Network architecture is beautiful since it use relatively simple modules to solve the problem that which deep network didn't perform well.</li>
 </ul>
-]]></content>
-      <tags>
-        <tag>paper_notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VGG Paper Note</title>
-    <url>/2022/07/28/VGG-paper-note/</url>
-    <content><![CDATA[<h1 id="very-deep-convolutional-networks-for-large-scale-image-recognitionvgg">Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1>
-<p>Published year : 2014 <a href="https://arxiv.org/abs/1409.1556">Paper URL</a></p>
-<h2 id="what">What</h2>
-<p>A neural networks using an architecture with 3 by 3 convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers.</p>
-<h2 id="how">How</h2>
-<p><img src="https://i.imgur.com/FRUaYPq.png"> 1. Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model. 2. The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers. 3. To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</p>
-<h4 id="from-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better.">From the result below we can see that as the network goes deeper the performance would be better.</h4>
-<p><img src="https://imgur.com/WXbSJAn.png"></p>
-<ul>
-<li>Note:
-<ul>
-<li>VGG stands for Vision Geometry Group of Oxford University</li>
-<li>VGG16 means 13 conv. layers + 3 FC layers.</li>
-<li>VGG19 means 16 conv. layers + 3 FC layers</li>
-</ul></li>
-</ul>
-<h2 id="and">And?</h2>
-<p>The defect of VGG network is that the number of parameters is too large and the training time is long. Thus we usually do not train this by scratch instead we can get the pre-trained model from tensorflow. Use these pr-trained model to do other project.</p>
 ]]></content>
       <tags>
         <tag>paper_notes</tag>
@@ -780,51 +780,6 @@ Prove this by induction. Suppose <span class="math inline"><mjx-container class=
       </tags>
   </entry>
   <entry>
-    <title>交大修課心得(111-1)</title>
-    <url>/2023/01/20/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-111-1/</url>
-    <content><![CDATA[<h5 id="背景nycu-cs-大二">背景：NYCU CS 大二</h5>
-<h2 id="必修">必修</h2>
-<h3 id="演算法">演算法</h3>
-<h4 id="教授游逸平學分3">教授：游逸平/學分：3</h4>
-<p>總結來說很不錯的課，整堂課總共五個程式作業，都是上機寫Code的那種，期中末都有分成手寫與上機考，手寫還算簡單，有認真讀一下應該還好，上機說實話也沒有很難，大部分都是模板題或稍有一點變化，老師上課也不錯，講解的內容都 算讓人聽得懂。這堂應該是三個演算法裡面最硬的，不過因為都修過競程（一）了，我本來想說演算法應該是水課吧，但我有點小看他了，所以期中末上機就直接去裸考了，我覺得競程這種東西還是很吃手感，太久沒寫也會要花一段時間回復 過來，結果就有點爆炸，加上期末時一堆考試擠在同一週，我就把最有把握的演算法放在最後一順位再讀，結果手寫就爆炸啦，因為期末教了一些東西之前競程根本沒用過，所以最後分數就只有A，我原本還想說躺著A+，笑死我是小丑。</p>
-<h3 id="機率">機率</h3>
-<h4 id="教授謝秉均學分3">教授：謝秉均/學分:3</h4>
-<p>很棒的課，這堂課我上得很開心，教授教得好，作業讓人需要思考但也不會太難，考試認真準備也不會太難，這是這學期我上得最好的課。有人說過：「機器學習就是建立在機率之上。」，之前自學ML的時候常常碰到一些機率的東西看不是很懂，這堂課把我的基礎補齊了，再加上教授本人是做機器學習相關研究，偶而都會補充一些機率在ML上的應用，我聽得很開心，導致後來都會很期待上機率課。作業四次，幾乎都是證明，但也不會太難，大多都是講義上的定理的轉換應用，稍微想一下都不會太難，最後一次作業還有叫我們寫一個簡易的高斯過程(Gaussian Process)，但沒有learning的部分，不會太難，是很有趣的作業。期中末考，部分跟作業相似，有些也只是考古變一變而已，不會太難，最後拿A+了，開心。</p>
-<h2 id="選修">選修</h2>
-<h3 id="電腦對局理論">電腦對局理論</h3>
-<h4 id="教授吳毅成學分3">教授：吳毅成/學分：3</h4>
-<p>資工所的課，電腦對局跟賽局是不一樣的，這堂課主要是讓電腦學會玩一些棋類遊戲如圍棋、五子棋等，教學內容有Alpha-beta search, TD-learning, Monte Carlo Tree Search 和很多用於下棋的策略，每週都有手寫作業，就是他當週講課的內容，有兩個大project，第一個是用 td-learning 玩 Threes 一種類似2048的遊戲，第二個是用 MCTS 去下禁圍棋（稍微跟一般圍棋有點不同），期末還有一個大比賽，讓大家的程式進行對弈，比賽的排名會算在學期成績裡，期末會有一個期末考，內容就是作業和其他衍伸內容，還有一個分組 presentation，向全班報告某個paper。研究所的課就是不一樣，優質又有趣，這堂課大概是這學期花我最多時間的一堂課，雖然我對那些對弈棋局的演算法沒什麼興趣，但程式作業中的td learning和mcts讓我寫得很開心，學到非常多東西的感覺，最後成績沒有很好看是因爲我期末考沒有念，就爆炸了QQ，但我還是很喜歡這堂課，推薦大家都去修，只要熟練C++和演算法就可以去修了，不過建議還是抱團一起。</p>
-<h3 id="資料庫系統概論">資料庫系統概論</h3>
-<h4 id="教授曾意儒學分3">教授：曾意儒/學分：3</h4>
-<p>資料庫其實是做網頁後端的時候常常用的，也衍伸出了許多理論，為了讓查詢、存取資料變得迅速，所以發展出許多算法、形式，畢竟是概論類型的課，免不了背一些東西，老實說讓我感到有點痛苦，因為背東西好無聊，我個人認為老師教得還算不錯，而且也會經常徵求同學的意見去改進課堂的進行方式，老師經常會和同學交流，是還蠻不錯的老師，不過這堂課的作業就讓我很痛苦，作業內容是去設計資料庫，給一分原始資料，要去對這個資料進行分類，存取資料型態，然後要分割table，為了讓資料去用更有效率，但那個資料超級醜，所以我做得很痛苦，再加上老師課堂上大部分教的是理論，沒有講解實作過程，就會有一種課程和作業的分裂感，而且資料庫我認爲大部分需要用的東西都可以透過自學達成，所以我覺得課堂上講的一些理論我會覺得很無聊。比較有趣的是期末專題，內容是結合資料庫做出一個應用程式，可以是網頁、app或是console類的東西，一組五個人一起開發一份project，我們這組做得是一個手機評價系統的網站，因為我們這組人基本上根本沒有開發網頁的經驗，所以我們都是從頭開始學，以前我有用過django開發的經驗，所以大概知道資料要去哪裡查，教學去哪裡看之類的，提供資源給其他人看，然後他們也可以幫我一起做，這可以算是我第一次做這種team project，有多個人手一起真的效率提高不少，感覺很不錯，大家參與度也很高，修這堂課最大的收穫就是這份專題，讓我知道如何從0開始開發網站，雖然我對課程內容不太感興趣，但總結下來還是蠻賺的吧。</p>
-<h3 id="圖形理論導論">圖形理論導論</h3>
-<h4 id="教授李毅郎學分3">教授：李毅郎/學分：3</h4>
-<p>就是圖論，但作為一門數學課我不是很滿意，老師就是從一個定理帶到下一個定理，考試也只是考背那些定理而已，但作業則是競程圖論，有種作業課程斷裂感，作業寫起來是不會有什麼問題，畢竟以前都寫過，不過考試就是背一堆課本上的證明，而且都是枝微末節的東西，我覺得很無聊，結果考試也考得很爛，不過作業成績佔50%，還算是蠻甜的課吧，想練習圖論演算法的題目和刷分的人都蠻推薦來修的。</p>
-<h3 id="機器學習概論">機器學習概論</h3>
-<h4 id="教授胡毓志學分3">教授：胡毓志/學分：3</h4>
-<p>完全不推，這堂課主要交一些常用的機器學習演算法還有一些資料預處理，評估模型好壞等等，上課講得很慢，雖然英文標準，但我認爲他有些太專注於不重要的細節，導致拖延很久。我認為機器學習課程分兩種，實作或是理論，前者有許多作業或專題讓學生操作，後者則是把ML演算法背後的數學理論講清楚，但這堂課兩者都沒做到，淪為大學部有的那種很無聊的「概論」課，就是把課堂上的東西背一背然後考試刷分了事，考試是申論題，題目會依照情境要求學生提供解法，題目本身還可以，但評分是依照飄準答案，有提到關鍵字就給分，結果後來就變成說要通靈這題到底想要考什麼，那其實沒有必要大費周章設計情境，乾脆簡報挖空填一填還比較好，個人很討厭這種模式，期中有一度想要退選，但考慮到明年同時段其他課的安排，還是撐了下去，現在有點後悔，刷不到分也學不到東西，只能把這次經驗當作警惕，以後選課多多注意授課品質。</p>
-<h2 id="其他">其他</h2>
-<h3 id="日文一">日文(一)</h3>
-<h4 id="教授賴郁芳學分2">教授：賴郁芳/學分：2</h4>
-<p>課很涼、分數也偏甜，老師教得也不錯，不過我這學期根本沒時間讀語言，所以爆炸了，只能怪我自己。</p>
-<h3 id="批判與創意思考">批判與創意思考</h3>
-<h4 id="教授顧醫華嚴偉哲楊元傑林映彤嚴如玉學分2">教授：顧醫華;嚴偉哲;楊元傑;林映彤;嚴如玉/學分：2</h4>
-<p>課程主要內容就是教一些思考技巧，用批判性思考的邏輯去研究字句、別人的想法，整個課程都是用全英文進行，除了偶而要用英文發表想法讓我覺得我的口說真的很渣，其他都沒什麼問題，期中末是用英文寫一篇報告之類的東西，期中是用批判性思考的技巧去討論社會上發生的議題，期末是用創意思考是討論一項發明、想法的產生，平常上課是助教帶大家討論，算是偏涼偏甜的課，雖然我修完課還是不知道我學了什麼，唯一的心得大概就是Chat GPT是我的通識報告救星。</p>
-<h3 id="高爾夫球">高爾夫球</h3>
-<h4 id="教授-張嘉洲學分0">教授： 張嘉洲/學分:0</h4>
-<p>高爾夫球好玩，雖然每個禮拜四早上都要七點起床騎摩托車去園區裡面的場地練習，不過打高爾夫是有成就感而且也蠻好玩的，下學期應該也會修，不過我要選開早十的。</p>
-<h2 id="其他事">其他事</h2>
-<h3 id="社團">社團</h3>
-<p>這學期接了DJ社的社長，剛開始社團都會有人過來，後來大家就都不來了QQ，可能練DJ真的蠻難的吧，這學期辦了兩場活動接了三場表演，比高中時還多，有成功的有失敗的，下學期感覺不要搞那麽多活動，一步一步來就好，希望可以找到下一屆社團幹部，要不然就要再當一年幹部了QQ。</p>
-<h3 id="未來期許">未來期許</h3>
-<p>爲下學期許個願，下學期計畫選23學分，結果還是選了六門系上必選修，希望可以撐下去並獲得好成績，下學期除了一些必要的，其他都是很有興趣的，我希望都能從中收穫很多。最近開始找實驗室了，對於自己想要走的方向更加確定，希望不要走錯路，希望時間管理能力能變好，我覺得我是一個沒辦法臨時抱佛腳的人，平時還是要多多累積比較好，下學期要做的事很多，有很多硬課、社團和去補習班教程式，希望不要像這學期一樣自爆。</p>
-]]></content>
-      <tags>
-        <tag>School</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>交大修課心得-111-2</title>
     <url>/2023/06/22/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-111-2/</url>
     <content><![CDATA[<h5 id="背景nycu-cs-大二">背景：NYCU CS 大二</h5>
@@ -900,6 +855,51 @@ Prove this by induction. Suppose <span class="math inline"><mjx-container class=
 ]]></content>
       <tags>
         <tag>School</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>交大修課心得(111-1)</title>
+    <url>/2023/01/20/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-111-1/</url>
+    <content><![CDATA[<h5 id="背景nycu-cs-大二">背景：NYCU CS 大二</h5>
+<h2 id="必修">必修</h2>
+<h3 id="演算法">演算法</h3>
+<h4 id="教授游逸平學分3">教授：游逸平/學分：3</h4>
+<p>總結來說很不錯的課，整堂課總共五個程式作業，都是上機寫Code的那種，期中末都有分成手寫與上機考，手寫還算簡單，有認真讀一下應該還好，上機說實話也沒有很難，大部分都是模板題或稍有一點變化，老師上課也不錯，講解的內容都 算讓人聽得懂。這堂應該是三個演算法裡面最硬的，不過因為都修過競程（一）了，我本來想說演算法應該是水課吧，但我有點小看他了，所以期中末上機就直接去裸考了，我覺得競程這種東西還是很吃手感，太久沒寫也會要花一段時間回復 過來，結果就有點爆炸，加上期末時一堆考試擠在同一週，我就把最有把握的演算法放在最後一順位再讀，結果手寫就爆炸啦，因為期末教了一些東西之前競程根本沒用過，所以最後分數就只有A，我原本還想說躺著A+，笑死我是小丑。</p>
+<h3 id="機率">機率</h3>
+<h4 id="教授謝秉均學分3">教授：謝秉均/學分:3</h4>
+<p>很棒的課，這堂課我上得很開心，教授教得好，作業讓人需要思考但也不會太難，考試認真準備也不會太難，這是這學期我上得最好的課。有人說過：「機器學習就是建立在機率之上。」，之前自學ML的時候常常碰到一些機率的東西看不是很懂，這堂課把我的基礎補齊了，再加上教授本人是做機器學習相關研究，偶而都會補充一些機率在ML上的應用，我聽得很開心，導致後來都會很期待上機率課。作業四次，幾乎都是證明，但也不會太難，大多都是講義上的定理的轉換應用，稍微想一下都不會太難，最後一次作業還有叫我們寫一個簡易的高斯過程(Gaussian Process)，但沒有learning的部分，不會太難，是很有趣的作業。期中末考，部分跟作業相似，有些也只是考古變一變而已，不會太難，最後拿A+了，開心。</p>
+<h2 id="選修">選修</h2>
+<h3 id="電腦對局理論">電腦對局理論</h3>
+<h4 id="教授吳毅成學分3">教授：吳毅成/學分：3</h4>
+<p>資工所的課，電腦對局跟賽局是不一樣的，這堂課主要是讓電腦學會玩一些棋類遊戲如圍棋、五子棋等，教學內容有Alpha-beta search, TD-learning, Monte Carlo Tree Search 和很多用於下棋的策略，每週都有手寫作業，就是他當週講課的內容，有兩個大project，第一個是用 td-learning 玩 Threes 一種類似2048的遊戲，第二個是用 MCTS 去下禁圍棋（稍微跟一般圍棋有點不同），期末還有一個大比賽，讓大家的程式進行對弈，比賽的排名會算在學期成績裡，期末會有一個期末考，內容就是作業和其他衍伸內容，還有一個分組 presentation，向全班報告某個paper。研究所的課就是不一樣，優質又有趣，這堂課大概是這學期花我最多時間的一堂課，雖然我對那些對弈棋局的演算法沒什麼興趣，但程式作業中的td learning和mcts讓我寫得很開心，學到非常多東西的感覺，最後成績沒有很好看是因爲我期末考沒有念，就爆炸了QQ，但我還是很喜歡這堂課，推薦大家都去修，只要熟練C++和演算法就可以去修了，不過建議還是抱團一起。</p>
+<h3 id="資料庫系統概論">資料庫系統概論</h3>
+<h4 id="教授曾意儒學分3">教授：曾意儒/學分：3</h4>
+<p>資料庫其實是做網頁後端的時候常常用的，也衍伸出了許多理論，為了讓查詢、存取資料變得迅速，所以發展出許多算法、形式，畢竟是概論類型的課，免不了背一些東西，老實說讓我感到有點痛苦，因為背東西好無聊，我個人認為老師教得還算不錯，而且也會經常徵求同學的意見去改進課堂的進行方式，老師經常會和同學交流，是還蠻不錯的老師，不過這堂課的作業就讓我很痛苦，作業內容是去設計資料庫，給一分原始資料，要去對這個資料進行分類，存取資料型態，然後要分割table，為了讓資料去用更有效率，但那個資料超級醜，所以我做得很痛苦，再加上老師課堂上大部分教的是理論，沒有講解實作過程，就會有一種課程和作業的分裂感，而且資料庫我認爲大部分需要用的東西都可以透過自學達成，所以我覺得課堂上講的一些理論我會覺得很無聊。比較有趣的是期末專題，內容是結合資料庫做出一個應用程式，可以是網頁、app或是console類的東西，一組五個人一起開發一份project，我們這組做得是一個手機評價系統的網站，因為我們這組人基本上根本沒有開發網頁的經驗，所以我們都是從頭開始學，以前我有用過django開發的經驗，所以大概知道資料要去哪裡查，教學去哪裡看之類的，提供資源給其他人看，然後他們也可以幫我一起做，這可以算是我第一次做這種team project，有多個人手一起真的效率提高不少，感覺很不錯，大家參與度也很高，修這堂課最大的收穫就是這份專題，讓我知道如何從0開始開發網站，雖然我對課程內容不太感興趣，但總結下來還是蠻賺的吧。</p>
+<h3 id="圖形理論導論">圖形理論導論</h3>
+<h4 id="教授李毅郎學分3">教授：李毅郎/學分：3</h4>
+<p>就是圖論，但作為一門數學課我不是很滿意，老師就是從一個定理帶到下一個定理，考試也只是考背那些定理而已，但作業則是競程圖論，有種作業課程斷裂感，作業寫起來是不會有什麼問題，畢竟以前都寫過，不過考試就是背一堆課本上的證明，而且都是枝微末節的東西，我覺得很無聊，結果考試也考得很爛，不過作業成績佔50%，還算是蠻甜的課吧，想練習圖論演算法的題目和刷分的人都蠻推薦來修的。</p>
+<h3 id="機器學習概論">機器學習概論</h3>
+<h4 id="教授胡毓志學分3">教授：胡毓志/學分：3</h4>
+<p>完全不推，這堂課主要交一些常用的機器學習演算法還有一些資料預處理，評估模型好壞等等，上課講得很慢，雖然英文標準，但我認爲他有些太專注於不重要的細節，導致拖延很久。我認為機器學習課程分兩種，實作或是理論，前者有許多作業或專題讓學生操作，後者則是把ML演算法背後的數學理論講清楚，但這堂課兩者都沒做到，淪為大學部有的那種很無聊的「概論」課，就是把課堂上的東西背一背然後考試刷分了事，考試是申論題，題目會依照情境要求學生提供解法，題目本身還可以，但評分是依照飄準答案，有提到關鍵字就給分，結果後來就變成說要通靈這題到底想要考什麼，那其實沒有必要大費周章設計情境，乾脆簡報挖空填一填還比較好，個人很討厭這種模式，期中有一度想要退選，但考慮到明年同時段其他課的安排，還是撐了下去，現在有點後悔，刷不到分也學不到東西，只能把這次經驗當作警惕，以後選課多多注意授課品質。</p>
+<h2 id="其他">其他</h2>
+<h3 id="日文一">日文(一)</h3>
+<h4 id="教授賴郁芳學分2">教授：賴郁芳/學分：2</h4>
+<p>課很涼、分數也偏甜，老師教得也不錯，不過我這學期根本沒時間讀語言，所以爆炸了，只能怪我自己。</p>
+<h3 id="批判與創意思考">批判與創意思考</h3>
+<h4 id="教授顧醫華嚴偉哲楊元傑林映彤嚴如玉學分2">教授：顧醫華;嚴偉哲;楊元傑;林映彤;嚴如玉/學分：2</h4>
+<p>課程主要內容就是教一些思考技巧，用批判性思考的邏輯去研究字句、別人的想法，整個課程都是用全英文進行，除了偶而要用英文發表想法讓我覺得我的口說真的很渣，其他都沒什麼問題，期中末是用英文寫一篇報告之類的東西，期中是用批判性思考的技巧去討論社會上發生的議題，期末是用創意思考是討論一項發明、想法的產生，平常上課是助教帶大家討論，算是偏涼偏甜的課，雖然我修完課還是不知道我學了什麼，唯一的心得大概就是Chat GPT是我的通識報告救星。</p>
+<h3 id="高爾夫球">高爾夫球</h3>
+<h4 id="教授-張嘉洲學分0">教授： 張嘉洲/學分:0</h4>
+<p>高爾夫球好玩，雖然每個禮拜四早上都要七點起床騎摩托車去園區裡面的場地練習，不過打高爾夫是有成就感而且也蠻好玩的，下學期應該也會修，不過我要選開早十的。</p>
+<h2 id="其他事">其他事</h2>
+<h3 id="社團">社團</h3>
+<p>這學期接了DJ社的社長，剛開始社團都會有人過來，後來大家就都不來了QQ，可能練DJ真的蠻難的吧，這學期辦了兩場活動接了三場表演，比高中時還多，有成功的有失敗的，下學期感覺不要搞那麽多活動，一步一步來就好，希望可以找到下一屆社團幹部，要不然就要再當一年幹部了QQ。</p>
+<h3 id="未來期許">未來期許</h3>
+<p>爲下學期許個願，下學期計畫選23學分，結果還是選了六門系上必選修，希望可以撐下去並獲得好成績，下學期除了一些必要的，其他都是很有興趣的，我希望都能從中收穫很多。最近開始找實驗室了，對於自己想要走的方向更加確定，希望不要走錯路，希望時間管理能力能變好，我覺得我是一個沒辦法臨時抱佛腳的人，平時還是要多多累積比較好，下學期要做的事很多，有很多硬課、社團和去補習班教程式，希望不要像這學期一樣自爆。</p>
+]]></content>
+      <tags>
+        <tag>School</tag>
+        <tag>Life</tag>
       </tags>
   </entry>
 </search>
