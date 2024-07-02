@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="/icons-192.png">
   <link rel="manifest" href="/manifest.json">
   
-  <meta name="generator" content="Hexo 6.1.0">
+  <meta name="generator" content="Hexo 7.1.1">
 
   
 
@@ -38,123 +38,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
-
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+</head>
 <body>
   <div class="root-container">
     
@@ -254,24 +138,24 @@ mjx-container[display="true"] + br {
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="very-deep-convolutional-networks-for-large-scale-image-recognitionvgg">Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1>
-<p>Published year : 2014 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.1556">Paper URL</a></p>
-<h2 id="what">What</h2>
-<p>A neural networks using an architecture with 3 by 3 convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers.</p>
-<h2 id="how">How</h2>
-<p><img src="https://i.imgur.com/FRUaYPq.png"> 1. Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model. 2. The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers. 3. To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</p>
-<h4 id="from-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better.">From the result below we can see that as the network goes deeper the performance would be better.</h4>
-<p><img src="https://imgur.com/WXbSJAn.png"></p>
+        <h1 id="Very-Deep-Convolutional-Networks-for-Large-Scale-Image-Recognition-VGG"><a href="#Very-Deep-Convolutional-Networks-for-Large-Scale-Image-Recognition-VGG" class="headerlink" title="Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)"></a>Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1><p>Published year : 2014<br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.1556">Paper URL</a></p>
+<h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><p>A neural networks using an architecture with 3 by 3 convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers. </p>
+<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><p><img src="https://i.imgur.com/FRUaYPq.png"></p>
+<ol>
+<li>Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model.</li>
+<li>The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers.</li>
+<li>To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</li>
+</ol>
+<h4 id="From-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better"><a href="#From-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better" class="headerlink" title="From the result below we can see that as the network goes deeper the performance would be better."></a>From the result below we can see that as the network goes deeper the performance would be better.</h4><p><img src="https://imgur.com/WXbSJAn.png"></p>
 <ul>
-<li>Note:
-<ul>
+<li>Note:<ul>
 <li>VGG stands for Vision Geometry Group of Oxford University</li>
 <li>VGG16 means 13 conv. layers + 3 FC layers.</li>
 <li>VGG19 means 16 conv. layers + 3 FC layers</li>
-</ul></li>
 </ul>
-<h2 id="and">And?</h2>
-<p>The defect of VGG network is that the number of parameters is too large and the training time is long. Thus we usually do not train this by scratch instead we can get the pre-trained model from tensorflow. Use these pr-trained model to do other project.</p>
+</li>
+</ul>
+<h2 id="And"><a href="#And" class="headerlink" title="And?"></a>And?</h2><p>The defect of VGG network is that the number of parameters is too large and the training time is long. Thus we usually do not train this by scratch instead we can get the pre-trained model from tensorflow. Use these pr-trained model to do other project.</p>
 
       </section>
 
@@ -346,7 +230,7 @@ mjx-container[display="true"] + br {
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>15</span>
+        <span>16</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -430,7 +314,7 @@ mjx-container[display="true"] + br {
       
     </div>
      
-    <p>&copy; 2023 <a href="/" target="_blank">KJL</a></p>
+    <p>&copy; 2024 <a href="/" target="_blank">KJL</a></p>
 
     
 
