@@ -38,7 +38,9 @@
   
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 <body>
   <div class="root-container">
     
@@ -127,6 +129,17 @@
   </script>
 </header>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <!-- 文章 -->
 
 <!-- 文章内容 -->
@@ -138,38 +151,44 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="ImageNet-Classification-with-Deep-Convolutional-Neural-Networks-AlexNet"><a href="#ImageNet-Classification-with-Deep-Convolutional-Neural-Networks-AlexNet" class="headerlink" title="ImageNet Classification with Deep Convolutional Neural Networks(AlexNet)"></a>ImageNet Classification with Deep Convolutional Neural Networks(AlexNet)</h1><p>Published Year : 2012<br><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">Paper URL</a></p>
+        <h1 id="imagenet-classification-with-deep-convolutional-neural-networksalexnet">ImageNet Classification with Deep Convolutional Neural Networks(AlexNet)</h1>
+<p>Published Year : 2012 <a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">Paper URL</a></p>
 <p>Note:這是關於讀paper時所做的筆記以及insight，之後應該會每週更個兩三篇吧，一開始先來一些經典的paper。</p>
-<h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><ul>
+<h2 id="what">What</h2>
+<ul>
 <li>Use large deep convolutional neural network to classify 1.2 million images and achieved top-1 and top-5 error rates of 37.5% and 17.0% which is considerably better than the previous state of art(Sparse coding methods).</li>
 </ul>
-<h2 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h2><ol>
+<h2 id="why">Why</h2>
+<ol type="1">
 <li>To achive higher accurate of image classification.</li>
 <li>To solve the over fitting problem of fully-connected layer</li>
 <li>To train faster of large deep neural network</li>
 </ol>
-<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><ul>
-<li>This structure cost a lot of computational ability which makes training time slow and overfitting. Thus the writter give some way to solve it.<br><img src="https://www.mdpi.com/remotesensing/remotesensing-09-00848/article_deploy/html/images/remotesensing-09-00848-g003.png" alt="Nearal Net Structure"></li>
+<h2 id="how">How</h2>
+<ul>
+<li>This structure cost a lot of computational ability which makes training time slow and overfitting. Thus the writter give some way to solve it. <img src="https://www.mdpi.com/remotesensing/remotesensing-09-00848/article_deploy/html/images/remotesensing-09-00848-g003.png" alt="Nearal Net Structure" /></li>
 </ul>
-<ol>
-<li><p>ReLU Nonlinearity<br>$$<br>ReLU(x) &#x3D; max(0, x)<br>$$</p>
+<ol type="1">
+<li>ReLU Nonlinearity <span class="math display">\[
+ReLU(x) = max(0, x)
+\]</span>
 <ul>
 <li>Choose ReLU as activation function to train six times faster faster than tanh</li>
-</ul>
-</li>
-<li><p>Multiple GPUs</p>
+</ul></li>
+<li>Multiple GPUs
 <ul>
 <li>Use two GPUs to train faster</li>
-</ul>
-</li>
-<li><p>Local Response Normalization<br>$$<br>b_{x,y}^i &#x3D; a_{x,y}^i&#x2F;(k + \alpha\sum_{j&#x3D;max(0,i-n&#x2F;2)}^{min(N-1,i+n&#x2F;2)}(a_{x,y}^{j})^2)^\beta<br>$$</p>
+</ul></li>
+<li>Local Response Normalization <span class="math display">\[
+b_{x,y}^i = a_{x,y}^i/(k + \alpha\sum_{j=max(0,i-n/2)}^{min(N-1,i+n/2)}(a_{x,y}^{j})^2)^\beta
+\]</span>
 <ul>
-<li>Denoting by $a_{x,y}^i$ the activity of a neuron computed by applying kernel $i$ at position $(x,y)$ and then applying the ReLU nonlinearity, the response-normalized activity $b_{x,y}^i$ is given by the expresion above where the sum runs over $n$ “adjacent” kernel maps at the same spatial position, and $N$ is the total number of kernels in the layer. The ordering of the kernel maps is of course arbitrary and determined bfore training beings. This sort of response normalization implements a form of lateral infibition inspired by the type found in real neurons, creating competition for big activities among neuron outputs computed using different kernels. The constants $k,n,\alpha,$ and $\beta$ are hyper-parameters whose values are determined using a validation set.</li>
+<li>Denoting by <span class="math inline">\(a_{x,y}^i\)</span> the activity of a neuron computed by applying kernel <span class="math inline">\(i\)</span> at position <span class="math inline">\((x,y)\)</span> and then applying the ReLU nonlinearity, the response-normalized activity <span class="math inline">\(b_{x,y}^i\)</span> is given by the expresion above where the sum runs over <span class="math inline">\(n\)</span> "adjacent" kernel maps at the same spatial position, and <span class="math inline">\(N\)</span> is the total number of kernels in the layer. The ordering of the kernel maps is of course arbitrary and determined bfore training beings. This sort of response normalization implements a form of lateral infibition inspired by the type found in real neurons, creating competition for big activities among neuron outputs computed using different kernels. The constants <span class="math inline">\(k,n,\alpha,\)</span> and <span class="math inline">\(\beta\)</span> are hyper-parameters whose values are determined using a validation set.</li>
 <li>This type of normalization is not usually seen today.</li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<h2 id="And"><a href="#And" class="headerlink" title="And?"></a>And?</h2><ul>
+<h2 id="and">And?</h2>
+<ul>
 <li>The result of this neural network structure might not be seen good today, but it was the state of art in 2012. Although it was ten years ago paper, we still can find that it has impacted a lot of paper and research in machine learning and computer vision field.</li>
 </ul>
 
@@ -246,7 +265,7 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>16</span>
+        <span>17</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">

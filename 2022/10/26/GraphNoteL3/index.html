@@ -38,7 +38,9 @@
   
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 <body>
   <div class="root-container">
     
@@ -127,6 +129,17 @@
   </script>
 </header>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <!-- 文章 -->
 
 <!-- 文章内容 -->
@@ -138,32 +151,39 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="Trees"><a href="#Trees" class="headerlink" title="Trees"></a>Trees</h1><h4 id="Definition-3-1"><a href="#Definition-3-1" class="headerlink" title="Definition 3.1"></a>Definition 3.1</h4><ul>
+        <h1 id="trees">Trees</h1>
+<h4 id="definition-3.1">Definition 3.1</h4>
+<ul>
 <li><strong>acyclic</strong>: if there are no cycles or circuits in the graph.</li>
 <li><strong>tree</strong>: acyclic and connected.</li>
 <li><strong>forest</strong>: acyclic graph.</li>
 <li><strong>leaf</strong>: vertex with degree 1.</li>
 </ul>
-<h2 id="Spanning-Trees"><a href="#Spanning-Trees" class="headerlink" title="Spanning Trees"></a>Spanning Trees</h2><h4 id="Definition-3-2"><a href="#Definition-3-2" class="headerlink" title="Definition 3.2"></a>Definition 3.2</h4><p>A <strong>spanning tree</strong> is a spanning subgraph that is also a tree.</p>
-<h4 id="Definition-3-3"><a href="#Definition-3-3" class="headerlink" title="Definition 3.3"></a>Definition 3.3</h4><ul>
-<li>Given a weighted graph $G&#x3D;(V,E,w)$, $T$ is a <strong>minimum spanning tree</strong>, or MST, of $G if it is a spanning tree with least total weight.</li>
+<h2 id="spanning-trees">Spanning Trees</h2>
+<h4 id="definition-3.2">Definition 3.2</h4>
+<p>A <strong>spanning tree</strong> is a spanning subgraph that is also a tree.</p>
+<h4 id="definition-3.3">Definition 3.3</h4>
+<ul>
+<li>Given a weighted graph <span class="math inline">\(G=(V,E,w)\)</span>, <span class="math inline">\(T\)</span> is a <strong>minimum spanning tree</strong>, or MST, of $G if it is a spanning tree with least total weight.</li>
 </ul>
-<h4 id="Kruskal’s-Algorithm"><a href="#Kruskal’s-Algorithm" class="headerlink" title="Kruskal’s Algorithm"></a>Kruskal’s Algorithm</h4><ul>
+<h4 id="kruskals-algorithm">Kruskal's Algorithm</h4>
+<ul>
 <li>Just sort all weighted edges and pick the one with least weight until the graph connected and without any cycle.</li>
 </ul>
-<h4 id="Prim’s-Algorithm"><a href="#Prim’s-Algorithm" class="headerlink" title="Prim’s Algorithm"></a>Prim’s Algorithm</h4><ul>
-<li>Randomly pick a root. Add the least weight edge that incident to root. Then find the least weight edge among all edge that incident to the endpoint of $T$ until $T$ cotain all vertex and connected.</li>
-</ul>
-<h2 id="Tree-Properties"><a href="#Tree-Properties" class="headerlink" title="Tree Properties"></a>Tree Properties</h2><h4 id="Theorem-3-4"><a href="#Theorem-3-4" class="headerlink" title="Theorem 3.4"></a>Theorem 3.4</h4><p>Every tree with at least two vertices has a leaf.</p>
-<h4 id="Theorem-3-6"><a href="#Theorem-3-6" class="headerlink" title="Theorem 3.6"></a>Theorem 3.6</h4><p>A tree with $n$ vertices has $n-1$ edges $\forall n\ge 1$.</p>
-<h4 id="Theorem-3-11"><a href="#Theorem-3-11" class="headerlink" title="Theorem 3.11"></a>Theorem 3.11</h4><p>Let $T$ be a graph with $n$ vertices. <br><br>$T$ is a tree. <br><br>$\iff$ $T$ is acyclic and contain $n-1$ edges. <br><br>$\iff$ $T$ is connected and contain $n-1$ edges. <br><br>$\iff$ There is a unique path between every pair of distinct vertice in $T$. <br><br>$\iff$ $T$ is acyclic and for any edge $e$ from $T$, $T+e$ contains exactly one cycle.</p>
-<h3 id="Tree-Enumeration"><a href="#Tree-Enumeration" class="headerlink" title="Tree Enumeration"></a>Tree Enumeration</h3><h4 id="Definition-3-13"><a href="#Definition-3-13" class="headerlink" title="Definition 3.13"></a>Definition 3.13</h4><p>Given a tree $T$ on $n \gt 2$ vertices(labeld 1,2,…,n), the <strong>Prufer sequence</strong> of $T$ is a sequence $(s_{1},s_{2},…,s_{n-2})$ of length $n-2$ defined as follows:</p>
+<h4 id="prims-algorithm">Prim's Algorithm</h4>
 <ul>
-<li>Let $l_{1}$ be the leaf of $T$ with the smallest label.</li>
-<li>Define $T_{1}$ to be $T-l_{1}$.</li>
-<li>For each $i\ge 1$, define $T_{i+1}&#x3D;T_{i}-l_{i+1}$, where $l_{i+1}$ is the leaf with the smallest label of $T_{i}$.</li>
-<li>Define $s_{i}$ to be the neighbor of $l_{i}$.</li>
+<li>Randomly pick a root. Add the least weight edge that incident to root. Then find the least weight edge among all edge that incident to the endpoint of <span class="math inline">\(T\)</span> until <span class="math inline">\(T\)</span> cotain all vertex and connected.</li>
 </ul>
+<h2 id="tree-properties">Tree Properties</h2>
+<h4 id="theorem-3.4">Theorem 3.4</h4>
+<p>Every tree with at least two vertices has a leaf.</p>
+<h4 id="theorem-3.6">Theorem 3.6</h4>
+<p>A tree with <span class="math inline">\(n\)</span> vertices has <span class="math inline">\(n-1\)</span> edges <span class="math inline">\(\forall n\ge 1\)</span>.</p>
+<h4 id="theorem-3.11">Theorem 3.11</h4>
+<p>Let <span class="math inline">\(T\)</span> be a graph with <span class="math inline">\(n\)</span> vertices. <br> <span class="math inline">\(T\)</span> is a tree. <br> <span class="math inline">\(\iff\)</span> <span class="math inline">\(T\)</span> is acyclic and contain <span class="math inline">\(n-1\)</span> edges. <br> <span class="math inline">\(\iff\)</span> <span class="math inline">\(T\)</span> is connected and contain <span class="math inline">\(n-1\)</span> edges. <br> <span class="math inline">\(\iff\)</span> There is a unique path between every pair of distinct vertice in <span class="math inline">\(T\)</span>. <br> <span class="math inline">\(\iff\)</span> <span class="math inline">\(T\)</span> is acyclic and for any edge <span class="math inline">\(e\)</span> from <span class="math inline">\(T\)</span>, <span class="math inline">\(T+e\)</span> contains exactly one cycle.</p>
+<h3 id="tree-enumeration">Tree Enumeration</h3>
+<h4 id="definition-3.13">Definition 3.13</h4>
+<p>Given a tree <span class="math inline">\(T\)</span> on <span class="math inline">\(n \gt 2\)</span> vertices(labeld 1,2,...,n), the <strong>Prufer sequence</strong> of <span class="math inline">\(T\)</span> is a sequence <span class="math inline">\((s_{1},s_{2},...,s_{n-2})\)</span> of length <span class="math inline">\(n-2\)</span> defined as follows: - Let <span class="math inline">\(l_{1}\)</span> be the leaf of <span class="math inline">\(T\)</span> with the smallest label. - Define <span class="math inline">\(T_{1}\)</span> to be <span class="math inline">\(T-l_{1}\)</span>. - For each <span class="math inline">\(i\ge 1\)</span>, define <span class="math inline">\(T_{i+1}=T_{i}-l_{i+1}\)</span>, where <span class="math inline">\(l_{i+1}\)</span> is the leaf with the smallest label of <span class="math inline">\(T_{i}\)</span>. - Define <span class="math inline">\(s_{i}\)</span> to be the neighbor of <span class="math inline">\(l_{i}\)</span>.</p>
 
       </section>
 
@@ -238,7 +258,7 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>16</span>
+        <span>17</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">

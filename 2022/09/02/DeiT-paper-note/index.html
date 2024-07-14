@@ -38,7 +38,9 @@
   
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 <body>
   <div class="root-container">
     
@@ -127,6 +129,17 @@
   </script>
 </header>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <!-- 文章 -->
 
 <!-- 文章内容 -->
@@ -138,47 +151,57 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="Training-data-efficient-image-transformers-distillation-through-attention-DeiT"><a href="#Training-data-efficient-image-transformers-distillation-through-attention-DeiT" class="headerlink" title="Training data-efficient image transformers &amp; distillation through attention(DeiT)"></a>Training data-efficient image transformers &amp; distillation through attention(DeiT)</h1><p>Published Year : 2020<br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2012.12877">Paper URL</a></p>
-<h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><p>This paper introduce a new model called DeiT. The main different between DeiT and ViT is a new distillation procedure based on a distillation token. DeiT show that contain no convolutional layer can achieve competitive results against the state of the art on ImageNet with no extra data and fewer parameters.</p>
-<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><ul>
-<li>Overall Architecture<ul>
-<li>DeiT<br>![](<a target="_blank" rel="noopener" href="https://imgur.com/8edVuOP.png">https://imgur.com/8edVuOP.png</a> &#x3D;200x)</li>
-<li>ViT<br>![](<a target="_blank" rel="noopener" href="https://imgur.com/1IyunX9.png">https://imgur.com/1IyunX9.png</a> &#x3D;200x)</li>
+        <h1 id="training-data-efficient-image-transformers-distillation-through-attentiondeit">Training data-efficient image transformers &amp; distillation through attention(DeiT)</h1>
+<p>Published Year : 2020 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2012.12877">Paper URL</a></p>
+<h2 id="what">What</h2>
+<p>This paper introduce a new model called DeiT. The main different between DeiT and ViT is a new distillation procedure based on a distillation token. DeiT show that contain no convolutional layer can achieve competitive results against the state of the art on ImageNet with no extra data and fewer parameters.</p>
+<h2 id="how">How</h2>
+<ul>
+<li>Overall Architecture
+<ul>
+<li>DeiT <img src="https://imgur.com/8edVuOP.png%20=200x" /></li>
+<li>ViT <img src="https://imgur.com/1IyunX9.png%20=200x" /></li>
 <li>You can find that the main differece between these two is that DeiT has one more distillation token than ViT.</li>
-</ul>
-</li>
-<li>Class token<ul>
+</ul></li>
+<li>Class token
+<ul>
 <li>The class token is a trainable vector, appended to the patch tokens before the first layer, that goes through the transformer layers, and is then projected with a linear layer to predict the class.</li>
-</ul>
-</li>
-<li>What is distillaiton token do?<ul>
+</ul></li>
+<li>What is distillaiton token do?
+<ul>
 <li>Distillation token is similar to class token, except that on output of the network its objective is to reproduce the label predicted by a teacher model, instead of true lable. (The teacher model is a good performing classifier. It can be CNN or transformer. We will discuss which one is better later.)</li>
-<li>Soft distillation <ul>
+<li>Soft distillation
+<ul>
 <li>It minimizes the Kullback-Leibler divergence between the softmax of the eacher and the softmac of the student model.</li>
-<li>Let $Z_{t}$ be the logits of the teacher model, $Z_{s}$ the logits of the student model. $\tau$ is the temperture for the distillation, $\lambda$ the coefficient balacing the KL divergence loss ($\mathrm{KL}$) and the cross-entropy ($\mathcal{L}_{CE}$) on ground truth labels $y$, and $\psi$ the softmax function. The distillation objective is:</li>
+<li>Let <span class="math inline">\(Z_{t}\)</span> be the logits of the teacher model, <span class="math inline">\(Z_{s}\)</span> the logits of the student model. <span class="math inline">\(\tau\)</span> is the temperture for the distillation, <span class="math inline">\(\lambda\)</span> the coefficient balacing the KL divergence loss (<span class="math inline">\(\mathrm{KL}\)</span>) and the cross-entropy (<span class="math inline">\(\mathcal{L}_{CE}\)</span>) on ground truth labels <span class="math inline">\(y\)</span>, and <span class="math inline">\(\psi\)</span> the softmax function. The distillation objective is: <span class="math display">\[
+\mathcal{L}_{global} = (1-\lambda)\mathcal{L}_{CE}(\psi(Z_{s}),y) + \lambda \tau^2 \mathrm{KL}(\psi(Z_{s}/\tau), \psi(Z_{t}/\tau)).
+\]</span></li>
+</ul></li>
+<li>Hard distillation
+<ul>
+<li>The authors introduced a new distillation method called hard distillation.</li>
+<li>Let <span class="math inline">\(y_{t} = argmax_{c}Z_{t}(c)\)</span> be the hard decision of the teacher, the objective associated with this hard-label distillation is: <span class="math display">\[
+\mathcal{L}_{global}^{harDistill} = \frac{1}{2}\mathcal{L}_{CE}(\psi(Z_{s}), y)+\frac{1}{2}\mathcal{L}_{CE}(\psi(Z_{s}), y_{t})
+\]</span> ## Experiment</li>
+</ul></li>
+</ul></li>
+<li>Variants of DeiT model. <img src="https://imgur.com/LYPf4pF.png%20=200x" /></li>
+<li>Which teacher is better?
+<ul>
+<li>Using CNNs as teacher model is better than transformers. Maybe the transformer has learned the inductive bias of teacher. <img src="https://imgur.com/XJ55VNm.png%20=300x" /></li>
+</ul></li>
+<li>Which distillation method is better?
+<ul>
+<li>Hard distillation outperforms soft distillation for transformers, even with ising only a class token. The classifier with class and distillation tokens is significantly better than the independent class and distillaiton classifiers. <img src="https://imgur.com/VCJDVpi.png%20=500x" /></li>
+</ul></li>
+<li>Agreement with the teacher &amp; inductive bias?
+<ul>
+<li>This question is difficult to formally answered. From the figure below, the distilled model is more correlated to the convnet than with a transformer learned from scratch. <img src="https://imgur.com/ch3H8ac.png%20=200x" /></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>$$<br>\mathcal{L}<em>{global} &#x3D; (1-\lambda)\mathcal{L}</em>{CE}(\psi(Z_{s}),y) + \lambda \tau^2 \mathrm{KL}(\psi(Z_{s}&#x2F;\tau), \psi(Z_{t}&#x2F;\tau)).<br>$$<br>    - Hard distillation<br>        - The authors introduced a new distillation method called hard distillation.<br>        - Let $y_{t} &#x3D; argmax_{c}Z_{t}(c)$ be the hard decision of the teacher, the objective associated with this hard-label distillation is:<br>$$<br>\mathcal{L}<em>{global}^{harDistill} &#x3D; \frac{1}{2}\mathcal{L}</em>{CE}(\psi(Z_{s}), y)+\frac{1}{2}\mathcal{L}<em>{CE}(\psi(Z</em>{s}), y_{t})<br>$$</p>
-<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><ul>
-<li>Variants of DeiT model.<br>![](<a target="_blank" rel="noopener" href="https://imgur.com/LYPf4pF.png">https://imgur.com/LYPf4pF.png</a> &#x3D;200x)</li>
-<li>Which teacher is better?<ul>
-<li>Using CNNs as teacher model is better than transformers. Maybe the transformer has learned the inductive bias of teacher.<br>![](<a target="_blank" rel="noopener" href="https://imgur.com/XJ55VNm.png">https://imgur.com/XJ55VNm.png</a> &#x3D;300x)</li>
-</ul>
-</li>
-<li>Which distillation method is better?<ul>
-<li>Hard distillation outperforms soft distillation for transformers, even with ising only a class token. The classifier with class and distillation tokens is significantly better than the independent class and distillaiton classifiers.<br>![](<a target="_blank" rel="noopener" href="https://imgur.com/VCJDVpi.png">https://imgur.com/VCJDVpi.png</a> &#x3D;500x)</li>
-</ul>
-</li>
-<li>Agreement with the teacher &amp; inductive bias?<ul>
-<li>This question is difficult to formally answered. From the figure below, the distilled model is more correlated to the convnet than with a transformer learned from scratch.<br>![](<a target="_blank" rel="noopener" href="https://imgur.com/ch3H8ac.png">https://imgur.com/ch3H8ac.png</a> &#x3D;200x)</li>
-</ul>
-</li>
-</ul>
-<h2 id="And"><a href="#And" class="headerlink" title="And?"></a>And?</h2><ul>
-<li>Comparing with Transformers based model on different transfer learning task with ImageNet pre-training.<br>![](<a target="_blank" rel="noopener" href="https://imgur.com/04d66bz.png">https://imgur.com/04d66bz.png</a> &#x3D;300x)</li>
+<h2 id="and">And?</h2>
+<ul>
+<li>Comparing with Transformers based model on different transfer learning task with ImageNet pre-training. <img src="https://imgur.com/04d66bz.png%20=300x" /></li>
 <li>I am interesting about inductive bias and what the model has learned. I think it is a hard problem but cool study.</li>
 </ul>
 
@@ -255,7 +278,7 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>16</span>
+        <span>17</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">

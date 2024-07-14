@@ -38,7 +38,9 @@
   
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 <body>
   <div class="root-container">
     
@@ -127,6 +129,17 @@
   </script>
 </header>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <!-- 文章 -->
 
 <!-- 文章内容 -->
@@ -138,155 +151,191 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="Graph-Routes"><a href="#Graph-Routes" class="headerlink" title="Graph Routes"></a>Graph Routes</h1><h4 id="Definition-2-1"><a href="#Definition-2-1" class="headerlink" title="Definition 2.1"></a>Definition 2.1</h4><ul>
+        <h1 id="graph-routes">Graph Routes</h1>
+<h4 id="definition-2.1">Definition 2.1</h4>
+<ul>
 <li>A <strong>walk</strong> is a sequence of vertices so that there is an edge between consecutive vertices. A walk can repeat vertices and edges.</li>
 <li>A <strong>trail</strong> is a walk with no repeated edges. A trail can repeat vertices but not edges.</li>
-<li>A <strong>path</strong> is a trail with no repeated vertex (or edges). A path on n vertices is denoted $P_{n}$.</li>
+<li>A <strong>path</strong> is a trail with no repeated vertex (or edges). A path on n vertices is denoted <span class="math inline">\(P_{n}\)</span>.</li>
 <li>A <strong>closed walk</strong> is a walk that starts and ends at the same vertex.</li>
 <li>A <strong>circuit</strong> is a closed trail; that is, a trail that starts and ends at the same vertex with no repeated edges though.</li>
-<li>A <strong>cycle</strong> is a closed path; that is, a path that starts and ends at the same vertex. Thus cycles cannot repeat edges or vertices. A cycle on n vertices is denoted $C_{n}$.</li>
+<li>A <strong>cycle</strong> is a closed path; that is, a path that starts and ends at the same vertex. Thus cycles cannot repeat edges or vertices. A cycle on n vertices is denoted <span class="math inline">\(C_{n}\)</span>.</li>
 </ul>
-<p>The <strong>length</strong> of tours &#x3D; number of edges.</p>
-<h4 id="Definition-2-2"><a href="#Definition-2-2" class="headerlink" title="Definition 2.2"></a>Definition 2.2</h4><ul>
-<li>Let $G$ be a graph. Two vertices x and y are <strong>connected</strong> if there exists a path from x to y in $G$. The graph $G$ is <strong>connected</strong> if every pair of distinct vertices is connected.</li>
+<p>The <strong>length</strong> of tours = number of edges.</p>
+<h4 id="definition-2.2">Definition 2.2</h4>
+<ul>
+<li>Let <span class="math inline">\(G\)</span> be a graph. Two vertices x and y are <strong>connected</strong> if there exists a path from x to y in <span class="math inline">\(G\)</span>. The graph <span class="math inline">\(G\)</span> is <strong>connected</strong> if every pair of distinct vertices is connected.</li>
 </ul>
-<h4 id="Theorem-2-3"><a href="#Theorem-2-3" class="headerlink" title="Theorem 2.3"></a>Theorem 2.3</h4><ul>
-<li>Every $x-y$ walk contains an $x-y$ path.<ul>
-<li><strong>Proof:</strong><br>  Prove this by induction. Suppose $l$ be the length of ab $x-y$ walk $W$.<br>  When $l&#x3D;0$, then the walk does not have any vertices and edges so it contains a single vertex, that is $x&#x3D;y and so $W$ is a path of length 0.<br>  Supppose $l \ge 0$ and the claim holds for true for all $k \lt l$. If $W$ has no repeated vertex, then it cannot have any repeated edges and so $W$ is an $x-y$ path. Otherwise $W$ has a repeated vertex, call it $u$. We can remove all edges and vertices between two appearances of $u$ in the ealk, and leave only one copy of $u$. This will produce a shorter $x-y$ walk $W’$ which is contained in $W$. Thus, by the induction hypothesis we know $W’$ contains an $x-y$ path $P$, which is also contained in $W$. Thus $W$ contains an $x-y$ path $P$.</li>
+<h4 id="theorem-2.3">Theorem 2.3</h4>
+<ul>
+<li>Every <span class="math inline">\(x-y\)</span> walk contains an <span class="math inline">\(x-y\)</span> path.
+<ul>
+<li><strong>Proof:</strong><br />
+Prove this by induction. Suppose <span class="math inline">\(l\)</span> be the length of ab <span class="math inline">\(x-y\)</span> walk <span class="math inline">\(W\)</span>. When <span class="math inline">\(l=0\)</span>, then the walk does not have any vertices and edges so it contains a single vertex, that is $x=y and so <span class="math inline">\(W\)</span> is a path of length 0. Supppose <span class="math inline">\(l \ge 0\)</span> and the claim holds for true for all <span class="math inline">\(k \lt l\)</span>. If <span class="math inline">\(W\)</span> has no repeated vertex, then it cannot have any repeated edges and so <span class="math inline">\(W\)</span> is an <span class="math inline">\(x-y\)</span> path. Otherwise <span class="math inline">\(W\)</span> has a repeated vertex, call it <span class="math inline">\(u\)</span>. We can remove all edges and vertices between two appearances of <span class="math inline">\(u\)</span> in the ealk, and leave only one copy of <span class="math inline">\(u\)</span>. This will produce a shorter <span class="math inline">\(x-y\)</span> walk <span class="math inline">\(W&#39;\)</span> which is contained in <span class="math inline">\(W\)</span>. Thus, by the induction hypothesis we know <span class="math inline">\(W&#39;\)</span> contains an <span class="math inline">\(x-y\)</span> path <span class="math inline">\(P\)</span>, which is also contained in <span class="math inline">\(W\)</span>. Thus <span class="math inline">\(W\)</span> contains an <span class="math inline">\(x-y\)</span> path <span class="math inline">\(P\)</span>.</li>
+</ul></li>
 </ul>
-</li>
+<h4 id="definition-2.4">Definition 2.4</h4>
+<ul>
+<li>An object <span class="math inline">\(X\)</span> is <strong>maximum</strong> if it is the largest among all objects under consideration; that is, <span class="math inline">\(|X| \ge |A| \forall A \in \mathcal{U}\)</span>. An object <span class="math inline">\(X\)</span> is <strong>maximal</strong> if it cannot be made larger.</li>
 </ul>
-<h4 id="Definition-2-4"><a href="#Definition-2-4" class="headerlink" title="Definition 2.4"></a>Definition 2.4</h4><ul>
-<li>An object $X$ is <strong>maximum</strong> if it is the largest among all objects under consideration; that is, $|X| \ge |A| \forall A \in \mathcal{U}$. An object $X$ is <strong>maximal</strong> if it cannot be made larger.</li>
+<h4 id="theorem-2.5">Theorem 2.5</h4>
+<ul>
+<li>If every vertex of a graph has degree at least 2 than <span class="math inline">\(G\)</span> contains a cycle.</li>
 </ul>
-<h4 id="Theorem-2-5"><a href="#Theorem-2-5" class="headerlink" title="Theorem 2.5"></a>Theorem 2.5</h4><ul>
-<li>If every vertex of a graph has degree at least 2 than $G$ contains a cycle.</li>
+<h2 id="eulerian-graphs">Eulerian Graphs</h2>
+<h4 id="definition-2.6">Definition 2.6</h4>
+<ul>
+<li>Eulerian circuit is a circuit that contains every edge and every vertex of graph <span class="math inline">\(G\)</span>.</li>
 </ul>
-<h2 id="Eulerian-Graphs"><a href="#Eulerian-Graphs" class="headerlink" title="Eulerian Graphs"></a>Eulerian Graphs</h2><h4 id="Definition-2-6"><a href="#Definition-2-6" class="headerlink" title="Definition 2.6"></a>Definition 2.6</h4><ul>
-<li>Eulerian circuit is a circuit that contains every edge and every vertex of graph $G$.</li>
-</ul>
-<h4 id="Theorem-2-7"><a href="#Theorem-2-7" class="headerlink" title="Theorem 2.7"></a>Theorem 2.7</h4><ul>
-<li>A graph $G$ is eulerian $\iff$ $G$ is connected and every vertex has even degree.<ul>
+<h4 id="theorem-2.7">Theorem 2.7</h4>
+<ul>
+<li>A graph <span class="math inline">\(G\)</span> is eulerian <span class="math inline">\(\iff\)</span> <span class="math inline">\(G\)</span> is connected and every vertex has even degree.
+<ul>
 <li><strong>Proof:</strong></li>
 </ul>
-<ol>
-<li>$(\implies)$ <br><br>$G$ is eulerian. <br><br>$\implies$ There is a circuit $C$ containing every edge and vertex of $G$.<br><br>$\implies$ $G$ is connected.<br><br>The circuit $C$ is a trail that starts and ends at the same vertex.<br><br>$\implies$ For every vertex, there at least exists a pair of edges in and out. <br><br>$\implies$ Every vertex has even degree.<br>$\implies$ $G$ is connected and every vertex has even degree.</li>
-<li>$(\impliedby)$ <br><br>The proof processed by induction. Suppose $G$ has $m &gt; 0$ edges and that for all $k$, with $m &gt; k \ge 0$ that any connected graph $G’$ with $k$ edges and all vertices of even degree have an eulerian circuit. <br><br>By Theorem 2.5, all vertices in $G$ have at least degree 2, then $G$ contains a cycle $C$. Let $G’$ be the graph obtained by deleting all the edge of $C$. $G’$ has less edges than $G$, thus it contains an eulerian circuit. To find the eulerian circuit of $G$, we traverse $C$ but when a component of $G’$ is encountered, we detour along its eulerian circuit. This detour will start and end at the same vertex, and we continue traversing $C$ until all edges being traveled, thus completing an eulerian circuit of $G$.<br></li>
-</ol>
-</li>
+<ol type="1">
+<li><span class="math inline">\((\implies)\)</span> <br> <span class="math inline">\(G\)</span> is eulerian. <br> <span class="math inline">\(\implies\)</span> There is a circuit <span class="math inline">\(C\)</span> containing every edge and vertex of <span class="math inline">\(G\)</span>.<br> <span class="math inline">\(\implies\)</span> <span class="math inline">\(G\)</span> is connected.<br> The circuit <span class="math inline">\(C\)</span> is a trail that starts and ends at the same vertex.<br> <span class="math inline">\(\implies\)</span> For every vertex, there at least exists a pair of edges in and out. <br> <span class="math inline">\(\implies\)</span> Every vertex has even degree. <span class="math inline">\(\implies\)</span> <span class="math inline">\(G\)</span> is connected and every vertex has even degree.</li>
+<li><span class="math inline">\((\impliedby)\)</span> <br> The proof processed by induction. Suppose <span class="math inline">\(G\)</span> has <span class="math inline">\(m &gt; 0\)</span> edges and that for all <span class="math inline">\(k\)</span>, with <span class="math inline">\(m &gt; k \ge 0\)</span> that any connected graph <span class="math inline">\(G&#39;\)</span> with <span class="math inline">\(k\)</span> edges and all vertices of even degree have an eulerian circuit. <br> By Theorem 2.5, all vertices in <span class="math inline">\(G\)</span> have at least degree 2, then <span class="math inline">\(G\)</span> contains a cycle <span class="math inline">\(C\)</span>. Let <span class="math inline">\(G&#39;\)</span> be the graph obtained by deleting all the edge of <span class="math inline">\(C\)</span>. <span class="math inline">\(G&#39;\)</span> has less edges than <span class="math inline">\(G\)</span>, thus it contains an eulerian circuit. To find the eulerian circuit of <span class="math inline">\(G\)</span>, we traverse <span class="math inline">\(C\)</span> but when a component of <span class="math inline">\(G&#39;\)</span> is encountered, we detour along its eulerian circuit. This detour will start and end at the same vertex, and we continue traversing <span class="math inline">\(C\)</span> until all edges being traveled, thus completing an eulerian circuit of <span class="math inline">\(G\)</span>.<br></li>
+</ol></li>
 </ul>
-<h3 id="Algorithm-for-finding-Eulerian-circuit"><a href="#Algorithm-for-finding-Eulerian-circuit" class="headerlink" title="Algorithm for finding Eulerian circuit"></a>Algorithm for finding Eulerian circuit</h3><h4 id="Fleury’s-Algorithm"><a href="#Fleury’s-Algorithm" class="headerlink" title="Fleury’s Algorithm"></a>Fleury’s Algorithm</h4><ul>
-<li>Given a graph $G$ where zero or two vertices are odd. If $G$ has no odd vertices, then any vertex can be teh starting point. If $G$ has odd vertices, then the starting point must be one of the odd vertices. From the starting point, using dfs travel through all edge and label the edge have been traveled. Then we have labeled eulerian circuit or trail. The complexity is the cost of doing dfs.</li>
+<h3 id="algorithm-for-finding-eulerian-circuit">Algorithm for finding Eulerian circuit</h3>
+<h4 id="fleurys-algorithm">Fleury's Algorithm</h4>
+<ul>
+<li>Given a graph <span class="math inline">\(G\)</span> where zero or two vertices are odd. If <span class="math inline">\(G\)</span> has no odd vertices, then any vertex can be teh starting point. If <span class="math inline">\(G\)</span> has odd vertices, then the starting point must be one of the odd vertices. From the starting point, using dfs travel through all edge and label the edge have been traveled. Then we have labeled eulerian circuit or trail. The complexity is the cost of doing dfs.</li>
 </ul>
-<h4 id="Hierholzer’s-Algorithm"><a href="#Hierholzer’s-Algorithm" class="headerlink" title="Hierholzer’s Algorithm"></a>Hierholzer’s Algorithm</h4><ul>
-<li>Given a graph $G$ where all vertices are even. <ol>
-<li>Select a starting vertex $v$, and find a circuit $C$ originating at $v$.</li>
-<li>Find any vertex $x$ on $C$ has edges not appearing in $C$, find a cicuit $C’$ originating at $x$.</li>
-<li>Combine $C$ and $C’$ into a single circuit $C*$.</li>
-<li>Repeat (2) and (3) until all edge of $G$ are used.</li>
-</ol>
-</li>
+<h4 id="hierholzers-algorithm">Hierholzer's Algorithm</h4>
+<ul>
+<li>Given a graph <span class="math inline">\(G\)</span> where all vertices are even.
+<ol type="1">
+<li>Select a starting vertex <span class="math inline">\(v\)</span>, and find a circuit <span class="math inline">\(C\)</span> originating at <span class="math inline">\(v\)</span>.</li>
+<li>Find any vertex <span class="math inline">\(x\)</span> on <span class="math inline">\(C\)</span> has edges not appearing in <span class="math inline">\(C\)</span>, find a cicuit <span class="math inline">\(C&#39;\)</span> originating at <span class="math inline">\(x\)</span>.</li>
+<li>Combine <span class="math inline">\(C\)</span> and <span class="math inline">\(C&#39;\)</span> into a single circuit <span class="math inline">\(C*\)</span>.</li>
+<li>Repeat (2) and (3) until all edge of <span class="math inline">\(G\)</span> are used.</li>
+</ol></li>
 </ul>
-<h2 id="Hamiltonian-Cycles"><a href="#Hamiltonian-Cycles" class="headerlink" title="Hamiltonian Cycles"></a>Hamiltonian Cycles</h2><h4 id="Definition-2-10"><a href="#Definition-2-10" class="headerlink" title="Definition 2.10"></a>Definition 2.10</h4><ul>
-<li><strong>Hamiltonian cycle</strong> is a cycle in a graph $G$ that contains every vertex of $G$.</li>
+<h2 id="hamiltonian-cycles">Hamiltonian Cycles</h2>
+<h4 id="definition-2.10">Definition 2.10</h4>
+<ul>
+<li><strong>Hamiltonian cycle</strong> is a cycle in a graph <span class="math inline">\(G\)</span> that contains every vertex of <span class="math inline">\(G\)</span>.</li>
 <li><strong>Hailtonian path</strong> is a path that contains every vertex.</li>
 <li>A graph that contains a hamiltonian cycle is called <strong>hamiltonian</strong>.</li>
 </ul>
-<h4 id="Properties-of-Hamiltonian-Graphs"><a href="#Properties-of-Hamiltonian-Graphs" class="headerlink" title="Properties of Hamiltonian Graphs"></a>Properties of Hamiltonian Graphs</h4><ul>
-<li>$G$ must be connected.</li>
-<li>No vertex of $G$ have degree less than 2.</li>
-<li>$G$ cannot contain a <strong>cut-vertex</strong>, i.e. a vertex whose removal disconnects the graph.</li>
-<li>If $G$ contains a vertex $x$ of degree 2 then both edges incident to $x$ must be included in the cycle.</li>
-<li>If two edges incident to a vertex $x$ must be included in the cycle, then all other edges incident to $x$ cannot be used in the cycle.</li>
-<li>If in the process of attempting to build a hamiltonian cycle, a cycle is formed that does not span $G$, then $G$ cannot be hamiltonian.</li>
+<h4 id="properties-of-hamiltonian-graphs">Properties of Hamiltonian Graphs</h4>
+<ul>
+<li><span class="math inline">\(G\)</span> must be connected.</li>
+<li>No vertex of <span class="math inline">\(G\)</span> have degree less than 2.</li>
+<li><span class="math inline">\(G\)</span> cannot contain a <strong>cut-vertex</strong>, i.e. a vertex whose removal disconnects the graph.</li>
+<li>If <span class="math inline">\(G\)</span> contains a vertex <span class="math inline">\(x\)</span> of degree 2 then both edges incident to <span class="math inline">\(x\)</span> must be included in the cycle.</li>
+<li>If two edges incident to a vertex <span class="math inline">\(x\)</span> must be included in the cycle, then all other edges incident to <span class="math inline">\(x\)</span> cannot be used in the cycle.</li>
+<li>If in the process of attempting to build a hamiltonian cycle, a cycle is formed that does not span <span class="math inline">\(G\)</span>, then <span class="math inline">\(G\)</span> cannot be hamiltonian.</li>
 </ul>
-<h4 id="Theorem-2-12-Dirac’s-Theorem"><a href="#Theorem-2-12-Dirac’s-Theorem" class="headerlink" title="Theorem 2.12 (Dirac’s Theorem)"></a>Theorem 2.12 (Dirac’s Theorem)</h4><ul>
-<li>Let $G$ be a graph with $n \ge 3$ vertices. If every vertex of $G$ satisfies $deg(v) \ge \frac{n}{2}$, then $G$ has a hamiltonian cycle.<ul>
-<li><strong>Proof:</strong> Noted that $G$ is connected. Let $P &#x3D; x_{0}x_{1}…x_{n}$ be a path that contains all vertices in $G$. Let $S$ be the set of vertices that are adjacent to $x_{n}$ i.e. $S &#x3D; {x_{i}:x_{i}x_{n} \in E(G)}$. Let $T$ be the set of vertices whise immediate neighbor on $P$ is adjacent to $x_{0}$ i.e. $T&#x3D;{x_{i}:x_{i+1}x_{0} \in E(G)}$. Since both $x_{0}$ and $x_{n}$ have degree $\ge \frac{n}{2}$ we know $|S| + |T| \ge n$.<br>  Since $|S \cup T| \lt n$, thus $|S \cup T| &#x3D; |S| + |T| - |S \cap T|$, then we have $|S \cap T| \ge 1$. There exists some vertex $x_{i}$ s.t. $x_{0}x+{i+1},x_{i}x_{n} \in E(G)$. Consider the cycle $C &#x3D; x_{0} \underset{P}{-} x_{i}x_{n}\underset{P}{-}x_{i+1}x_{0}$, where $x \underset{P}{-}y$ indicates travaling from $x$ to $y$ along path $P$. Thus $C$ forms a hamiltonian cycle.<br>  <img src="https://imgur.com/IhjSXKG.png"></li>
+<h4 id="theorem-2.12-diracs-theorem">Theorem 2.12 (Dirac's Theorem)</h4>
+<ul>
+<li>Let <span class="math inline">\(G\)</span> be a graph with <span class="math inline">\(n \ge 3\)</span> vertices. If every vertex of <span class="math inline">\(G\)</span> satisfies <span class="math inline">\(deg(v) \ge \frac{n}{2}\)</span>, then <span class="math inline">\(G\)</span> has a hamiltonian cycle.
+<ul>
+<li><strong>Proof:</strong> Noted that <span class="math inline">\(G\)</span> is connected. Let <span class="math inline">\(P = x_{0}x_{1}...x_{n}\)</span> be a path that contains all vertices in <span class="math inline">\(G\)</span>. Let <span class="math inline">\(S\)</span> be the set of vertices that are adjacent to <span class="math inline">\(x_{n}\)</span> i.e. <span class="math inline">\(S = \{x_{i}:x_{i}x_{n} \in E(G)\}\)</span>. Let <span class="math inline">\(T\)</span> be the set of vertices whise immediate neighbor on <span class="math inline">\(P\)</span> is adjacent to <span class="math inline">\(x_{0}\)</span> i.e. <span class="math inline">\(T=\{x_{i}:x_{i+1}x_{0} \in E(G)\}\)</span>. Since both <span class="math inline">\(x_{0}\)</span> and <span class="math inline">\(x_{n}\)</span> have degree <span class="math inline">\(\ge \frac{n}{2}\)</span> we know <span class="math inline">\(|S| + |T| \ge n\)</span>. Since <span class="math inline">\(|S \cup T| \lt n\)</span>, thus <span class="math inline">\(|S \cup T| = |S| + |T| - |S \cap T|\)</span>, then we have <span class="math inline">\(|S \cap T| \ge 1\)</span>. There exists some vertex <span class="math inline">\(x_{i}\)</span> s.t. <span class="math inline">\(x_{0}x+{i+1},x_{i}x_{n} \in E(G)\)</span>. Consider the cycle <span class="math inline">\(C = x_{0} \underset{P}{-} x_{i}x_{n}\underset{P}{-}x_{i+1}x_{0}\)</span>, where <span class="math inline">\(x \underset{P}{-}y\)</span> indicates travaling from <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> along path <span class="math inline">\(P\)</span>. Thus <span class="math inline">\(C\)</span> forms a hamiltonian cycle. <img src="https://imgur.com/IhjSXKG.png" /></li>
+</ul></li>
 </ul>
-</li>
+<h4 id="theorem-2.13-ores-theorem">Theorem 2.13 (Ore's Theorem)</h4>
+<ul>
+<li>Let <span class="math inline">\(G\)</span> be a graph with <span class="math inline">\(n \ge 3\)</span> vertices. If <span class="math inline">\(deg(x) + deg(y) \ge n\)</span> for all distinct nonadjacent vertices, then <span class="math inline">\(G\)</span> has a hamiltonian cycle.</li>
 </ul>
-<h4 id="Theorem-2-13-Ore’s-Theorem"><a href="#Theorem-2-13-Ore’s-Theorem" class="headerlink" title="Theorem 2.13 (Ore’s Theorem)"></a>Theorem 2.13 (Ore’s Theorem)</h4><ul>
-<li>Let $G$ be a graph with $n \ge 3$ vertices. If $deg(x) + deg(y) \ge n$ for all distinct nonadjacent vertices, then $G$ has a hamiltonian cycle.</li>
+<h4 id="definition-2.14">Definition 2.14</h4>
+<ul>
+<li>The <strong>hamiltonian closure</strong> of a graph <span class="math inline">\(G\)</span>, denoted <span class="math inline">\(cl(G)\)</span> is the graph obtained from <span class="math inline">\(G\)</span> by iteratively adding edges between pairs of nonadjacent vertices whose degree sum is at least <span class="math inline">\(n\)</span>, that is we add an edge between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> if <span class="math inline">\(deg(x) + deg(y) \ge n\)</span>, until no such pair remains.</li>
 </ul>
-<h4 id="Definition-2-14"><a href="#Definition-2-14" class="headerlink" title="Definition 2.14"></a>Definition 2.14</h4><ul>
-<li>The <strong>hamiltonian closure</strong> of a graph $G$, denoted $cl(G)$ is the graph obtained from $G$ by iteratively adding edges between pairs of nonadjacent vertices whose degree sum is at least $n$, that is we add an edge between $x$ and $y$ if $deg(x) + deg(y) \ge n$, until no such pair remains.</li>
+<h4 id="theorem-2.16">Theorem 2.16</h4>
+<ul>
+<li>A graph <span class="math inline">\(G\)</span> is hamiltonian <span class="math inline">\(\iff cl(G)\)</span> is hamiltonian.</li>
 </ul>
-<h4 id="Theorem-2-16"><a href="#Theorem-2-16" class="headerlink" title="Theorem 2.16"></a>Theorem 2.16</h4><ul>
-<li>A graph $G$ is hamiltonian $\iff cl(G)$ is hamiltonian.</li>
+<h4 id="lemma-2.17">Lemma 2.17</h4>
+<ul>
+<li>If <span class="math inline">\(G\)</span> is graph with at least 3 vertices such that its closure <span class="math inline">\(cl(G)\)</span> is complete, then <span class="math inline">\(G\)</span> is hamiltonian.</li>
 </ul>
-<h4 id="Lemma-2-17"><a href="#Lemma-2-17" class="headerlink" title="Lemma 2.17"></a>Lemma 2.17</h4><ul>
-<li>If $G$ is  graph with at least 3 vertices such that its closure $cl(G)$ is complete, then $G$ is hamiltonian.</li>
+<h4 id="theorem-2.18-posas-theorem">Theorem 2.18 (Posa's Theorem)</h4>
+<ul>
+<li>Let <span class="math inline">\(G\)</span> be a simple graph where the vertices have degree <span class="math inline">\(d1,d2,...,dn\)</span> such that <span class="math inline">\(n \ge 3\)</span> and the degrees are listed in increasing order. If for any <span class="math inline">\(i \lt \frac{n}{2}\)</span> either <span class="math inline">\(d_{i} \gt i\)</span> or <span class="math inline">\(d_{n-i} \ge n-i\)</span>, then <span class="math inline">\(G\)</span> is hamiltonian.
+<ul>
+<li><strong>Proof:</strong> We will <span class="math inline">\(cl(G)\)</span> is a complete graph, so by Lemma 2.17 we would know that both <span class="math inline">\(cl(G)\)</span> and <span class="math inline">\(G\)</span> are hamiltonian. Suppose for a contradiction that <span class="math inline">\(cl(G)\)</span> is not complete. Then there exist nonadjacent vertices <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> in <span class="math inline">\(cl(G)\)</span>, and <span class="math inline">\(deg_{cl(G)}(x) + deg_{cl(G)}(y) \le n-1\)</span>, as otherwise <span class="math inline">\(xy\)</span> would be added to <span class="math inline">\(G\)</span> in the formation of <span class="math inline">\(cl(G)\)</span>. Choose <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> among all such nonadjacent pairs in <span class="math inline">\(cl(G)\)</span> so that the sum of their degrees in <span class="math inline">\(cl(G)\)</span> (TBD).</li>
+</ul></li>
 </ul>
-<h4 id="Theorem-2-18-Posa’s-Theorem"><a href="#Theorem-2-18-Posa’s-Theorem" class="headerlink" title="Theorem 2.18 (Posa’s Theorem)"></a>Theorem 2.18 (Posa’s Theorem)</h4><ul>
-<li>Let $G$ be a simple graph where the vertices have degree $d1,d2,…,dn$ such that $n \ge 3$ and the degrees are listed in increasing order. If for any $i \lt \frac{n}{2}$ either $d_{i} \gt i$ or $d_{n-i} \ge n-i$, then $G$ is hamiltonian.<ul>
-<li><strong>Proof:</strong> We will $cl(G)$ is a complete graph, so by Lemma 2.17 we would know that both $cl(G)$ and $G$ are hamiltonian. Suppose for a contradiction that $cl(G)$ is not complete. Then there exist nonadjacent vertices $x$ and $y$ in $cl(G)$, and $deg_{cl(G)}(x) + deg_{cl(G)}(y) \le n-1$, as otherwise $xy$ would be added to $G$ in the formation of $cl(G)$. Choose $x$ and $y$ among all such nonadjacent pairs in $cl(G)$ so that the sum of their degrees in $cl(G)$ (TBD).</li>
-</ul>
-</li>
-</ul>
-<h2 id="The-Traveling-Salesman-Problem"><a href="#The-Traveling-Salesman-Problem" class="headerlink" title="The Traveling Salesman Problem"></a>The Traveling Salesman Problem</h2><h4 id="Problem-Statement"><a href="#Problem-Statement" class="headerlink" title="Problem Statement"></a>Problem Statement</h4><p>Given a <strong>weighted complete graph</strong>, find the hamiltonian cycle with least total weight.</p>
-<h4 id="Brute-Force-Algorithm"><a href="#Brute-Force-Algorithm" class="headerlink" title="Brute Force Algorithm"></a>Brute Force Algorithm</h4><ul>
+<h2 id="the-traveling-salesman-problem">The Traveling Salesman Problem</h2>
+<h4 id="problem-statement">Problem Statement</h4>
+<p>Given a <strong>weighted complete graph</strong>, find the hamiltonian cycle with least total weight.</p>
+<h4 id="brute-force-algorithm">Brute Force Algorithm</h4>
+<ul>
 <li>Find all possible hamiltonian cycles and pich the one with smallest weight.</li>
-<li>Time Complexity: $n!$.</li>
+<li>Time Complexity: <span class="math inline">\(n!\)</span>.</li>
 </ul>
-<h4 id="Nearest-Neighbor-Algorithm"><a href="#Nearest-Neighbor-Algorithm" class="headerlink" title="Nearest Neighbor Algorithm"></a>Nearest Neighbor Algorithm</h4><ul>
+<h4 id="nearest-neighbor-algorithm">Nearest Neighbor Algorithm</h4>
+<ul>
 <li>Always choose the least weight among adjacent node.</li>
-<li>Time complexity is $n^2$.</li>
+<li>Time complexity is <span class="math inline">\(n^2\)</span>.</li>
 <li><strong>Repetitive Nearest Neighbor Algorithm</strong> means considering every vertex as starting vertex and apply NN. This way may find more optimal solution.</li>
 <li>Approximate Algorithm with lower computation cost but not always optimal.</li>
 </ul>
-<h4 id="Cheapest-Link-Algorithm"><a href="#Cheapest-Link-Algorithm" class="headerlink" title="Cheapest Link Algorithm"></a>Cheapest Link Algorithm</h4><ul>
+<h4 id="cheapest-link-algorithm">Cheapest Link Algorithm</h4>
+<ul>
 <li>Repeat pick the one with the smallest weight among all edges with two conditions: (1) no vertex has three highlighted edges incident to it; (2) no edge is chosen so that a cycle closes before hitting all the vertices.</li>
 <li>Also an approximate algorithm. Generally perform well than NN.</li>
 </ul>
-<h4 id="Nearest-Insertion-Algorithm"><a href="#Nearest-Insertion-Algorithm" class="headerlink" title="Nearest Insertion Algorithm"></a>Nearest Insertion Algorithm</h4><ol>
-<li>First choose the smallest edge, hightlight the edge and its endpoints. </li>
+<h4 id="nearest-insertion-algorithm">Nearest Insertion Algorithm</h4>
+<ol type="1">
+<li>First choose the smallest edge, hightlight the edge and its endpoints.</li>
 <li>Pick a vertex which is cloest to the one of the two already chosen vertices,, highlight the new vertex and its edges to both previously chosen vertices.</li>
 <li>Pick a vertex that is cloest to the one of the three chosen vertices. Calculate the increase in weight obtained by adding two new edges and deleting a previously chosen edge. Choose the scenario with the smallest total.</li>
 <li>Repeat (3) until all vertices have been included.</li>
 </ol>
-<h2 id="Shortest-Paths"><a href="#Shortest-Paths" class="headerlink" title="Shortest Paths"></a>Shortest Paths</h2><h4 id="Dijkstra’s-Algorithm"><a href="#Dijkstra’s-Algorithm" class="headerlink" title="Dijkstra’s Algorithm"></a>Dijkstra’s Algorithm</h4><ul>
-<li>Given weighted connected simple graph $G&#x3D;(V,E,w)$.</li>
+<h2 id="shortest-paths">Shortest Paths</h2>
+<h4 id="dijkstras-algorithm">Dijkstra's Algorithm</h4>
+<ul>
+<li>Given weighted connected simple graph <span class="math inline">\(G=(V,E,w)\)</span>.</li>
 </ul>
-<ol>
-<li>Let $u$ be the start vertex, and $L(x)$ means the shortest path from $u$ to $x$.</li>
-<li>For the current vertex $u$, find the vertex $v$ with lowest weight and update<br>$L(v) &#x3D; min(L(v), L(u) + w(uv))$. Let $u&#x3D;v$;</li>
+<ol type="1">
+<li>Let <span class="math inline">\(u\)</span> be the start vertex, and <span class="math inline">\(L(x)\)</span> means the shortest path from <span class="math inline">\(u\)</span> to <span class="math inline">\(x\)</span>.</li>
+<li>For the current vertex <span class="math inline">\(u\)</span>, find the vertex <span class="math inline">\(v\)</span> with lowest weight and update <span class="math inline">\(L(v) = min(L(v), L(u) + w(uv))\)</span>. Let <span class="math inline">\(u=v\)</span>;</li>
 <li>Repeat step 2 until all vertex have been traveled.</li>
 </ol>
 <ul>
-<li>One source to many vertex. Timecomplexity: $O(nlog(n))$.</li>
+<li>One source to many vertex. Timecomplexity: <span class="math inline">\(O(nlog(n))\)</span>.</li>
 </ul>
-<h4 id="Theorem-2-24-Walks-Using-Matrices"><a href="#Theorem-2-24-Walks-Using-Matrices" class="headerlink" title="Theorem 2.24 Walks Using Matrices"></a>Theorem 2.24 Walks Using Matrices</h4><p>Let $A$ be the adjacency matrix of graph $G$. $\forall n \gt 0, a_{ij}$ in $A^n$ counts the number of walks from $v_{i}$ to $v_{j}$ using n edges.</p>
-<h4 id="Definition-2-25"><a href="#Definition-2-25" class="headerlink" title="Definition 2.25"></a>Definition 2.25</h4><ul>
-<li><strong>distance:</strong> $d(x,y)$ is the shorest length from node $x$ to $y$.</li>
-<li><strong>eccentricity:</strong> $\epsilon(x) &#x3D; max_{y\in V(G)}d(x,y)$.</li>
-<li><strong>diameter:</strong> maximum eccentricity among all vertices. $diam(G)&#x3D;max_{x,y\in V(G)}d(x,y)$.</li>
-<li><strong>radius:</strong> minimum eccentricity. $rad(G) &#x3D; min_{x\in V(G)}\epsilon(x)$.</li>
+<h4 id="theorem-2.24-walks-using-matrices">Theorem 2.24 Walks Using Matrices</h4>
+<p>Let <span class="math inline">\(A\)</span> be the adjacency matrix of graph <span class="math inline">\(G\)</span>. <span class="math inline">\(\forall n \gt 0, a_{ij}\)</span> in <span class="math inline">\(A^n\)</span> counts the number of walks from <span class="math inline">\(v_{i}\)</span> to <span class="math inline">\(v_{j}\)</span> using n edges.</p>
+<h4 id="definition-2.25">Definition 2.25</h4>
+<ul>
+<li><strong>distance:</strong> <span class="math inline">\(d(x,y)\)</span> is the shorest length from node <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span>.</li>
+<li><strong>eccentricity:</strong> <span class="math inline">\(\epsilon(x) = max_{y\in V(G)}d(x,y)\)</span>.</li>
+<li><strong>diameter:</strong> maximum eccentricity among all vertices. <span class="math inline">\(diam(G)=max_{x,y\in V(G)}d(x,y)\)</span>.</li>
+<li><strong>radius:</strong> minimum eccentricity. <span class="math inline">\(rad(G) = min_{x\in V(G)}\epsilon(x)\)</span>.</li>
 </ul>
-<h4 id="Theorem-2-26"><a href="#Theorem-2-26" class="headerlink" title="Theorem 2.26"></a>Theorem 2.26</h4><ul>
-<li>If $G$ is disconnected then $\bar{G}$ is connected and $diam(\bar{G}) \le 2$.</li>
-<li><strong>Proof:</strong> We are going to prove that for any pairs of vertex $x$ and $y$, there is a $x-y$ path. <ol>
-<li>For $xy \not\in E(G)$, then $xy \in E(\bar{G})$.</li>
-<li>For $xy \in E(G)$, then $x$ and $y$ are not adjacent in $E(\bar{G})$. $\exists z$ such that $z$ is in different component from $x$ and $y$<br>  $\implies xz,yz \in E(\bar{G}) \implies$ there is $x-y$ path in $G$.</li>
-</ol>
-</li>
+<h4 id="theorem-2.26">Theorem 2.26</h4>
+<ul>
+<li>If <span class="math inline">\(G\)</span> is disconnected then <span class="math inline">\(\bar{G}\)</span> is connected and <span class="math inline">\(diam(\bar{G}) \le 2\)</span>.</li>
+<li><strong>Proof:</strong> We are going to prove that for any pairs of vertex <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, there is a <span class="math inline">\(x-y\)</span> path.
+<ol type="1">
+<li>For <span class="math inline">\(xy \not\in E(G)\)</span>, then <span class="math inline">\(xy \in E(\bar{G})\)</span>.</li>
+<li>For <span class="math inline">\(xy \in E(G)\)</span>, then <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are not adjacent in <span class="math inline">\(E(\bar{G})\)</span>. <span class="math inline">\(\exists z\)</span> such that <span class="math inline">\(z\)</span> is in different component from <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> <span class="math inline">\(\implies xz,yz \in E(\bar{G}) \implies\)</span> there is <span class="math inline">\(x-y\)</span> path in <span class="math inline">\(G\)</span>.</li>
+</ol></li>
 </ul>
-<h4 id="Theorem-2-27"><a href="#Theorem-2-27" class="headerlink" title="Theorem 2.27"></a>Theorem 2.27</h4><ul>
-<li>For a simple graph $G$ if $rad(G) \ge 3$ then $rad(\bar{G}) \le 2$.</li>
+<h4 id="theorem-2.27">Theorem 2.27</h4>
+<ul>
+<li>For a simple graph <span class="math inline">\(G\)</span> if <span class="math inline">\(rad(G) \ge 3\)</span> then <span class="math inline">\(rad(\bar{G}) \le 2\)</span>.</li>
 </ul>
-<h4 id="Theorem-2-28"><a href="#Theorem-2-28" class="headerlink" title="Theorem 2.28"></a>Theorem 2.28</h4><ul>
-<li>For any simple graph $G$, $rad(G) \le diam(G) \le 2rad(G)$.</li>
+<h4 id="theorem-2.28">Theorem 2.28</h4>
+<ul>
+<li>For any simple graph <span class="math inline">\(G\)</span>, <span class="math inline">\(rad(G) \le diam(G) \le 2rad(G)\)</span>.</li>
 </ul>
-<h4 id="Definition-2-29"><a href="#Definition-2-29" class="headerlink" title="Definition 2.29"></a>Definition 2.29</h4><p>Let $G$ be a graph with $rad(G) &#x3D; r$. <strong>Central vertex</strong> is the vertex x which has $rad(x)&#x3D;r$.</p>
-<h4 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h4><ul>
-<li><strong>girth</strong>: the minimul length of a cycle in $G$.</li>
+<h4 id="definition-2.29">Definition 2.29</h4>
+<p>Let <span class="math inline">\(G\)</span> be a graph with <span class="math inline">\(rad(G) = r\)</span>. <strong>Central vertex</strong> is the vertex x which has <span class="math inline">\(rad(x)=r\)</span>.</p>
+<h4 id="definition">Definition</h4>
+<ul>
+<li><strong>girth</strong>: the minimul length of a cycle in <span class="math inline">\(G\)</span>.</li>
 <li><strong>circumference</strong>: the maximum length of a cycle.</li>
 </ul>
-<h4 id="Theorem-2-31"><a href="#Theorem-2-31" class="headerlink" title="Theorem 2.31"></a>Theorem 2.31</h4><p>If $G$ is a graph with at least one cycle then $girth(G) \le 2diam(G)+1$.</p>
-<ul>
-<li>Proof note: use the property of shortest path.</li>
-</ul>
-<h4 id="Theorem-2-32"><a href="#Theorem-2-32" class="headerlink" title="Theorem 2.32"></a>Theorem 2.32</h4><p>Let $G$ be a graph with $n$ vertices, radius at most $k$, and maximum degree at most $d$, with $d \ge 3$. Then $n &lt; \frac{d}{d-2}(d-1)^k$. </p>
+<h4 id="theorem-2.31">Theorem 2.31</h4>
+<p>If <span class="math inline">\(G\)</span> is a graph with at least one cycle then <span class="math inline">\(girth(G) \le 2diam(G)+1\)</span>. - Proof note: use the property of shortest path.</p>
+<h4 id="theorem-2.32">Theorem 2.32</h4>
+<p>Let <span class="math inline">\(G\)</span> be a graph with <span class="math inline">\(n\)</span> vertices, radius at most <span class="math inline">\(k\)</span>, and maximum degree at most <span class="math inline">\(d\)</span>, with <span class="math inline">\(d \ge 3\)</span>. Then <span class="math inline">\(n &lt; \frac{d}{d-2}(d-1)^k\)</span>.</p>
 
       </section>
 
@@ -361,7 +410,7 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>16</span>
+        <span>17</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">

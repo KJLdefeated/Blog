@@ -38,7 +38,9 @@
   
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 <body>
   <div class="root-container">
     
@@ -127,6 +129,17 @@
   </script>
 </header>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <!-- 文章 -->
 
 <!-- 文章内容 -->
@@ -138,26 +151,27 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="Going-deeper-with-convolutions-Inception-GoogLeNet"><a href="#Going-deeper-with-convolutions-Inception-GoogLeNet" class="headerlink" title="Going deeper with convolutions (Inception, GoogLeNet)"></a>Going deeper with convolutions (Inception, GoogLeNet)</h1><p>Published Year : 2014<br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.4842">Paper URL</a><br><img src="https://imgur.com/VSkET31.png" alt="image alt"></p>
-<h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><p>This architecture improved utilization of the computing resources inside the network which is achieved by a carefully crafted design that allows for increasing the depth and width of the network while keeping the computational budget constant.</p>
-<h2 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h2><ul>
-<li>The most straightforward way of improving the performance of deep neural networks is by increasing their depth and width, but this way comes two drawbacks:<ol>
+        <h1 id="going-deeper-with-convolutions-inception-googlenet">Going deeper with convolutions (Inception, GoogLeNet)</h1>
+<p>Published Year : 2014 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.4842">Paper URL</a> <img src="https://imgur.com/VSkET31.png" alt="image alt" /></p>
+<h2 id="what">What</h2>
+<p>This architecture improved utilization of the computing resources inside the network which is achieved by a carefully crafted design that allows for increasing the depth and width of the network while keeping the computational budget constant.</p>
+<h2 id="why">Why</h2>
+<ul>
+<li>The most straightforward way of improving the performance of deep neural networks is by increasing their depth and width, but this way comes two drawbacks:
+<ol type="1">
 <li>Overfitting</li>
 <li>High Computaional Complexity</li>
-</ol>
-</li>
-<li>Although the way of solving both problems is by ultimately moving from fully connected to sparsely connected architecture, but todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures.</li>
-</ul>
-<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><p><img src="https://imgur.com/9F2lBEm.png"></p>
-<ul>
+</ol></li>
+<li>Although the way of solving both problems is by ultimately moving from fully connected to sparsely connected architecture, but todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures. ## How <img src="https://imgur.com/9F2lBEm.png" /></li>
 <li>In order avoid patch alignment issues, current incarnations of the Inception architectue are restricted to the filter sizes 1x1, 3x3 and 5x5.</li>
-<li>The problem with the above architecture is that even a modest number of 5x5 convolutions can be expensive on top of a convolutional layer with a large number of filters.<br><img src="https://imgur.com/jwvz6eq.png"></li>
-<li>To make computational complexity cheaper, adding the 1x1 conv. layers as role of reduction which reduced the number of input channels.<br><img src="https://imgur.com/a5bDHKy.png"></li>
+<li>The problem with the above architecture is that even a modest number of 5x5 convolutions can be expensive on top of a convolutional layer with a large number of filters. <img src="https://imgur.com/jwvz6eq.png" /></li>
+<li>To make computational complexity cheaper, adding the 1x1 conv. layers as role of reduction which reduced the number of input channels. <img src="https://imgur.com/a5bDHKy.png" /></li>
 <li>The network is 22 layers(27 layers with pooling).</li>
-<li>Adding auxiliary classifiers connected to these nitermediate layers to ecourage discrimination in the lower stages in the  classifier, increse the gradient signal that gets propagated back, and provide additional regularization.</li>
-<li>The final result of the architecture reach to 6.67% in the ILSVRC 2014 Classification Challenge.<br><img src="https://imgur.com/ec7hdwJ.png"></li>
+<li>Adding auxiliary classifiers connected to these nitermediate layers to ecourage discrimination in the lower stages in the classifier, increse the gradient signal that gets propagated back, and provide additional regularization.</li>
+<li>The final result of the architecture reach to 6.67% in the ILSVRC 2014 Classification Challenge. <img src="https://imgur.com/ec7hdwJ.png" /></li>
 </ul>
-<h2 id="And"><a href="#And" class="headerlink" title="And?"></a>And?</h2><ul>
+<h2 id="and">And?</h2>
+<ul>
 <li>There are v2 ,v3 and v4 version of Inception Neural Network. We can review these states of art in later blogs.</li>
 </ul>
 
@@ -234,7 +248,7 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>16</span>
+        <span>17</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
