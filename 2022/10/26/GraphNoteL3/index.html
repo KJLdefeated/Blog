@@ -151,39 +151,50 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="trees">Trees</h1>
-<h4 id="definition-3.1">Definition 3.1</h4>
+        <h1>Trees</h1>
+<h4 id="Definition-3-1">Definition 3.1</h4>
 <ul>
 <li><strong>acyclic</strong>: if there are no cycles or circuits in the graph.</li>
 <li><strong>tree</strong>: acyclic and connected.</li>
 <li><strong>forest</strong>: acyclic graph.</li>
 <li><strong>leaf</strong>: vertex with degree 1.</li>
 </ul>
-<h2 id="spanning-trees">Spanning Trees</h2>
-<h4 id="definition-3.2">Definition 3.2</h4>
+<h2 id="Spanning-Trees">Spanning Trees</h2>
+<h4 id="Definition-3-2">Definition 3.2</h4>
 <p>A <strong>spanning tree</strong> is a spanning subgraph that is also a tree.</p>
-<h4 id="definition-3.3">Definition 3.3</h4>
+<h4 id="Definition-3-3">Definition 3.3</h4>
 <ul>
-<li>Given a weighted graph <span class="math inline">\(G=(V,E,w)\)</span>, <span class="math inline">\(T\)</span> is a <strong>minimum spanning tree</strong>, or MST, of $G if it is a spanning tree with least total weight.</li>
+<li>Given a weighted graph $G=(V,E,w)$, $T$ is a <strong>minimum spanning tree</strong>, or MST, of $G if it is a spanning tree with least total weight.</li>
 </ul>
-<h4 id="kruskals-algorithm">Kruskal's Algorithm</h4>
+<h4 id="Kruskal’s-Algorithm">Kruskal’s Algorithm</h4>
 <ul>
 <li>Just sort all weighted edges and pick the one with least weight until the graph connected and without any cycle.</li>
 </ul>
-<h4 id="prims-algorithm">Prim's Algorithm</h4>
+<h4 id="Prim’s-Algorithm">Prim’s Algorithm</h4>
 <ul>
-<li>Randomly pick a root. Add the least weight edge that incident to root. Then find the least weight edge among all edge that incident to the endpoint of <span class="math inline">\(T\)</span> until <span class="math inline">\(T\)</span> cotain all vertex and connected.</li>
+<li>Randomly pick a root. Add the least weight edge that incident to root. Then find the least weight edge among all edge that incident to the endpoint of $T$ until $T$ cotain all vertex and connected.</li>
 </ul>
-<h2 id="tree-properties">Tree Properties</h2>
-<h4 id="theorem-3.4">Theorem 3.4</h4>
+<h2 id="Tree-Properties">Tree Properties</h2>
+<h4 id="Theorem-3-4">Theorem 3.4</h4>
 <p>Every tree with at least two vertices has a leaf.</p>
-<h4 id="theorem-3.6">Theorem 3.6</h4>
-<p>A tree with <span class="math inline">\(n\)</span> vertices has <span class="math inline">\(n-1\)</span> edges <span class="math inline">\(\forall n\ge 1\)</span>.</p>
-<h4 id="theorem-3.11">Theorem 3.11</h4>
-<p>Let <span class="math inline">\(T\)</span> be a graph with <span class="math inline">\(n\)</span> vertices. <br> <span class="math inline">\(T\)</span> is a tree. <br> <span class="math inline">\(\iff\)</span> <span class="math inline">\(T\)</span> is acyclic and contain <span class="math inline">\(n-1\)</span> edges. <br> <span class="math inline">\(\iff\)</span> <span class="math inline">\(T\)</span> is connected and contain <span class="math inline">\(n-1\)</span> edges. <br> <span class="math inline">\(\iff\)</span> There is a unique path between every pair of distinct vertice in <span class="math inline">\(T\)</span>. <br> <span class="math inline">\(\iff\)</span> <span class="math inline">\(T\)</span> is acyclic and for any edge <span class="math inline">\(e\)</span> from <span class="math inline">\(T\)</span>, <span class="math inline">\(T+e\)</span> contains exactly one cycle.</p>
-<h3 id="tree-enumeration">Tree Enumeration</h3>
-<h4 id="definition-3.13">Definition 3.13</h4>
-<p>Given a tree <span class="math inline">\(T\)</span> on <span class="math inline">\(n \gt 2\)</span> vertices(labeld 1,2,...,n), the <strong>Prufer sequence</strong> of <span class="math inline">\(T\)</span> is a sequence <span class="math inline">\((s_{1},s_{2},...,s_{n-2})\)</span> of length <span class="math inline">\(n-2\)</span> defined as follows: - Let <span class="math inline">\(l_{1}\)</span> be the leaf of <span class="math inline">\(T\)</span> with the smallest label. - Define <span class="math inline">\(T_{1}\)</span> to be <span class="math inline">\(T-l_{1}\)</span>. - For each <span class="math inline">\(i\ge 1\)</span>, define <span class="math inline">\(T_{i+1}=T_{i}-l_{i+1}\)</span>, where <span class="math inline">\(l_{i+1}\)</span> is the leaf with the smallest label of <span class="math inline">\(T_{i}\)</span>. - Define <span class="math inline">\(s_{i}\)</span> to be the neighbor of <span class="math inline">\(l_{i}\)</span>.</p>
+<h4 id="Theorem-3-6">Theorem 3.6</h4>
+<p>A tree with $n$ vertices has $n-1$ edges $\forall n\ge 1$.</p>
+<h4 id="Theorem-3-11">Theorem 3.11</h4>
+<p>Let $T$ be a graph with $n$ vertices. <br><br>
+$T$ is a tree. <br><br>
+$\iff$ $T$ is acyclic and contain $n-1$ edges. <br><br>
+$\iff$ $T$ is connected and contain $n-1$ edges. <br><br>
+$\iff$ There is a unique path between every pair of distinct vertice in $T$. <br><br>
+$\iff$ $T$ is acyclic and for any edge $e$ from $T$, $T+e$ contains exactly one cycle.</p>
+<h3 id="Tree-Enumeration">Tree Enumeration</h3>
+<h4 id="Definition-3-13">Definition 3.13</h4>
+<p>Given a tree $T$ on $n \gt 2$ vertices(labeld 1,2,…,n), the <strong>Prufer sequence</strong> of $T$ is a sequence $(s_{1},s_{2},…,s_{n-2})$ of length $n-2$ defined as follows:</p>
+<ul>
+<li>Let $l_{1}$ be the leaf of $T$ with the smallest label.</li>
+<li>Define $T_{1}$ to be $T-l_{1}$.</li>
+<li>For each $i\ge 1$, define $T_{i+1}=T_{i}-l_{i+1}$, where $l_{i+1}$ is the leaf with the smallest label of $T_{i}$.</li>
+<li>Define $s_{i}$ to be the neighbor of $l_{i}$.</li>
+</ul>
 
       </section>
 
@@ -258,7 +269,7 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>19</span>
+        <span>21</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -270,7 +281,7 @@
         <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
 </svg>
-        6
+        7
       </div>
     </div>
   </div>
@@ -303,7 +314,7 @@
   </div>
   <div class="widget-body">
     <div class="tags-cloud">
-      <a href="/Blog/tags/Exchange/" style="font-size: 10px;" class="tags-cloud-0">Exchange</a> <a href="/Blog/tags/Job/" style="font-size: 10px;" class="tags-cloud-0">Job</a> <a href="/Blog/tags/Life/" style="font-size: 16.67px;" class="tags-cloud-7">Life</a> <a href="/Blog/tags/Math/" style="font-size: 13.33px;" class="tags-cloud-3">Math</a> <a href="/Blog/tags/School/" style="font-size: 16.67px;" class="tags-cloud-7">School</a> <a href="/Blog/tags/paper-notes/" style="font-size: 20px;" class="tags-cloud-10">paper_notes</a>
+      <a href="/Blog/tags/Exchange/" style="font-size: 10px;" class="tags-cloud-0">Exchange</a> <a href="/Blog/tags/Job/" style="font-size: 12.5px;" class="tags-cloud-3">Job</a> <a href="/Blog/tags/Life/" style="font-size: 20px;" class="tags-cloud-10">Life</a> <a href="/Blog/tags/Math/" style="font-size: 15px;" class="tags-cloud-5">Math</a> <a href="/Blog/tags/Research/" style="font-size: 10px;" class="tags-cloud-0">Research</a> <a href="/Blog/tags/School/" style="font-size: 17.5px;" class="tags-cloud-8">School</a> <a href="/Blog/tags/paper-notes/" style="font-size: 17.5px;" class="tags-cloud-8">paper_notes</a>
     </div>
   </div>
 </section>
@@ -342,7 +353,7 @@
       
     </div>
      
-    <p>&copy; 2025 <a href="/" target="_blank">KJL</a></p>
+    <p>&copy; 2026 <a href="/" target="_blank">KJL</a></p>
 
     
 
