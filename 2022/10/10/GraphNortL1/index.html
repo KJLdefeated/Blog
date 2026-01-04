@@ -151,99 +151,99 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1>Graph Models and Terminology</h1>
-<h2 id="Terminology">Terminology</h2>
-<h4 id="Definition-1-1">Definition 1.1</h4>
+        <h1 id="graph-models-and-terminology">Graph Models and Terminology</h1>
+<h2 id="terminology">Terminology</h2>
+<h4 id="definition-1.1">Definition 1.1</h4>
 <ul>
-<li>A graph $G$ consists of two sets: $V(G)$, called the vertex set, and $E(G)$, called the edge set. An edge, denoted xy, is an unordered pair of vertices. We will often use $G=(V,E)$ as short-hand.</li>
+<li>A graph <span class="math inline">\(G\)</span> consists of two sets: <span class="math inline">\(V(G)\)</span>, called the vertex set, and <span class="math inline">\(E(G)\)</span>, called the edge set. An edge, denoted xy, is an unordered pair of vertices. We will often use <span class="math inline">\(G=(V,E)\)</span> as short-hand.</li>
 </ul>
-<h4 id="Definition-1-2">Definition 1.2</h4>
+<h4 id="definition-1.2">Definition 1.2</h4>
 <ul>
-<li>The number of vertices in a graph $G$ is denoted $|V(G)|$, or more simply $|G|$. The number of edge is denoted $|E(G)|$ or $||G||$.</li>
+<li>The number of vertices in a graph <span class="math inline">\(G\)</span> is denoted <span class="math inline">\(|V(G)|\)</span>, or more simply <span class="math inline">\(|G|\)</span>. The number of edge is denoted <span class="math inline">\(|E(G)|\)</span> or <span class="math inline">\(||G||\)</span>.</li>
 </ul>
-<h4 id="Definition-1-3">Definition 1.3</h4>
-<p>Let $G$ be a graph</p>
+<h4 id="definition-1.3">Definition 1.3</h4>
+<p>Let <span class="math inline">\(G\)</span> be a graph</p>
 <ul>
 <li>If xy is an edge, then x and y are the endpoints for that edge. We say x is <strong>incident</strong> to edge e if x is an endpoint of e.</li>
-<li>If two vertices are incident to the same edge, we say the vertices are <strong>adjacent</strong>, denoted $x~y$. Similarly, if two edges share an endpoint, we say they are <strong>neighbors</strong> and the set of all neighbors of a vertex $x$ is denoted $N(x)$.</li>
+<li>If two vertices are incident to the same edge, we say the vertices are <strong>adjacent</strong>, denoted <span class="math inline">\(x~y\)</span>. Similarly, if two edges share an endpoint, we say they are <strong>neighbors</strong> and the set of all neighbors of a vertex <span class="math inline">\(x\)</span> is denoted <span class="math inline">\(N(x)\)</span>.</li>
 <li>If two vertices (or edges) are not adjacent then we call them <strong>independent</strong>.</li>
 <li>If a vertex is not incident to any edge, we call it an <strong>isolated vertx</strong>.</li>
 <li>If both endpoints of an edge with the same vertex, then we say the edge is a <strong>loop</strong>.</li>
 <li>If there is more than one edge with the same endpoints, we call these <strong>multi-edges</strong>.</li>
 <li>If a graph has no multi-edge or loops, we call it <strong>simple</strong>.</li>
-<li>The <strong>degree</strong> if a vertex $v$, denoted $deg(v)$, is the number of edges incident to $v$, with a loop adding two to the degree. If the degree is even, the vertex is called <strong>even</strong>; if the degree is odd, then the vertex is <strong>odd</strong>.</li>
-<li>If all vertices in a graph $G$ have the same degree $k$, then $G$ is called a <strong>k-regular</strong> graph.</li>
+<li>The <strong>degree</strong> if a vertex <span class="math inline">\(v\)</span>, denoted <span class="math inline">\(deg(v)\)</span>, is the number of edges incident to <span class="math inline">\(v\)</span>, with a loop adding two to the degree. If the degree is even, the vertex is called <strong>even</strong>; if the degree is odd, then the vertex is <strong>odd</strong>.</li>
+<li>If all vertices in a graph <span class="math inline">\(G\)</span> have the same degree <span class="math inline">\(k\)</span>, then <span class="math inline">\(G\)</span> is called a <strong>k-regular</strong> graph.</li>
 </ul>
-<h4 id="Definition-1-4">Definition 1.4</h4>
+<h4 id="definition-1.4">Definition 1.4</h4>
 <ul>
-<li>A <strong>subgraph</strong> $H$ of a graph $G$ is a graph where $H$ contains some of the edges and vertices of $G$; that is, $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$.</li>
+<li>A <strong>subgraph</strong> <span class="math inline">\(H\)</span> of a graph <span class="math inline">\(G\)</span> is a graph where <span class="math inline">\(H\)</span> contains some of the edges and vertices of <span class="math inline">\(G\)</span>; that is, <span class="math inline">\(V(H) \subseteq V(G)\)</span> and <span class="math inline">\(E(H) \subseteq E(G)\)</span>.</li>
 </ul>
-<h4 id="Definition-1-5">Definition 1.5</h4>
+<h4 id="definition-1.5">Definition 1.5</h4>
 <ul>
-<li>Given a graph $G=(V,E)$, an <strong>induced subgraph</strong> is a subgraph $G[V’]$ where $V’ \subseteq V$ and every abailable edge from $G$ between the vertices in $V’$ is included.</li>
-<li>We say $H$ is a <strong>spanning subgraph</strong> if it contains all the vertices but not necessarily all the edges of $G$; that is, $V(H) = V(G)$ and $E(H) \subseteq E(G)$.</li>
+<li>Given a graph <span class="math inline">\(G=(V,E)\)</span>, an <strong>induced subgraph</strong> is a subgraph <span class="math inline">\(G[V&#39;]\)</span> where <span class="math inline">\(V&#39; \subseteq V\)</span> and every abailable edge from <span class="math inline">\(G\)</span> between the vertices in <span class="math inline">\(V&#39;\)</span> is included.</li>
+<li>We say <span class="math inline">\(H\)</span> is a <strong>spanning subgraph</strong> if it contains all the vertices but not necessarily all the edges of <span class="math inline">\(G\)</span>; that is, <span class="math inline">\(V(H) = V(G)\)</span> and <span class="math inline">\(E(H) \subseteq E(G)\)</span>.</li>
 </ul>
-<h2 id="Digraphs">Digraphs</h2>
-<h4 id="Definition-1-6">Definition 1.6</h4>
+<h2 id="digraphs">Digraphs</h2>
+<h4 id="definition-1.6">Definition 1.6</h4>
 <ul>
-<li>A <strong>directed graph</strong>, or <strong>digraph</strong>, is a graph $G=(V,A)$ that consists of a vertex set $V(G)$ and an <strong>arc set</strong> $A(G)$. An <strong>arc</strong> is an ordered pair of vertices.</li>
+<li>A <strong>directed graph</strong>, or <strong>digraph</strong>, is a graph <span class="math inline">\(G=(V,A)\)</span> that consists of a vertex set <span class="math inline">\(V(G)\)</span> and an <strong>arc set</strong> <span class="math inline">\(A(G)\)</span>. An <strong>arc</strong> is an ordered pair of vertices.</li>
 </ul>
-<h4 id="Definition-1-7">Definition 1.7</h4>
-<p>Let $G = (V,A)$ be a digraph</p>
+<h4 id="definition-1.7">Definition 1.7</h4>
+<p>Let <span class="math inline">\(G = (V,A)\)</span> be a digraph</p>
 <ul>
 <li>Given an arc xy, the <strong>head</strong> is the starting vertex x and the <strong>tail</strong> is the ending vertex y.</li>
-<li>Given a vertex x, the <strong>in-degree</strong> of x is the number of arcs for which x is a tail, denoted $deg^{-}(x)$. The <strong>out-degree</strong> pof x is the numver of arcs for which x is the head, denoted $deg^{+}(x)$.</li>
-<li>The <strong>underlying graph</strong> for a digraph is the graph $G’=(V,E)$ which is formed by removing the direction the direction from each arc to form an edge.</li>
+<li>Given a vertex x, the <strong>in-degree</strong> of x is the number of arcs for which x is a tail, denoted <span class="math inline">\(deg^{-}(x)\)</span>. The <strong>out-degree</strong> pof x is the numver of arcs for which x is the head, denoted <span class="math inline">\(deg^{+}(x)\)</span>.</li>
+<li>The <strong>underlying graph</strong> for a digraph is the graph <span class="math inline">\(G&#39;=(V,E)\)</span> which is formed by removing the direction the direction from each arc to form an edge.</li>
 </ul>
-<h2 id="Weighted-Graphs">Weighted Graphs</h2>
-<h4 id="Definition-1-8">Definition 1.8</h4>
+<h2 id="weighted-graphs">Weighted Graphs</h2>
+<h4 id="definition-1.8">Definition 1.8</h4>
 <ul>
-<li>A <strong>weighted graph</strong> $G=(V,E,w)$ is a graph where each of the edges has a real number associated with it. This number is referred to as the <strong>weight</strong> and denoted $w(xy)$ for the edge $xy$.</li>
+<li>A <strong>weighted graph</strong> <span class="math inline">\(G=(V,E,w)\)</span> is a graph where each of the edges has a real number associated with it. This number is referred to as the <strong>weight</strong> and denoted <span class="math inline">\(w(xy)\)</span> for the edge <span class="math inline">\(xy\)</span>.</li>
 </ul>
-<h2 id="Complete-Graphs">Complete Graphs</h2>
-<h4 id="Definition-1-9">Definition 1.9</h4>
+<h2 id="complete-graphs">Complete Graphs</h2>
+<h4 id="definition-1.9">Definition 1.9</h4>
 <ul>
-<li>A simple graph $G$ is <strong>complete</strong> if every pair of distinct vertices is adjacent. The complete graph on n vertices is denoted $K_{n}$.</li>
+<li>A simple graph <span class="math inline">\(G\)</span> is <strong>complete</strong> if every pair of distinct vertices is adjacent. The complete graph on n vertices is denoted <span class="math inline">\(K_{n}\)</span>.</li>
 </ul>
-<h4 id="Definition-1-10">Definition 1.10</h4>
+<h4 id="definition-1.10">Definition 1.10</h4>
 <ul>
-<li>The <strong>clique-size</strong> of a graph, $w(G)$, is the largest inteder n such that $K_{N}$ is a subgraph of $G$ but $K_{n+1}$ is not.</li>
+<li>The <strong>clique-size</strong> of a graph, <span class="math inline">\(w(G)\)</span>, is the largest inteder n such that <span class="math inline">\(K_{N}\)</span> is a subgraph of <span class="math inline">\(G\)</span> but <span class="math inline">\(K_{n+1}\)</span> is not.</li>
 </ul>
-<h2 id="Graph-Complements">Graph Complements</h2>
-<h4 id="Definition-1-11">Definition 1.11</h4>
+<h2 id="graph-complements">Graph Complements</h2>
+<h4 id="definition-1.11">Definition 1.11</h4>
 <ul>
-<li>Given a simple graph $G=(V,E)$, define the <strong>complement</strong> of $G$ as the graph $\overline{G} = (V,\overline{E})$, where an edge $xy\in \overline{E} \iff xy \not\in E$.</li>
+<li>Given a simple graph <span class="math inline">\(G=(V,E)\)</span>, define the <strong>complement</strong> of <span class="math inline">\(G\)</span> as the graph <span class="math inline">\(\overline{G} = (V,\overline{E})\)</span>, where an edge <span class="math inline">\(xy\in \overline{E} \iff xy \not\in E\)</span>.</li>
 </ul>
-<h2 id="Bipartite-Graphs">Bipartite Graphs</h2>
-<h4 id="Definition-1-12">Definition 1.12</h4>
+<h2 id="bipartite-graphs">Bipartite Graphs</h2>
+<h4 id="definition-1.12">Definition 1.12</h4>
 <ul>
-<li>A graph $G$ is <strong>bipartite</strong> if the vertices can be partitioned into teo sets $X$ and $Y$ so that every edge has one endpoint in $X$ and the other in $Y$.</li>
+<li>A graph <span class="math inline">\(G\)</span> is <strong>bipartite</strong> if the vertices can be partitioned into teo sets <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> so that every edge has one endpoint in <span class="math inline">\(X\)</span> and the other in <span class="math inline">\(Y\)</span>.</li>
 </ul>
-<h4 id="Definition-1-13">Definition 1.13</h4>
+<h4 id="definition-1.13">Definition 1.13</h4>
 <ul>
-<li>$K_{m,n}$ is the <strong>complete bipartite graph</strong> where $|X|=m$ and $|Y|=n$ and every vertex in $X$ is adjacent to every vertex in $X$ is adjacent to every vertex in $Y$.</li>
+<li><span class="math inline">\(K_{m,n}\)</span> is the <strong>complete bipartite graph</strong> where <span class="math inline">\(|X|=m\)</span> and <span class="math inline">\(|Y|=n\)</span> and every vertex in <span class="math inline">\(X\)</span> is adjacent to every vertex in <span class="math inline">\(X\)</span> is adjacent to every vertex in <span class="math inline">\(Y\)</span>.</li>
 </ul>
-<h4 id="Definition-1-14">Definition 1.14</h4>
+<h4 id="definition-1.14">Definition 1.14</h4>
 <ul>
-<li>A graph $G$ is <strong>k-partite</strong> if the vertices can be partitioned into k sets $X_{1},X_{2}…X_{k}$ so that every edge has one endpoint in $X_{i}$ and the other in $X_{j}$ where $i \not= j$.</li>
+<li>A graph <span class="math inline">\(G\)</span> is <strong>k-partite</strong> if the vertices can be partitioned into k sets <span class="math inline">\(X_{1},X_{2}...X_{k}\)</span> so that every edge has one endpoint in <span class="math inline">\(X_{i}\)</span> and the other in <span class="math inline">\(X_{j}\)</span> where <span class="math inline">\(i \not= j\)</span>.</li>
 </ul>
-<h2 id="Graph-Combinations">Graph Combinations</h2>
-<h4 id="Definition-1-15">Definition 1.15</h4>
+<h2 id="graph-combinations">Graph Combinations</h2>
+<h4 id="definition-1.15">Definition 1.15</h4>
 <ul>
-<li>Given two graphs $G$ and $H$ the <strong>union</strong> $G \cup H$ is the graph with vertex-set $V(G)\cup V(H)$ and edge-set $E(G) \cup E(H)$.</li>
-<li>If the vertex-sets are disjoint (that is $V(G)\cap V(H) = \emptyset$) then we call the disjoint union the <strong>sum</strong>, denoted $G+H$.</li>
+<li>Given two graphs <span class="math inline">\(G\)</span> and <span class="math inline">\(H\)</span> the <strong>union</strong> <span class="math inline">\(G \cup H\)</span> is the graph with vertex-set <span class="math inline">\(V(G)\cup V(H)\)</span> and edge-set <span class="math inline">\(E(G) \cup E(H)\)</span>.</li>
+<li>If the vertex-sets are disjoint (that is <span class="math inline">\(V(G)\cap V(H) = \emptyset\)</span>) then we call the disjoint union the <strong>sum</strong>, denoted <span class="math inline">\(G+H\)</span>.</li>
 </ul>
-<h4 id="Definition-1-16">Definition 1.16</h4>
+<h4 id="definition-1.16">Definition 1.16</h4>
 <ul>
-<li>The <strong>join</strong> of two graphs $G$ and $H$, denoted $G \lor H$, is the sum $G+H$ together with all edges of the form $xy$ where $x \in V(G)$ and $y \in V(H)$.</li>
+<li>The <strong>join</strong> of two graphs <span class="math inline">\(G\)</span> and <span class="math inline">\(H\)</span>, denoted <span class="math inline">\(G \lor H\)</span>, is the sum <span class="math inline">\(G+H\)</span> together with all edges of the form <span class="math inline">\(xy\)</span> where <span class="math inline">\(x \in V(G)\)</span> and <span class="math inline">\(y \in V(H)\)</span>.</li>
 </ul>
-<h2 id="Isomorphisms">Isomorphisms</h2>
-<h4 id="Definition-1-17">Definition 1.17</h4>
+<h2 id="isomorphisms">Isomorphisms</h2>
+<h4 id="definition-1.17">Definition 1.17</h4>
 <ul>
-<li>Two graphs $G_{1}$ and $G_{2}$ are <strong>isomorphic</strong>, denoted $G_{1} \cong G_{2}$, if there exists a bijection $f:V(G_{1}) \to V(G_{2})$ so that $xy \in E(G_{1}) \iff f(x)f(y) \in E(G_{2})$.</li>
+<li>Two graphs <span class="math inline">\(G_{1}\)</span> and <span class="math inline">\(G_{2}\)</span> are <strong>isomorphic</strong>, denoted <span class="math inline">\(G_{1} \cong G_{2}\)</span>, if there exists a bijection <span class="math inline">\(f:V(G_{1}) \to V(G_{2})\)</span> so that <span class="math inline">\(xy \in E(G_{1}) \iff f(x)f(y) \in E(G_{2})\)</span>.</li>
 </ul>
-<h4 id="Theorem-1-18">Theorem 1.18</h4>
-<p>Assume $G_{1}$ and $G_{2}$ are isomorphic graphs. Then $G_{1}$ and $G_{2}$ must satisfy any of the properties listed below; that is, if $G_{1}$</p>
+<h4 id="theorem-1.18">Theorem 1.18</h4>
+<p>Assume <span class="math inline">\(G_{1}\)</span> and <span class="math inline">\(G_{2}\)</span> are isomorphic graphs. Then <span class="math inline">\(G_{1}\)</span> and <span class="math inline">\(G_{2}\)</span> must satisfy any of the properties listed below; that is, if <span class="math inline">\(G_{1}\)</span></p>
 <ul>
 <li>is connected</li>
 <li>has n vertices</li>
@@ -253,35 +253,33 @@
 <li>has an <a href="">eulerian circuit</a></li>
 <li>has a <a href="">hamiltonian cycle</a></li>
 </ul>
-<p>then so too must $G_{2}$(where n,m, and k are non-negative integers).</p>
-<h2 id="Degree-Sequence">Degree Sequence</h2>
-<h4 id="Definition-1-26">Definition 1.26</h4>
+<p>then so too must <span class="math inline">\(G_{2}\)</span>(where n,m, and k are non-negative integers).</p>
+<h2 id="degree-sequence">Degree Sequence</h2>
+<h4 id="definition-1.26">Definition 1.26</h4>
 <ul>
 <li>The <strong>degree sequence</strong> of a graph is a listing of the degrees of the vertices. It is customary to write these in decreasing order. If a sequence is a degree sequence of a simple graph then we call it <strong>graphical</strong>.</li>
 </ul>
-<h4 id="Theorem-1-27-Havel-Hakimi-Theorem">Theorem 1.27 (Havel-Hakimi Theorem)</h4>
+<h4 id="theorem-1.27-havel-hakimi-theorem">Theorem 1.27 (Havel-Hakimi Theorem)</h4>
 <ul>
-<li>An increasing sequence $S : s_{1},s_{2},…,s_{n}(\forall n \ge 2)$ nonnegative integers is graphical if and only if the sequence $S’:s_{2}-1,s_{3}-1,…,s_{s_{1}}-1,s_{s_{n+1}},…,s_{n}$ is graphical.</li>
+<li>An increasing sequence <span class="math inline">\(S : s_{1},s_{2},...,s_{n}(\forall n \ge 2)\)</span> nonnegative integers is graphical if and only if the sequence <span class="math inline">\(S&#39;:s_{2}-1,s_{3}-1,...,s_{s_{1}}-1,s_{s_{n+1}},...,s_{n}\)</span> is graphical.</li>
 </ul>
-<h4 id="Erdos-Gallai-theorem">Erdős-Gallai theorem</h4>
+<h4 id="erdős-gallai-theorem">Erdős-Gallai theorem</h4>
 <ul>
-<li>
-<p>For any integers $n \ge 1$ and $d_{1} \ge … \ge d_{n} \ge 0$, there exists a graph with $n \ge 1$ vertices with respective degrees $d_{1},…,d_{n}$ if and only if the following two conditions hold true:</p>
-<ol>
-<li>the integer $d_{1}+…+d_{n}$ is even</li>
-<li>for any $1 \le k \le n, d_{1}+…+d_{k}\le k(k-1)+min(k,d_{k+1})+…+min(k,d_{n})$.</li>
+<li>For any integers <span class="math inline">\(n \ge 1\)</span> and <span class="math inline">\(d_{1} \ge ... \ge d_{n} \ge 0\)</span>, there exists a graph with <span class="math inline">\(n \ge 1\)</span> vertices with respective degrees <span class="math inline">\(d_{1},...,d_{n}\)</span> if and only if the following two conditions hold true:
+<ol type="1">
+<li>the integer <span class="math inline">\(d_{1}+...+d_{n}\)</span> is even</li>
+<li>for any <span class="math inline">\(1 \le k \le n, d_{1}+...+d_{k}\le k(k-1)+min(k,d_{k+1})+...+min(k,d_{n})\)</span>.</li>
 </ol>
-<p>In this case we say $d_{1},…,d_{n}$ is graphic.</p>
-</li>
+In this case we say <span class="math inline">\(d_{1},...,d_{n}\)</span> is graphic.</li>
 </ul>
-<h2 id="Score-Sequenc">Score Sequenc</h2>
-<h4 id="Definition-1-28">Definition 1.28</h4>
+<h2 id="score-sequenc">Score Sequenc</h2>
+<h4 id="definition-1.28">Definition 1.28</h4>
 <ul>
 <li>The <strong>score sequence</strong> of a tournament is a listing of the out-degrees of the vertices. It is customary to write these in incresing order.</li>
 </ul>
-<h4 id="Theorem-1-30">Theorem 1.30</h4>
+<h4 id="theorem-1.30">Theorem 1.30</h4>
 <ul>
-<li>An increasing sequence $S:s_{1},s_{2},…,s_{n}(\forall n \ge 2)$ of nonnegative integers is a score sequnce of a tournament if and only if the sequence $S_{1}:s_{1},s_{2},…,s_{s_{n}},s_{s_{n+1}}-1,…,s_{n-1}-1$ is a score sequence.</li>
+<li>An increasing sequence <span class="math inline">\(S:s_{1},s_{2},...,s_{n}(\forall n \ge 2)\)</span> of nonnegative integers is a score sequnce of a tournament if and only if the sequence <span class="math inline">\(S_{1}:s_{1},s_{2},...,s_{s_{n}},s_{s_{n+1}}-1,...,s_{n-1}-1\)</span> is a score sequence.</li>
 </ul>
 
       </section>

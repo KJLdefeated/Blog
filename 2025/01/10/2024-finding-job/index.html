@@ -153,60 +153,29 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1>2024 找工面試心得</h1>
-<h3 id="Back-Ground">Back Ground</h3>
-<p>NYCU CS 大四<br>
-有接觸過競程但很不強，leet code刷了快兩百題。<br>
-主要找學期中的實習，其中一個是暑假的。</p>
-<h2 id="2024-1-8-Google-TW-SWE-Intern-Reject">2024/1/8 Google TW SWE Intern (Reject)</h2>
-<p>第一場：<br>
-給定字串sorted陣列和request字串<br>
-找出有幾個字串在陣列裡且他的prefix是request<br>
-一開始先暴力<br>
-後來用二分搜<br>
-Easy-Medium2024/11/10 我現在才發現這題其實是Trie，難怪我沒上==</p>
-<p>第二場：<br>
-一個外國人 英文面試<br>
-先問一個連續陣列中找free space的問題<br>
-簡單來說就是OS的first fit<br>
-Follow up也沒什麼 加一個request size而已<br>
-最後他好像沒東西可以問了就問我vector operation的複雜度<br>
-甚至還提早結束 挖勒</p>
-<h2 id="2024-11-19-Google-TW-SWE-NewGrad-No-news">2024/11/19 Google TW SWE NewGrad (No news)</h2>
-<p>Mount View 印度裔工程師面試<br>
-給定K, sequence of numbers<br>
-實作兩個function: input, get_average<br>
-input就是在sequence 後面加一個element<br>
-get_average要計算最後K個element平均<br>
-Follow up: 給定一個x% (ex: 20%) 去掉前x%大的number計算剩下的平均。<br>
-難度medium~hard<br>
-解法：follow up之前的解法是maintain 一個queue和sum，input和get_average兩個function可以到O(1)<br>
-Follow up的時候想不太出來，interviewer提示說可以維護一個有序的資料結構，並且可以架設我們能夠簡單得到x% largest numbers（不管語法），所以我就用map，雖然感覺很怪但interviewer感覺很滿意，因為map的key是ordered，我也架設map有個get_20_largest的function，這樣就可以實作了。<br>
-Drawbacks: 剛開始溝通題意時有點卡，我有點怕理解錯題意問了比較多次。Follow up出來一開始沒想到，畢竟作法也不是平常刷題會有的，被他提示了一下才慢慢寫出來，中間有提出錯的作法一次，總體來說有點不夠flexible ，而且出錯後變得有點緊張。<br>
-多練習英文解說、更彈性的思考方式。</p>
-<h2 id="GoFreight-SDET-Intern-11-20-Reject">GoFreight SDET Intern 11/20 (Reject)</h2>
-<p>簡單聊一下之後實習時間，問了之前OA的問題與解法，都是簡單python語法，後來問了一些選擇題也是簡單python語法。<br>
-後來問了一下這個team在尬麻，主要是用python來測試RD team寫的code</p>
-<h2 id="Wistron-Omniverse-Digital-Twin-Assistant-Engineer-Intern-11-28-Reject">Wistron Omniverse Digital Twin Assistant Engineer Intern 11/28 (Reject)</h2>
+        <h1 id="找工面試心得">2024 找工面試心得</h1>
+<h3 id="back-ground">Back Ground</h3>
+<p>NYCU CS 大四 有接觸過競程但很不強，leet code刷了快兩百題。 主要找學期中的實習，其中一個是暑假的。</p>
+<h2 id="google-tw-swe-intern-reject">2024/1/8 Google TW SWE Intern (Reject)</h2>
+<p>第一場： 給定字串sorted陣列和request字串 找出有幾個字串在陣列裡且他的prefix是request 一開始先暴力 後來用二分搜 Easy-Medium2024/11/10 我現在才發現這題其實是Trie，難怪我沒上==</p>
+<p>第二場： 一個外國人 英文面試 先問一個連續陣列中找free space的問題 簡單來說就是OS的first fit Follow up也沒什麼 加一個request size而已 最後他好像沒東西可以問了就問我vector operation的複雜度 甚至還提早結束 挖勒</p>
+<h2 id="google-tw-swe-newgrad-no-news">2024/11/19 Google TW SWE NewGrad (No news)</h2>
+<p>Mount View 印度裔工程師面試 給定K, sequence of numbers 實作兩個function: input, get_average input就是在sequence 後面加一個element get_average要計算最後K個element平均 Follow up: 給定一個x% (ex: 20%) 去掉前x%大的number計算剩下的平均。 難度medium~hard 解法：follow up之前的解法是maintain 一個queue和sum，input和get_average兩個function可以到O(1) Follow up的時候想不太出來，interviewer提示說可以維護一個有序的資料結構，並且可以架設我們能夠簡單得到x% largest numbers（不管語法），所以我就用map，雖然感覺很怪但interviewer感覺很滿意，因為map的key是ordered，我也架設map有個get_20_largest的function，這樣就可以實作了。 Drawbacks: 剛開始溝通題意時有點卡，我有點怕理解錯題意問了比較多次。Follow up出來一開始沒想到，畢竟作法也不是平常刷題會有的，被他提示了一下才慢慢寫出來，中間有提出錯的作法一次，總體來說有點不夠flexible ，而且出錯後變得有點緊張。 多練習英文解說、更彈性的思考方式。</p>
+<h2 id="gofreight-sdet-intern-1120-reject">GoFreight SDET Intern 11/20 (Reject)</h2>
+<p>簡單聊一下之後實習時間，問了之前OA的問題與解法，都是簡單python語法，後來問了一些選擇題也是簡單python語法。 後來問了一下這個team在尬麻，主要是用python來測試RD team寫的code</p>
+<h2 id="wistron-omniverse-digital-twin-assistant-engineer-intern-1128-reject">Wistron Omniverse Digital Twin Assistant Engineer Intern 11/28 (Reject)</h2>
 <p>一個做工廠模擬，用的工具是NVIDIA的Omniverse，Digital Twin簡單來說就是Simulator，這個team的目的就是去建工廠的Digital Twin。面試前被要求做關於Digital Twin的簡報，介紹自己對Digital Twin的理解和本身經歷的連結。面試兩個小時，前面一個小時給了一份程式作業，其他面試官看著你做，一題蠻簡單的一題leetcode的trap rain II一題實作圈圈叉叉，後面一小時聊了一下這個職位在做什麼，跟自己做過的專題有什麼關聯之類的，感覺他們是第一次開這個role，整個流程他們也不太熟的感覺，面試起來有點讓人尷尬。</p>
-<h2 id="Wistron-Data-Analyst-Assistant-Engineer-Intern-12-4-Offer">Wistron Data Analyst Assistant Engineer Intern 12/4 (Offer)</h2>
+<h2 id="wistron-data-analyst-assistant-engineer-intern-124-offer">Wistron Data Analyst Assistant Engineer Intern 12/4 (Offer)</h2>
 <p>一小時跟主管聊天，一開始介紹一下自己做過什麼，然後主管介紹｀這個部門做什麼，聽起來跟我想得Data Analyst不太一樣？我以為的是搞資料分析和SQL那些，但據主管所說跟AI掛鉤的都會牽扯？聽起來沒有很specific，主管本人感覺起來就像老教授一樣，不過跟他聊RL他也知道並且也用過相關應用，感覺蠻厲害的。後來我自己推掉了。</p>
-<h2 id="Synology-Surveillance-Product-Developer-Intern-12-11-Reject">Synology Surveillance Product Developer Intern 12/11 (Reject)</h2>
-<p>HR告知說要預留三小時，但面試兩個小時結束就被告知不用繼續面試了<br>
-一開始HR聊天，後來另一個應該是工程師，一開始也是自我介紹聊天，然後實作一個binary tree DFS 的問題，被提醒一些粗心錯誤，後來問了一些OS和OOP的問題，大概跟網路上看到的差不多，virtual function不會，static不會，其他算是有答出來<br>
-Rejected</p>
-<h2 id="VICI-Holdings-C-SWE-intern-12-15-Reject">VICI Holdings C++ SWE intern 12/15 (Reject)</h2>
-<p>一間做高頻交易的公司，面的職位是做infra的C++ SWE intern。<br>
-投遞履歷後收到take home assignment，內容有四題，前兩題算是modern C++的語法應用題，第三題是做hash，第四題比較有趣是做parallel programming優化，剛好這學期學了CUDA就用上了。寫完之後收到他們的review建議assignment可以怎麼改，改完之後收到面試了。<br>
-面試總共兩小時，工程師-&gt;主管-&gt;HR，工程師比較年輕感覺比較好聊，因為我履歷上都是AI的相關經歷，就會被問為什麼來投system的職位，我回答說是因為也對system有興趣，大學除了AI相關修得最多就是system相關的課了，跟他們聊RL，感覺他們也接觸過，跟有經驗的人解釋BOFormer在做什麼就是比較輕鬆呀…。後來就問了一些take home assignment的問題。後來是主管，也是聊履歷上的內容，說了可能之後會想infra部門怎麼加入AI的發展之類的。<br>
-最後是HR，聊一下生涯規劃和興趣發展，也聊了一下來美國交換的心得。<br>
-總體而言，雖然因為時差關係我在半夜面試，大家都很友善也很好聊。</p>
-<h2 id="Appier-LLM-Research-Scientist-Intern-12-17-Reject">Appier LLM Research Scientist Intern 12/17 (Reject)</h2>
+<h2 id="synology-surveillance-product-developer-intern-1211-reject">Synology Surveillance Product Developer Intern 12/11 (Reject)</h2>
+<p>HR告知說要預留三小時，但面試兩個小時結束就被告知不用繼續面試了 一開始HR聊天，後來另一個應該是工程師，一開始也是自我介紹聊天，然後實作一個binary tree DFS 的問題，被提醒一些粗心錯誤，後來問了一些OS和OOP的問題，大概跟網路上看到的差不多，virtual function不會，static不會，其他算是有答出來 Rejected</p>
+<h2 id="vici-holdings-c-swe-intern-1215-reject">VICI Holdings C++ SWE intern 12/15 (Reject)</h2>
+<p>一間做高頻交易的公司，面的職位是做infra的C++ SWE intern。 投遞履歷後收到take home assignment，內容有四題，前兩題算是modern C++的語法應用題，第三題是做hash，第四題比較有趣是做parallel programming優化，剛好這學期學了CUDA就用上了。寫完之後收到他們的review建議assignment可以怎麼改，改完之後收到面試了。 面試總共兩小時，工程師-&gt;主管-&gt;HR，工程師比較年輕感覺比較好聊，因為我履歷上都是AI的相關經歷，就會被問為什麼來投system的職位，我回答說是因為也對system有興趣，大學除了AI相關修得最多就是system相關的課了，跟他們聊RL，感覺他們也接觸過，跟有經驗的人解釋BOFormer在做什麼就是比較輕鬆呀...。後來就問了一些take home assignment的問題。後來是主管，也是聊履歷上的內容，說了可能之後會想infra部門怎麼加入AI的發展之類的。 最後是HR，聊一下生涯規劃和興趣發展，也聊了一下來美國交換的心得。 總體而言，雖然因為時差關係我在半夜面試，大家都很友善也很好聊。</p>
+<h2 id="appier-llm-research-scientist-intern-1217-reject">Appier LLM Research Scientist Intern 12/17 (Reject)</h2>
 <p>他們的team主要是做LLMs (behaviour study, agentic design)，有兩個researcher來面我，主要是聊我之前做的work跟LLM的connection和有沒有LLM相關的經驗，因為我LLM相關的經驗也很少，主要就往RLHF的方向聊，不過我還是對這個方向的development較少，不過兩位researcher還是很親切地跟我聊一些研究方向，但感覺research interest還是不太一樣，所以就被reject了。</p>
-<h2 id="Conclusion">Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>總結來說想要的都沒有上，緯創那個後來想想一週每天都要去加上資訊很少和我還需要修課就想說算了拒絕掉了，短期內我還是以做一些對申請研究所有幫助的事比較好。面了算蠻多間的一些反省，我原本認為我的能力綽綽有餘，但面完之後我發現我很依賴run code來試錯debug，code寫完很容易粗心有bug，沒辦法一次就寫對，這對面試來說有點致命，因為如果自己沒發現錯誤，讓面試官來提醒是蠻扣分的行為，以後應該要多多練習dry run。</p>
-<p>大學最後一學期的安排：<br>
-先繼續當個大學生吧，實驗室那邊應該找點題目來做，把課修完畢業，應該會繼續找看看暑假的實習或正職，平時練練刷題這樣，然後要開始準備GRE和TOEFL了，希望考一次就好。</p>
+<p>大學最後一學期的安排： 先繼續當個大學生吧，實驗室那邊應該找點題目來做，把課修完畢業，應該會繼續找看看暑假的實習或正職，平時練練刷題這樣，然後要開始準備GRE和TOEFL了，希望考一次就好。</p>
 
       </section>
 

@@ -151,53 +151,43 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1>ImageNet Classification with Deep Convolutional Neural Networks(AlexNet)</h1>
-<p>Published Year : 2012<br>
-<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">Paper URL</a></p>
+        <h1 id="imagenet-classification-with-deep-convolutional-neural-networksalexnet">ImageNet Classification with Deep Convolutional Neural Networks(AlexNet)</h1>
+<p>Published Year : 2012 <a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">Paper URL</a></p>
 <p>Note:這是關於讀paper時所做的筆記以及insight，之後應該會每週更個兩三篇吧，一開始先來一些經典的paper。</p>
-<h2 id="What">What</h2>
+<h2 id="what">What</h2>
 <ul>
 <li>Use large deep convolutional neural network to classify 1.2 million images and achieved top-1 and top-5 error rates of 37.5% and 17.0% which is considerably better than the previous state of art(Sparse coding methods).</li>
 </ul>
-<h2 id="Why">Why</h2>
-<ol>
+<h2 id="why">Why</h2>
+<ol type="1">
 <li>To achive higher accurate of image classification.</li>
 <li>To solve the over fitting problem of fully-connected layer</li>
 <li>To train faster of large deep neural network</li>
 </ol>
-<h2 id="How">How</h2>
+<h2 id="how">How</h2>
 <ul>
-<li>This structure cost a lot of computational ability which makes training time slow and overfitting. Thus the writter give some way to solve it.<br>
-<img src="https://www.mdpi.com/remotesensing/remotesensing-09-00848/article_deploy/html/images/remotesensing-09-00848-g003.png" alt="Nearal Net Structure"></li>
+<li>This structure cost a lot of computational ability which makes training time slow and overfitting. Thus the writter give some way to solve it. <img src="https://www.mdpi.com/remotesensing/remotesensing-09-00848/article_deploy/html/images/remotesensing-09-00848-g003.png" alt="Nearal Net Structure" /></li>
 </ul>
-<ol>
-<li>
-<p>ReLU Nonlinearity<br>
-$$<br>
-ReLU(x) = max(0, x)<br>
-$$</p>
+<ol type="1">
+<li>ReLU Nonlinearity <span class="math display">\[
+ReLU(x) = max(0, x)
+\]</span>
 <ul>
 <li>Choose ReLU as activation function to train six times faster faster than tanh</li>
-</ul>
-</li>
-<li>
-<p>Multiple GPUs</p>
+</ul></li>
+<li>Multiple GPUs
 <ul>
 <li>Use two GPUs to train faster</li>
-</ul>
-</li>
-<li>
-<p>Local Response Normalization<br>
-$$<br>
-b_{x,y}^i = a_{x,y}^i/(k + \alpha\sum_{j=max(0,i-n/2)}^{min(N-1,i+n/2)}(a_{x,y}^{j})^2)^\beta<br>
-$$</p>
+</ul></li>
+<li>Local Response Normalization <span class="math display">\[
+b_{x,y}^i = a_{x,y}^i/(k + \alpha\sum_{j=max(0,i-n/2)}^{min(N-1,i+n/2)}(a_{x,y}^{j})^2)^\beta
+\]</span>
 <ul>
-<li>Denoting by $a_{x,y}^i$ the activity of a neuron computed by applying kernel $i$ at position $(x,y)$ and then applying the ReLU nonlinearity, the response-normalized activity $b_{x,y}^i$ is given by the expresion above where the sum runs over $n$ “adjacent” kernel maps at the same spatial position, and $N$ is the total number of kernels in the layer. The ordering of the kernel maps is of course arbitrary and determined bfore training beings. This sort of response normalization implements a form of lateral infibition inspired by the type found in real neurons, creating competition for big activities among neuron outputs computed using different kernels. The constants $k,n,\alpha,$ and $\beta$ are hyper-parameters whose values are determined using a validation set.</li>
+<li>Denoting by <span class="math inline">\(a_{x,y}^i\)</span> the activity of a neuron computed by applying kernel <span class="math inline">\(i\)</span> at position <span class="math inline">\((x,y)\)</span> and then applying the ReLU nonlinearity, the response-normalized activity <span class="math inline">\(b_{x,y}^i\)</span> is given by the expresion above where the sum runs over <span class="math inline">\(n\)</span> "adjacent" kernel maps at the same spatial position, and <span class="math inline">\(N\)</span> is the total number of kernels in the layer. The ordering of the kernel maps is of course arbitrary and determined bfore training beings. This sort of response normalization implements a form of lateral infibition inspired by the type found in real neurons, creating competition for big activities among neuron outputs computed using different kernels. The constants <span class="math inline">\(k,n,\alpha,\)</span> and <span class="math inline">\(\beta\)</span> are hyper-parameters whose values are determined using a validation set.</li>
 <li>This type of normalization is not usually seen today.</li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<h2 id="And">And?</h2>
+<h2 id="and">And?</h2>
 <ul>
 <li>The result of this neural network structure might not be seen good today, but it was the state of art in 2012. Although it was ten years ago paper, we still can find that it has impacted a lot of paper and research in machine learning and computer vision field.</li>
 </ul>

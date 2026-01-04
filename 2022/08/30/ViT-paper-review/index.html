@@ -151,43 +151,38 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (Vision Transformer)</h1>
-<p>Published Year : 2021<br>
-<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.11929">Paper URL</a></p>
-<h2 id="What">What</h2>
+        <h1 id="an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale-vision-transformer">An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (Vision Transformer)</h1>
+<p>Published Year : 2021 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.11929">Paper URL</a></p>
+<h2 id="what">What</h2>
 <ul>
 <li>CNNs dominated classification tasks until recently. This paper shows that this reliance on CNNs is not necessary and a transformer applied to sequence of images patches can perform very well on image classification.</li>
 <li>Vision Transformer(ViT) attains excellent results compared to state-of-the-art CNN while when pre-trained on large data sets while requiring fewer computaional cost.</li>
 </ul>
-<h2 id="Why">Why</h2>
+<h2 id="why">Why</h2>
 <ul>
 <li>The transformers are doing very well on NLP tacks. What if we apply transformer on computer vision?</li>
 </ul>
-<h2 id="How">How</h2>
+<h2 id="how">How</h2>
 <ul>
-<li>Transformer Architecture<br>
-![](<a target="_blank" rel="noopener" href="https://i.imgur.com/1PNfjqR.png">https://i.imgur.com/1PNfjqR.png</a> =600x)</li>
+<li>Transformer Architecture <img src="https://i.imgur.com/1PNfjqR.png%20=600x" /></li>
 <li>Algorithm
 <ul>
-<li>![](<a target="_blank" rel="noopener" href="https://i.imgur.com/dMU1tvL.png">https://i.imgur.com/dMU1tvL.png</a> =600x)</li>
-<li>Patch ebedding.Reshape the image $x\in\mathbb{R}^{H \times W \times C}$ into 2D patches $x_{p}\in\mathbb{R}^{N\times(P^2\cdot C)}$, where $(H,W)$ is the resolution of original images, $C$ is the number of channels, $(P,P)$ is the resolution of image patch, and $N = HW/P^2$ is the resulting number of patches. $[x_{class};x_{p}^{1}E;x_{p}^{2}E;…;x_{p}^{N}E]$</li>
-<li>$E_{pos}$ is 1D learnable position encoding which is added to patch embedding.</li>
+<li><img src="https://i.imgur.com/dMU1tvL.png%20=600x" /></li>
+<li>Patch ebedding.Reshape the image <span class="math inline">\(x\in\mathbb{R}^{H \times W \times C}\)</span> into 2D patches <span class="math inline">\(x_{p}\in\mathbb{R}^{N\times(P^2\cdot C)}\)</span>, where <span class="math inline">\((H,W)\)</span> is the resolution of original images, <span class="math inline">\(C\)</span> is the number of channels, <span class="math inline">\((P,P)\)</span> is the resolution of image patch, and <span class="math inline">\(N = HW/P^2\)</span> is the resulting number of patches. <span class="math inline">\([x_{class};x_{p}^{1}E;x_{p}^{2}E;...;x_{p}^{N}E]\)</span></li>
+<li><span class="math inline">\(E_{pos}\)</span> is 1D learnable position encoding which is added to patch embedding.</li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762?context=cs">Multihead Self-Attention(MSA)</a>
 <ul>
-<li>For each input $z\in \mathbb{R}^{N \times D}$
+<li>For each input <span class="math inline">\(z\in \mathbb{R}^{N \times D}\)</span>
 <ul>
-<li>$[q,k,v] = zU_{qkv},\quad U_{qkv}\in\mathbb{R}^{D\times 3D_{h}}$</li>
-<li>$A = softmax(qk^\top / \sqrt{D_{h}}),\quad A\in\mathbb{R}^{N\times N}$</li>
-<li>$SA(z) = Av.$</li>
-<li>$MSA(z) = [SA_{1}(z);SA_{2}(z);…;SA_{k}(z)]U_{msa},\quad U_{msa}\in\mathbb{R}<em>{k \cdot D</em>{h}\times D}$</li>
+<li><span class="math inline">\([q,k,v] = zU_{qkv},\quad U_{qkv}\in\mathbb{R}^{D\times 3D_{h}}\)</span></li>
+<li><span class="math inline">\(A = softmax(qk^\top / \sqrt{D_{h}}),\quad A\in\mathbb{R}^{N\times N}\)</span></li>
+<li><span class="math inline">\(SA(z) = Av.\)</span></li>
+<li><span class="math inline">\(MSA(z) = [SA_{1}(z);SA_{2}(z);...;SA_{k}(z)]U_{msa},\quad U_{msa}\in\mathbb{R}_{k \cdot D_{h}\times D}\)</span></li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="And">And?</h2>
+<h2 id="and">And?</h2>
 <ul>
 <li>Inductive Bias
 <ul>
@@ -195,16 +190,12 @@
 <li>In CNNs, locality, 2D neighborhood structure, and translation equivariance are baked into each layer throughout the whole model.</li>
 <li>In ViT, only MLP layers are local and translationally equivariant, while the self-attention layers are global.</li>
 <li>This means ViT is much more free than CNN.</li>
-</ul>
-</li>
+</ul></li>
 <li>About CNNs
 <ul>
-<li>CNN is very good at detect partial features but it does not consider the relative positioning of facial features.<br>
-![](<a target="_blank" rel="noopener" href="https://i.imgur.com/RJnKBHr.png">https://i.imgur.com/RJnKBHr.png</a> =300x)</li>
-<li>The main difference between ViT and CNNs is vision(visual field).<br>
-![](<a target="_blank" rel="noopener" href="https://i.imgur.com/dhEY2p2.png">https://i.imgur.com/dhEY2p2.png</a> =400x)</li>
-</ul>
-</li>
+<li>CNN is very good at detect partial features but it does not consider the relative positioning of facial features. <img src="https://i.imgur.com/RJnKBHr.png%20=300x" /></li>
+<li>The main difference between ViT and CNNs is vision(visual field). <img src="https://i.imgur.com/dhEY2p2.png%20=400x" /></li>
+</ul></li>
 </ul>
 
       </section>

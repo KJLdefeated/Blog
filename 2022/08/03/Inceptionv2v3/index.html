@@ -151,61 +151,40 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1>Rethinking the Inception Arcitecture for Computer Vision (Inception v2 &amp; v3)</h1>
-<p>Published Year : 2015<br>
-<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.00567">Paper URL</a></p>
-<h2 id="What">What</h2>
+        <h1 id="rethinking-the-inception-arcitecture-for-computer-vision-inception-v2-v3">Rethinking the Inception Arcitecture for Computer Vision (Inception v2 &amp; v3)</h1>
+<p>Published Year : 2015 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.00567">Paper URL</a></p>
+<h2 id="what">What</h2>
 <ul>
-<li>Inception v2 and v3 improved computational efficiency and model accuracy to 3.5% top-5 error and 17.3% top-1 error in ILSVRC 2012 classification challenge.</li>
-</ul>
-<h2 id="Why">Why</h2>
-<ul>
+<li>Inception v2 and v3 improved computational efficiency and model accuracy to 3.5% top-5 error and 17.3% top-1 error in ILSVRC 2012 classification challenge. ## Why</li>
 <li>The problem with inception v1:
 <ul>
 <li>hard to adapt it to new use-cases while maintaining its efficiency.</li>
-</ul>
-</li>
+</ul></li>
 <li>Two ideas to improve performance
 <ul>
 <li>Avoiding representaional bottlenecks.</li>
-<li>Using smart factorization methods, convolutions can be more efficient in terms of computational complexity.</li>
+<li>Using smart factorization methods, convolutions can be more efficient in terms of computational complexity. ## How ### Inception V1</li>
+</ul></li>
+<li>Here is inception v1 module. <img src="https://imgur.com/mvvgsZN.png" /></li>
 </ul>
-</li>
-</ul>
-<h2 id="How">How</h2>
-<h3 id="Inception-V1">Inception V1</h3>
-<ul>
-<li>Here is inception v1 module.<br>
-<img src="https://imgur.com/mvvgsZN.png" alt=""></li>
-</ul>
-<h3 id="Inception-V2">Inception V2</h3>
+<h3 id="inception-v2">Inception V2</h3>
 <ul>
 <li>Factorization
 <ul>
 <li>Factorization into smaller convolution
 <ul>
-<li>From the picture below we can find that one 5x5 conv. layer can be replaced by two 3x3 layers.<br>
-<img src="https://imgur.com/ZlVhmCU.png" alt=""></li>
-<li>Below is Inception v2 module where 5x5 layer is replaced by two 3x3 layers contrast to Figure 4 above.<br>
-<img src="https://imgur.com/QPFCBiS.png" alt=""></li>
-</ul>
-</li>
+<li>From the picture below we can find that one 5x5 conv. layer can be replaced by two 3x3 layers. <img src="https://imgur.com/ZlVhmCU.png" /></li>
+<li>Below is Inception v2 module where 5x5 layer is replaced by two 3x3 layers contrast to Figure 4 above. <img src="https://imgur.com/QPFCBiS.png" /></li>
+</ul></li>
 <li>Spatial Factorization into Asymmetric Convolutions
 <ul>
-<li>Using asymmetric convolutions can be 33% cheaper than the symmetric conv. Ex: Using a 3x1 conv. followed by a 1x3 conv. is equivalent to sliding a two layer network with the same receptive field as in a 3x3 conv. like the picture below.<br>
-<img src="https://imgur.com/h24V4OJ.png" alt=""></li>
+<li>Using asymmetric convolutions can be 33% cheaper than the symmetric conv. Ex: Using a 3x1 conv. followed by a 1x3 conv. is equivalent to sliding a two layer network with the same receptive field as in a 3x3 conv. like the picture below. <img src="https://imgur.com/h24V4OJ.png" /></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://imgur.com/2WRC35l.png" alt=""></p>
-<p><img src="https://imgur.com/NxxfKLS.png" alt=""></p>
-<ul>
-<li>The overall v2 architecture:<br>
-<img src="https://imgur.com/WXjfPBW.png" alt=""></li>
-</ul>
-<h3 id="Inception-V3">Inception V3</h3>
+<p><img src="https://imgur.com/2WRC35l.png" /></p>
+<p><img src="https://imgur.com/NxxfKLS.png" /> - The overall v2 architecture: <img src="https://imgur.com/WXjfPBW.png" /></p>
+<h3 id="inception-v3">Inception V3</h3>
 <ul>
 <li>Inception v3 Net incorpoeated all of the above upgrade stated for Inception v2, and in addition used the following:
 <ul>
@@ -213,23 +192,20 @@
 <li>Factorized 7x7 conv.</li>
 <li>Batch Norm in the Auxiliary classifier
 <ul>
-<li>The authors noted that the auxiliary classifier didn’t contribute much until near the end of the training process, when accuracies wear near saturation. Thay argued that they function as regularizes, especially with dropout or BN operations.</li>
-</ul>
-</li>
+<li>The authors noted that the auxiliary classifier didn't contribute much until near the end of the training process, when accuracies wear near saturation. Thay argued that they function as regularizes, especially with dropout or BN operations.</li>
+</ul></li>
 <li>Label Smoothing Regularization
 <ul>
 <li>This regularization prevent the model from being too confident about a class. Prevents overfitting.</li>
-<li>Before regularizing process, all grond-truth label that’s called $q(k|x)$ is one-hot, which means it is either zero or one. This caused to push up the probability of answer but push down the wrong. Intuitively, this happens because the model becomes too confident about its predictions.</li>
-<li>Thus the authors proposed a new ground-truth distribution $q’(k|x)=(1-\epsilon)\delta_{k,y}+\epsilon u(k)$ where  $(k==y ? \delta_{k,y}=1:\delta_{k,y}=0)$ and since there are 1000 label in ILSVRC, $u(k)=1/1000$ and $\epsilon=0.1$ in this model.</li>
+<li>Before regularizing process, all grond-truth label that's called <span class="math inline">\(q(k|x)\)</span> is one-hot, which means it is either zero or one. This caused to push up the probability of answer but push down the wrong. Intuitively, this happens because the model becomes too confident about its predictions.</li>
+<li>Thus the authors proposed a new ground-truth distribution <span class="math inline">\(q&#39;(k|x)=(1-\epsilon)\delta_{k,y}+\epsilon u(k)\)</span> where <span class="math inline">\((k==y ? \delta_{k,y}=1:\delta_{k,y}=0)\)</span> and since there are 1000 label in ILSVRC, <span class="math inline">\(u(k)=1/1000\)</span> and <span class="math inline">\(\epsilon=0.1\)</span> in this model.</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="And">And?</h2>
+<h2 id="and">And?</h2>
 <ul>
 <li>There is v4 version of inception module, which is connected with residual module. i would like to review it latter.</li>
-<li>This paper introduced some convolution factorization methods. That’s pretty cool. I didn’t know this in other online ML course until now.</li>
+<li>This paper introduced some convolution factorization methods. That's pretty cool. I didn't know this in other online ML course until now.</li>
 <li>I found that my reading skill is pretty bad. Reading this paper cost me a lot of time. Hope that doing more practice will be better.</li>
 </ul>
 

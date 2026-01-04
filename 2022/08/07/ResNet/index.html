@@ -151,38 +151,29 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1>Deep residual Learning for Image Recognition</h1>
+        <h1 id="deep-residual-learning-for-image-recognition">Deep residual Learning for Image Recognition</h1>
 <ul>
 <li>Published Year : 2015</li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.03385?context=cs">Paper URL</a></li>
 </ul>
-<h2 id="What">What</h2>
+<h2 id="what">What</h2>
 <p>Deeper neural networks are more diffcult to train. The authors persent a residual learning framework to ease the training of networks that are substantially deeper than those used previously.</p>
-<h2 id="Why">Why</h2>
-<p><img src="https://imgur.com/FGApT86.png" alt="image alt"></p>
+<h2 id="why">Why</h2>
+<p><img src="https://imgur.com/FGApT86.png" alt="image alt" /> - From the picture avove we can find that the deeper layers cause higher training error. - Suppose we have a shallower architecture and we can add layers on it to make a deeper architecture. We can hypothesis that the deeper model should produce no higher training error than than its shallower counterpart since the deeper layers should contain as same or more informations as shallower layers. - But the experiment show that it does worse performance since Vanishing Gradient, which gradient signals from the error function decreased exponentially as they backprop to earlier layers.</p>
+<h2 id="how">How</h2>
 <ul>
-<li>From the picture avove we can find that the deeper layers cause higher training error.</li>
-<li>Suppose we have a shallower architecture and we can add layers on it to make a deeper architecture. We can hypothesis that the deeper model should produce no higher training error than than its shallower counterpart since the deeper layers should contain as same or more informations as shallower layers.</li>
-<li>But the experiment show that it does worse performance since Vanishing Gradient, which gradient signals from the error function decreased exponentially as they backprop to earlier layers.</li>
+<li>Consider <span class="math inline">\(\cal{H}(x)\)</span> as an underlying mapping to be fit by a few stacked layers with <span class="math inline">\(x\)</span> denoting the inputs.</li>
+<li>We can hypothesizes that multiple nonlinear layers can approximate complicated functions, then it is equivalent to hypothesis that thay can approximate the residual functions, <span class="math inline">\(i.e.,\cal{H}(x)-x\)</span>(assumingthat the input and toutput are of the same dimensions.)</li>
+<li>Rather than approximate <span class="math inline">\(\cal{H}(x)\)</span>, we let these layers approx. a residual function <span class="math inline">\(\cal{F}(x):=\cal{H}(x)-x\)</span>. THhe original function thus becomes <span class="math inline">\(\cal{F}(x)+x\)</span>.</li>
+<li>This gives rise to the famous ResNet block we've probably seen: <img src="https://imgur.com/v8lTN8h.png" /></li>
+<li>Network architecture: <img src="https://imgur.com/01a1T9l.png" /></li>
+<li>This module makes very deep neural network, such as 50, 101 and 152 layers, stll work well. <img src="https://imgur.com/RCW3wQh.png" /></li>
+<li>Result: <img src="https://imgur.com/yKyefzm.png" /></li>
 </ul>
-<h2 id="How">How</h2>
-<ul>
-<li>Consider $\cal{H}(x)$ as an underlying mapping to be fit by a few stacked layers with $x$ denoting the inputs.</li>
-<li>We can hypothesizes that multiple nonlinear layers can approximate complicated functions, then it is equivalent to hypothesis that thay can approximate the residual functions, $i.e.,\cal{H}(x)-x$(assumingthat the input and toutput are of the same dimensions.)</li>
-<li>Rather than approximate $\cal{H}(x)$, we let these layers approx. a residual function $\cal{F}(x):=\cal{H}(x)-x$. THhe original function thus becomes $\cal{F}(x)+x$.</li>
-<li>This gives rise to the famous ResNet block we’ve probably seen:<br>
-<img src="https://imgur.com/v8lTN8h.png" alt=""></li>
-<li>Network architecture:<br>
-<img src="https://imgur.com/01a1T9l.png" alt=""></li>
-<li>This module makes very deep neural network, such as 50, 101 and 152 layers, stll work well.<br>
-<img src="https://imgur.com/RCW3wQh.png" alt=""></li>
-<li>Result:<br>
-<img src="https://imgur.com/yKyefzm.png" alt=""></li>
-</ul>
-<h2 id="And">And?</h2>
+<h2 id="and">And?</h2>
 <ul>
 <li>This idea works extremely well in practice. There is still many computer vision use the concept of ResNet util today.</li>
-<li>I think this Network architecture is beautiful since it use relatively simple modules to solve the problem that which deep network didn’t perform well.</li>
+<li>I think this Network architecture is beautiful since it use relatively simple modules to solve the problem that which deep network didn't perform well.</li>
 </ul>
 
       </section>

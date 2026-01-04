@@ -151,30 +151,23 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1>Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1>
-<p>Published year : 2014<br>
-<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.1556">Paper URL</a></p>
-<h2 id="What">What</h2>
+        <h1 id="very-deep-convolutional-networks-for-large-scale-image-recognitionvgg">Very Deep Convolutional Networks for Large-Scale Image Recognition(VGG)</h1>
+<p>Published year : 2014 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.1556">Paper URL</a></p>
+<h2 id="what">What</h2>
 <p>A neural networks using an architecture with 3 by 3 convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers.</p>
-<h2 id="How">How</h2>
-<p><img src="https://i.imgur.com/FRUaYPq.png" alt=""></p>
-<ol>
-<li>Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model.</li>
-<li>The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers.</li>
-<li>To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</li>
-</ol>
-<h4 id="From-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better">From the result below we can see that as the network goes deeper the performance would be better.</h4>
-<p><img src="https://imgur.com/WXbSJAn.png" alt=""></p>
+<h2 id="how">How</h2>
+<p><img src="https://i.imgur.com/FRUaYPq.png" /> 1. Using 3x3 conv. layers instead of 7x7 or 5x5 to reduce the parameters in the model. 2. The incorporation of 1x1 conv. layers to increase the nonlinearity of the decision function without affecting the receptive fields of the conv. layers. 3. To better initialize the weight of the network, the writters first training the configuraton A in the above picture with random parameter initialization, then use the weights of network A to train othe network B,C,D and E.</p>
+<h4 id="from-the-result-below-we-can-see-that-as-the-network-goes-deeper-the-performance-would-be-better.">From the result below we can see that as the network goes deeper the performance would be better.</h4>
+<p><img src="https://imgur.com/WXbSJAn.png" /></p>
 <ul>
 <li>Note:
 <ul>
 <li>VGG stands for Vision Geometry Group of Oxford University</li>
 <li>VGG16 means 13 conv. layers + 3 FC layers.</li>
 <li>VGG19 means 16 conv. layers + 3 FC layers</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="And">And?</h2>
+<h2 id="and">And?</h2>
 <p>The defect of VGG network is that the number of parameters is too large and the training time is long. Thus we usually do not train this by scratch instead we can get the pre-trained model from tensorflow. Use these pr-trained model to do other project.</p>
 
       </section>

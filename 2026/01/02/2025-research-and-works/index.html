@@ -155,24 +155,20 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <p>2025過去了，申請的事情也告一段落，流水帳總結一下工作和研究上的想法。<br>
-雖然申請結果來沒出來，不過還是順便記錄一下一路上的心得和感嘅（<s>抱怨</s>）。</p>
-<h2 id="工作-AI-Software-Engineer">工作 - AI Software Engineer</h2>
+        <p>2025過去了，申請的事情也告一段落，流水帳總結一下工作和研究上的想法。 雖然申請結果來沒出來，不過還是順便記錄一下一路上的心得和感嘅（<del>抱怨</del>）。</p>
+<h2 id="工作---ai-software-engineer">工作 - AI Software Engineer</h2>
 <p>二月的時候，透過認識的人推薦，進到一間半導體新創擔任AI Engineer，我一直都很想進到業界實習看看，但前兩年一直沒有機會，終於在大學時期尾巴找到一個普普通通的實習工作，雖然也不是沒找到其他的（參見2024找工紀錄），但那時想說手邊還有研究要推動又要準備申請，工作還是越彈性越好，那時候一週做三天，一天去學校上完最後的課，其餘在家搞科研。</p>
 <p>這間公司主要是做顯示面板的硬體，想要用AI的方法去加速硬體製程，一開始是做用RL去優化某個製造過程，但問題很複雜，牽涉多目標優化，搜尋空間超大，雖然似乎greedy就是最優解，但還是不夠好，加上RL本來就是一個很難上production的東西，後來做一做就覺得不太行，就蛋雕了。</p>
 <p>後來五月，公司來了一個從美國meta來的SWE主管Brian，圈內人就是比較聊得來呀，很開心能夠從很有經驗的大廠工程師學習，後來我們組做的東西就比較像SWE會做的，架網站寫後端幫助硬體製成的系統，雖說是一個team，但其實也只有我和Brian在做軟體，其他人做了很多跟硬體相關的實驗，所以其實也只有我寫扣比較多，那時候感覺是真的不錯，因為很多東西都是從0到1去學習，從後端框架、DB、system design和一點點分散系統都接觸到，再加上現在AI很方便，學東西都很快，把之前沒有的SWE經驗補一補，雖然跟大廠SWE比還是差很多跟人合作的經驗，不過算是踏入這個領域了。</p>
-<p>之後6月就順勢轉正職了，想說跟學校RA同時一起做，一天工作四天，做的事比較少人管，也算是很自由，能夠平衡科研。<br>
-8,9,10這幾個月也是一邊忙科研、工作、申請和考托福，可能因為是半導體公司，平時我在搞其他事情都沒人盯。後來Brian也回美國了，新創公司也是動不動把方向變來變去，很常某個project做到一半蛋雕去做另一個，這是缺點，優點是能夠自己做一整個project，學到很多東西。<br>
-之後的工作就比較像一班的MLE，利用ML model去幫助硬體，比方說成本很高的量測，透過model prediction降低成本，但小公司基本沒什麼data，所以也是蠻難做的。<br>
-雖然有些抱怨，但還是感謝公司給我這個機會，接觸SWE，看到新創公司的運作，也給了我很多自由。之後有機會，我果然還是想去大廠做啊。</p>
-<h2 id="科研-RL-LLM-Reasoning">科研 - RL LLM Reasoning</h2>
+<p>之後6月就順勢轉正職了，想說跟學校RA同時一起做，一天工作四天，做的事比較少人管，也算是很自由，能夠平衡科研。 8,9,10這幾個月也是一邊忙科研、工作、申請和考托福，可能因為是半導體公司，平時我在搞其他事情都沒人盯。後來Brian也回美國了，新創公司也是動不動把方向變來變去，很常某個project做到一半蛋雕去做另一個，這是缺點，優點是能夠自己做一整個project，學到很多東西。 之後的工作就比較像一班的MLE，利用ML model去幫助硬體，比方說成本很高的量測，透過model prediction降低成本，但小公司基本沒什麼data，所以也是蠻難做的。 雖然有些抱怨，但還是感謝公司給我這個機會，接觸SWE，看到新創公司的運作，也給了我很多自由。之後有機會，我果然還是想去大廠做啊。</p>
+<h2 id="科研---rl-llm-reasoning">科研 - RL LLM Reasoning</h2>
 <p>TL;DR: 我今年是真真正正認識到科研的困難了，以前都太天真了，我根本只是打工小孩。</p>
 <p>大概二月ICLR確定中了之後，那時候我有自己想搞RL+Diffusion的方向，但其一自己沒有科研素養，想不出好topic，其二老師有個想搞Language Model+RL的idea也挺有趣，於是就在三月的時候跟實驗室的碩博生一起開工。</p>
 <p>這題開始的時候是想做latent space reasoning，利用gradient based的方法在latent space裡optimize LLM reasoning的task。</p>
-<p>在gradient based上其實過去還不少人做，比方說Energy-Based Model，都是透過構建一個energy landscape然後在上面進行最佳化，基本上就是likelihood，能量越低表示跟training data越接近，能量越高表示越不可能。這種方法過去比較多做在影像生成上，其實跟Diffusion model一樣都是類score matching的方法，最近有一些<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2507.02092">work</a>也拿來做文字生成，用這種&quot;Latent space optimization&quot;達成system-2 thinking。</p>
+<p>在gradient based上其實過去還不少人做，比方說Energy-Based Model，都是透過構建一個energy landscape然後在上面進行最佳化，基本上就是likelihood，能量越低表示跟training data越接近，能量越高表示越不可能。這種方法過去比較多做在影像生成上，其實跟Diffusion model一樣都是類score matching的方法，最近有一些<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2507.02092">work</a>也拿來做文字生成，用這種"Latent space optimization"達成system-2 thinking。</p>
 <p>我們的想法就是：既然可以construct energy landscape，那我們也可以construct RL中的Q landscape，也就是考慮long term的reward，讓model在reasoning上能夠更optimal，比起energy這種只建構likelihood，我們考慮了RL的object。而且我們同時還希望可以解決transformer中token by token的生成，用gradient based方式最後decode出最佳回答，就是non-autoregressive。</p>
 <p>看起來很美好，但實際做下去發現很多困難點：</p>
-<ol>
+<ol type="1">
 <li>gradient-based類方法非常不穩定非常難做，原因之一就是直接在連續空間中做搜尋，如果沒有好好限制空間，模型根本不會收斂，而且針對不同task，參數非常難調。</li>
 <li>continuous space optimization用在文字上的work真的很少(之前提的那篇也還沒發出去)，感覺大家都不太想碰，雖然也不是不可能做，也有可能是我沒慧根，做不出來QQ。</li>
 <li>去年剛好有稍微學過Q-learning的理論，Q的收斂跟action space的大小非常有關係，action space太大會很難收斂，更何況我們是在整個連續空間做搜尋。</li>
@@ -180,18 +176,17 @@
 <p>於是我想說能不能基於目前的LLM去做改造，透過類似parameter-efficient的方式加入value model，然後做生成，簡單來說就是影響LLM中的hidden vector去影響生成，雖然還做不到non-autoregressive，但也算是第一步了，7 8月抵著英檢壓力同時跑實驗，是在RLHF的框架下進行，就是針對某個reward model優化這樣，剛開始跑出的結果還蠻promising，不過跟現下preference alignment的做法還是有些差距，而且我一直想不出要怎麼leverage pretrained base model同時生成多個token，因為目前llm都是token by token，我其實是透過base model去收束我gradient based的搜尋空間，若是直接在response level continuous space 搜尋，就會有搜不到的問題。</p>
 <p>然後到了9月，突然發現<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2406.05954">這篇</a>的做法根本跟我一樣，靠杯，我之前根本沒看過這篇，但還是做得很像。而且我的方向一直從原本想要reasoning變成preference alignment，我的方法一定程度上需要base model幫助收束搜尋空間，所以我很難做出超過base model能力的動作，這裡跟原本「latent space reasoning」已經偏掉了，死局。</p>
 <p>後來想想為什麼死局的原因大概有兩個：</p>
-<ol>
+<ol type="1">
 <li>雖然我自認對RL算熟，但對NLP太不熟，第一次做碰了很多坑，而且對reasoning model的做法也不是很暸解，做成preference alignment還渾然不知。幾個月都在學習和踩坑，對研究進度沒什麼推動。組裡大家之前都是做RL的，很少人接觸過NLP，有時候題目做一做偏掉大家都沒注意。</li>
 <li>但我覺得最大原因還是我自己，對於研究，我還是不知道怎麼定義一個好題目，可以說服自己也說服他人為什麼我要這樣做，感覺我的思維還卡在普通打工仔，期待別人來告訴我要怎麼做，被老師質疑就想要改變方向，感覺我還缺了某種軟實力，在研究者上，我還不夠成熟。</li>
 </ol>
 <p>我後來整個覺得我根本不適合做研究讀phd，我還是去當打工人好了，還好申請時我都只有申請MS。</p>
-<p>整個方向蛋雕之後，還好有另一個博士生GuangDa來解救我，我們討論能不能用preference alignment引導reasoning，於是就想到能不能用「問題」引導思考，感覺是個不錯的題目。<br>
-於是我就快速搞了個preliminary，因為都是prompting，實驗進行得很快，而且GuangDa之前就做languange相關的work，題目定義和實驗上減少了很多無用的嘗試，preliminary過後感覺有搞頭，於是就做到現在了。</p>
-<p>我覺得我還挺擅長實作和對著data signal講故事，可能過去都在寫代碼和跑實驗吧，但對於研究，我還有太多需要學習，「如何定義好的題目」我感覺是很重要的課題。</p>
+<p>整個方向蛋雕之後，還好有另一個博士生GuangDa來解救我，我們討論能不能用preference alignment引導reasoning，於是就想到能不能用「問題」引導思考，感覺是個不錯的題目。 於是我就快速搞了個preliminary，因為都是prompting，實驗進行得很快，而且GuangDa之前就做languange相關的work，題目定義和實驗上減少了很多無用的嘗試，preliminary過後感覺有搞頭，於是就做到現在了。</p>
+<p>我覺得我還挺擅長實作和對著data signal講故事，可能過去都在寫代碼和跑實驗吧，但對於研究，我還有太多需要學習，「如何定義好的題目」「好的presentation」「腦中的思考很好地讓別人理解」我覺得都是很重要的課題。</p>
 <p>今年很常在做研究與不做之間來回反覆橫跳，研究有進展時感覺自己是天才，以後可以去讀個博吧，研究碰壁時感覺自己很爛，我以後還是當打工人吧，不適合讀博。還好最後申請大多是可以研究的碩班，還可以讓我反覆橫跳一陣子。</p>
 <p>在寫SOP的時候，我主要就往RL + MLsys的方向寫，有很多人在做RL，也有很多人在做MLsys，但很少兩個combine在一起，因為deepseek的關係，2025年RL整個火起來，連帶也很多RL Infra的項目，engineer-heavy結合algo太有趣了，也讓我認識了很多開源項目vllm, sglang, verl和slime之類的，雖然我算力不夠也沒法搞，發現裡面也是很多PhD在做，認識很多人之後，再加上跟學長聊聊，發現其實PhD也不用一直坐牢發paper，也是可以做很engineer的項目，端看自己怎麼安排，研究的技能也可以transfer到職場上，重點是讓自己成為某個領域的專家，也許我之前一直把路想窄了，研究這條路可以有更高更寬的上限。</p>
 <p>麻阿，目前就先努力做手邊的事，等申請結果出來再看看怎麼走下一步吧。</p>
-<h2 id="Conclusion">Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>感覺都在發牢騷和流水帳，但今年還是學到很多東西，有時候不能太急，就算慢慢走，時間一長還是走得挺遠。我覺得之後應該多多寫一些跟RL相關的文章，總結一下所學之類的，或許或許蠻有幫助（？</p>
 
       </section>
