@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 7.1.1">
+
+  
+
+  
+
+  
+    <meta name="author" content="KJL">
+  
+
+  
+
+  
+
+  <title>MLsys Note - Qwen3 Code Walk Through | KJ&#39;s Blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/Blog/favicon.ico">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.13/index.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/monokai.min.css">
+  
+
+  
+
+  
+<link rel="stylesheet" href="/Blog/css/style.css">
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://i.pinimg.com/1200x/7b/1a/5f/7b1a5f278e6210e62e986ddcc1c3bbf1.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/Blog/">
+        
+          KJ&#39;s Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/Blog/">首頁</a></li>
+        
+          <li class="navbar-list-item"><a href="/Blog/about">關於</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">MLsys Note - Qwen3 Code Walk Through</h1>
+          <h2 class="title-sub-wrap">
+            <strong>KJL</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2026-01-24T10:03:24.000Z" itemprop="datePublished">2026-01-24</time>
+          </h2>
+          
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2026-01-25T07:04:26.894Z" itemprop="dateUpdated">2026-01-25</time>
+            </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/Blog/tags/Research/">🏷️ Research</a></li>
+  
+    <li><a href="/Blog/tags/MLsys/">🏷️ MLsys</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <p>最近想要深入學習一些MLsys的開源框架，像Sglang, vLLM和Slime之類的，光閱讀code和文章記憶不深，想說自己來寫一下筆記。第一篇先以最簡單的huggingface transformers為主，順便複習一下以前沒注意到的東西。</p>
+<h1 id="transformers-code-walk-through">Transformers Code Walk Through</h1>
+<p>平常都在用Transformers做事，但裡面的架構卻不是很熟悉，想用看code的方式，去解析一下不同開源LLM的實作細節，這邊以<a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers/blob/main/src/transformers/models/qwen3/modeling_qwen3.py">Qwen3</a>和<a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers/blob/main/src/transformers/models/qwen2/modeling_qwen2.py">Qwen2</a>為主，參雜一些個人理解和對其他模型的比較，不會到超級仔細，若是說錯了，歡迎指正。 這邊主要以huggingface的實作為主。</p>
+<h3 id="causallm">CausalLM</h3>
+"Causal" 就是因果關係的意思，CausalLM就是泛指目前最常見從左到右的LLM，最新的token看得到過去的token，但過去的token看不到未來的token。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Qwen3ForCausalLM</span>(Qwen3PreTrainedModel, GenerationMixin)<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaForCausalLM</span>(LlamaPreTrainedModel, GenerationMixin)<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DeepseekV3ForCausalLM</span>(DeepseekV3PreTrainedModel, GenerationMixin)<br></code></pre></td></tr></table></figure> 這是第一層interface，還沒有真的進入model，主要是為了LLM生成logits之後，可以做採樣上的控制（GenerationMixin），若是有loss function的話也會在這裡計算loss。 因為這邊forward function很單純，而且大同小異，就直接貼上來：
+<details>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params"></span><br><span class="hljs-params">        self,</span><br><span class="hljs-params">        input_ids: torch.LongTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">        attention_mask: torch.Tensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">        position_ids: torch.LongTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">        past_key_values: Cache | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">        inputs_embeds: torch.FloatTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">        labels: torch.LongTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">        use_cache: <span class="hljs-built_in">bool</span> | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">        cache_position: torch.LongTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">        logits_to_keep: <span class="hljs-built_in">int</span> | torch.Tensor = <span class="hljs-number">0</span>,</span><br><span class="hljs-params">        **kwargs: Unpack[TransformersKwargs],</span><br><span class="hljs-params">    </span>) -&gt; CausalLMOutputWithPast:<br>        outputs: BaseModelOutputWithPast = self.model(<br>            input_ids=input_ids,<br>            attention_mask=attention_mask,<br>            position_ids=position_ids,<br>            past_key_values=past_key_values,<br>            inputs_embeds=inputs_embeds,<br>            use_cache=use_cache,<br>            cache_position=cache_position,<br>            **kwargs,<br>        )<br><br>        hidden_states = outputs.last_hidden_state<br>        logits = self.lm_head(hidden_states)<br><br>        loss = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">if</span> labels <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            loss = self.loss_function(logits=logits, labels=labels, vocab_size=self.config.vocab_size, **kwargs)<br><br>        <span class="hljs-keyword">return</span> CausalLMOutputWithPast(<br>            loss=loss,<br>            logits=logits,<br>            past_key_values=outputs.past_key_values,<br>            hidden_states=outputs.hidden_states,<br>            attentions=outputs.attentions,<br>        )<br></code></pre></td></tr></table></figure>
+lm_head 是一個 hidden_size X vocab_size的linear layer，從hidden states生成logits
+</details>
+<h3 id="model">Model</h3>
+<p>主要架構層，這裡會把input text從頭到尾生成last hidden state。</p>
+<p><strong>embed_tokens</strong>: Token embedding，從input_ids (1, 2, 3...) mapping 成hidden vector。</p>
+<p><strong>layers</strong>: config.num_hidden_layers定義了LLM需要幾層layers，layers越多model就越大。</p>
+<p><strong>norm</strong>: Qwen 2, 3 使用了 RMSnorm 取代傳統 layer norm，後面細講。</p>
+<p><strong>rotary_emb</strong>: Rotary Position Embedding. 這邊等到後面細講。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Qwen3Model</span>(<span class="hljs-title class_ inherited__">Qwen3PreTrainedModel</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config: Qwen3Config</span>):<br>        <span class="hljs-built_in">super</span>().__init__(config)<br>        self.padding_idx = config.pad_token_id<br>        self.vocab_size = config.vocab_size<br><br>        self.embed_tokens = nn.Embedding(config.vocab_size, config.hidden_size, self.padding_idx)<br>        self.layers = nn.ModuleList(<br>            [Qwen3DecoderLayer(config, layer_idx) <span class="hljs-keyword">for</span> layer_idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(config.num_hidden_layers)]<br>        )<br>        self.norm = Qwen3RMSNorm(config.hidden_size, eps=config.rms_norm_eps)<br>        self.rotary_emb = Qwen3RotaryEmbedding(config=config)<br>        self.gradient_checkpointing = <span class="hljs-literal">False</span><br>        self.has_sliding_layers = <span class="hljs-string">&quot;sliding_attention&quot;</span> <span class="hljs-keyword">in</span> self.config.layer_types<br><br>        <span class="hljs-comment"># Initialize weights and apply final processing</span><br>        self.post_init()<br></code></pre></td></tr></table></figure>
+Forward function接受自定義input_embeds, attention_maks, position_ids和KV cache，可以有flexible的masking和forward的操作。
+<details>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params"></span><br><span class="hljs-params">    self,</span><br><span class="hljs-params">    input_ids: torch.LongTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">    attention_mask: torch.Tensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">    position_ids: torch.LongTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">    past_key_values: Cache | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">    inputs_embeds: torch.FloatTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">    use_cache: <span class="hljs-built_in">bool</span> | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">    cache_position: torch.LongTensor | <span class="hljs-literal">None</span> = <span class="hljs-literal">None</span>,</span><br><span class="hljs-params">    **kwargs: Unpack[TransformersKwargs],</span><br><span class="hljs-params"></span>) -&gt; BaseModelOutputWithPast<br><br>    <span class="hljs-comment"># 1. Embedding forward</span><br>    <span class="hljs-keyword">if</span> inputs_embeds <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        inputs_embeds = self.embed_tokens(input_ids)<br><br>    <span class="hljs-comment"># 2. 取出過去的key value</span><br>    <span class="hljs-comment"># 關於KV Cache 之後用另一篇討論</span><br>    <span class="hljs-keyword">if</span> use_cache <span class="hljs-keyword">and</span> past_key_values <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        past_key_values = DynamicCache(config=self.config)<br><br>    <span class="hljs-comment"># KV Cache的position</span><br>    <span class="hljs-keyword">if</span> cache_position <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        past_seen_tokens = past_key_values.get_seq_length() <span class="hljs-keyword">if</span> past_key_values <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span><br>        cache_position = torch.arange(<br>            past_seen_tokens, past_seen_tokens + inputs_embeds.shape[<span class="hljs-number">1</span>], device=inputs_embeds.device<br>        )<br><br>    <span class="hljs-keyword">if</span> position_ids <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        position_ids = cache_position.unsqueeze(<span class="hljs-number">0</span>)<br><br>    <span class="hljs-comment"># 3. masking的部分拿llama的代替比較簡潔</span><br>    <span class="hljs-comment"># 我們input的attention_mask是1D的，若要造出2D的attention mask，可以用這個function</span><br>    causal_mask = create_causal_mask(<br>            config=self.config,<br>            input_embeds=inputs_embeds,<br>            attention_mask=attention_mask,<br>            cache_position=cache_position,<br>            past_key_values=past_key_values,<br>            position_ids=position_ids,<br>        )<br><br>    hidden_states = inputs_embeds<br>    <span class="hljs-comment"># 4. Position embedding</span><br>    position_embeddings = self.rotary_emb(hidden_states, position_ids)<br><br>    <span class="hljs-comment"># 5. Decoder forwards</span><br>    <span class="hljs-keyword">for</span> decoder_layer <span class="hljs-keyword">in</span> self.layers[: self.config.num_hidden_layers]:<br>        hidden_states = decoder_layer(<br>            hidden_states,<br>            attention_mask=causal_mask_mapping[decoder_layer.attention_type],<br>            position_embeddings=position_embeddings,<br>            position_ids=position_ids,<br>            past_key_values=past_key_values,<br>            use_cache=use_cache,<br>            cache_position=cache_position,<br>            **kwargs,<br>        )<br><br>    <span class="hljs-comment"># 6. Last hidden states.</span><br>    hidden_states = self.norm(hidden_states)<br>    <span class="hljs-keyword">return</span> BaseModelOutputWithPast(<br>        last_hidden_state=hidden_states,<br>        past_key_values=past_key_values <span class="hljs-keyword">if</span> use_cache <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>,<br>    )<br></code></pre></td></tr></table></figure>
+</details>
+<h2 id="decoder-layers">Decoder layers</h2>
+<p>這邊會分開來講 [layer norm -&gt; attention -&gt; mlp]。</p>
+<h3 id="attention">Attention</h3>
+<p>這邊就不細講 Attention 怎麼算的，之後看 FlashInfer 再一起看 Flash Attn 等計算和代碼。</p>
+看一些一般不會注意到的實作細節。 Code:
+<details>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Qwen3Attention</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config: Qwen3Config, layer_idx: <span class="hljs-built_in">int</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.config = config<br>        self.layer_idx = layer_idx<br>        self.head_dim = <span class="hljs-built_in">getattr</span>(config, <span class="hljs-string">&quot;head_dim&quot;</span>, config.hidden_size // config.num_attention_heads)<br>        self.num_key_value_groups = config.num_attention_heads // config.num_key_value_heads <span class="hljs-comment"># MHA &amp; GQA</span><br>        self.scaling = self.head_dim**-<span class="hljs-number">0.5</span><br>        self.attention_dropout = config.attention_dropout<br>        self.is_causal = <span class="hljs-literal">True</span><br><br>        self.q_proj = nn.Linear(<br>            config.hidden_size, <br>            config.num_attention_heads * self.head_dim, <br>            bias=config.attention_bias<br>        )<br>        self.k_proj = nn.Linear(<br>            config.hidden_size, <br>            config.num_key_value_heads * self.head_dim, <br>            bias=config.attention_bias<br>        )<br>        self.v_proj = nn.Linear(<br>            config.hidden_size, <br>            config.num_key_value_heads * self.head_dim, <br>            bias=config.attention_bias<br>        )<br>        self.o_proj = nn.Linear(<br>            config.num_attention_heads * self.head_dim, <br>            config.hidden_size, <br>            bias=config.attention_bias<br>        )<br>        self.q_norm = Qwen3RMSNorm(self.head_dim, eps=config.rms_norm_eps)  <span class="hljs-comment"># unlike olmo, only on the head dim!</span><br>        self.k_norm = Qwen3RMSNorm(self.head_dim, eps=config.rms_norm_eps)  <span class="hljs-comment"># thus post q_norm does not need reshape</span><br>        self.sliding_window = config.sliding_window <span class="hljs-keyword">if</span> self.layer_type == <span class="hljs-string">&quot;sliding_attention&quot;</span> <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+</details>
+<ol type="1">
+<li>注意Qwen3的attention bias是可以被關閉的，而Qwen2是強制開啟。
+<ul>
+<li>Attn(Q,K,V)=softmax(QK/sqrt(d)​+<strong>bias</strong>)V</li>
+<li>bias會讓llm有更強的instruction following，能夠更服從prompt，相對的關掉bias可以讓llm有更多exploration，這對reasoning model特別有用，因為CoT需要更廣的探索去獲取reasoning pattern。</li>
+</ul></li>
+<li>QK norm是Qwen3新加的，在Qwen2和llama等模型都沒有。
+<ul>
+<li>原本attention score: <span class="math inline">\(s_{ij}​=\frac{q_{i}⊤​k_{j}}{\sqrt{d}}\)</span>.</li>
+<li>在沒有bias的之後，模型更新會直接由QK決定，若是訓練過於朝向某個token，QK值會變得很大，在這裏的RMSnorm是為了訓練穩定。</li>
+<li>除了防止訓練爆掉，還有一個是為了不讓RL訓練overfit到某些token，在RL訓練中，某些token可能導致獲得高reward，這屬於某種reward hacking，這邊的normalize是為了RL訓練的穩定。</li>
+<li>為什麼只對QK做norm? 注意這邊只對head dim做norm，意思就是說為了不消除不同head之間的訊息量，所以才只對head內做norm，若是V也做同樣的事，則會失去不同head之間的語意訊息。</li>
+</ul></li>
+<li>​Group Query Attention / Multi-head Attention <img src="GQA.png" />
+<ul>
+<li>在Attention裡每個head代表學習不同的語意和邏輯，就是不同的sub-space，當然也可以被共享。</li>
+<li>就像上圖一樣，最naive的MHA每個QKV都是獨立的，也消耗最多的算力（更多的KV weight和KV Cache存取）。</li>
+<li>MQA是另一極端，所有V享有一個head，最有效率的同時也犧牲表現力，只在一些專門解small task的模型中使用。</li>
+<li>GQA是兼顧效率和表現，享有較少算力的同時兼顧表現，現代模型大多使用這種架構。</li>
+</ul></li>
+</ol>
+<h3 id="rotary-positional-embedding-rope">Rotary Positional Embedding (RoPE)</h3>
+<p>比較一下Absolute PE和Relative PE</p>
+<ol type="1">
+<li>Absolute: x_t → x_t + pos_embedding[t]
+<ul>
+<li>沒有相對位置的資訊</li>
+</ul></li>
+<li>Relative: QK^T + bias(i - j)
+<ul>
+<li>bias需要另外訓練</li>
+</ul></li>
+</ol>
+<p><strong>RoPE</strong>概念是利用旋轉角度給予位置資訊，RoPE 對每個 position t，把 QK 在 2D 子空間裡旋轉一個角度θt。賦予相對位置資訊的同時，也不用另外學習。當然，當 context length 拉得超級長的時候，短距離位置之間的資訊量會被壓平，這時候會用 yarn 之類的變體來處理（Deepseek）。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Qwen3RotaryEmbedding</span>(nn.Module):<br>    inv_freq: torch.Tensor  <span class="hljs-comment"># fix linting for `register_buffer`</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config: Qwen3Config, device=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.max_seq_len_cached = config.max_position_embeddings<br>        self.original_max_seq_len = config.max_position_embeddings<br><br>        self.config = config<br><br>        self.rope_type = self.config.rope_parameters[<span class="hljs-string">&quot;rope_type&quot;</span>]<br>        rope_init_fn: <span class="hljs-type">Callable</span> = self.compute_default_rope_parameters<br>        <span class="hljs-keyword">if</span> self.rope_type != <span class="hljs-string">&quot;default&quot;</span>:<br>            rope_init_fn = ROPE_INIT_FUNCTIONS[self.rope_type]<br>        inv_freq, self.attention_scaling = rope_init_fn(self.config, device)<br><br>        self.register_buffer(<span class="hljs-string">&quot;inv_freq&quot;</span>, inv_freq, persistent=<span class="hljs-literal">False</span>)<br>        self.register_buffer(<span class="hljs-string">&quot;original_inv_freq&quot;</span>, inv_freq.clone(), persistent=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure> inv_freq: 決定每一個維度的旋轉頻率。這邊 register_buffer 之後就是一個固定參數，不會被train。</br> rope_type: 這邊定義了不同種 rope，像是有處理過長 context 的 yarn。</p>
+<p>計算 <code>inv_freq</code> （簡化）：對於第i個位置，分配一個角度。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_default_rope_parameters</span>(<span class="hljs-params">config, device, seq_len=<span class="hljs-literal">None</span></span>):<br>    base = config.rope_parameters[<span class="hljs-string">&quot;rope_theta&quot;</span>] <span class="hljs-comment"># 通常是10000</span><br>    dim = config.head_dim<br>    inv_freq = <span class="hljs-number">1.0</span> / (<br>        base ** (torch.arange(<span class="hljs-number">0</span>, dim, <span class="hljs-number">2</span>) / dim)<br>    )<br></code></pre></td></tr></table></figure></p>
+<p>Forward function: (簡化) <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x, position_ids</span>):<br>    freqs = (inv_freq @ position_ids).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>    emb = torch.cat((freqs, freqs), dim=-<span class="hljs-number">1</span>)<br>    cos = emb.cos()<br>    sin = emb.sin()<br>    <span class="hljs-keyword">return</span> cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)<br></code></pre></td></tr></table></figure> 這邊比較簡單，就是對每個position_ids賦予cos和sin作為positional embedding。</p>
+<h3 id="mlp">MLP</h3>
+<p>每個layer後面都會接一個MLP，之前一直不知道為什麼後面接一個這個，稍微研究一下才知道是為了引入「非線性」。</br> 就像linear layer後面會有ReLU一樣，Decoder block最後也會有MLP。</br> <img src="MLP.png" /> Qwen2,3都採用<strong>Gated MLP</strong>。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Qwen3MLP</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.config = config<br>        self.hidden_size = config.hidden_size<br>        self.intermediate_size = config.intermediate_size<br>        self.gate_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=<span class="hljs-literal">False</span>)<br>        self.up_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=<span class="hljs-literal">False</span>)<br>        self.down_proj = nn.Linear(self.intermediate_size, self.hidden_size, bias=<span class="hljs-literal">False</span>)<br>        self.act_fn = ACT2FN[config.hidden_act]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))<br>        <span class="hljs-keyword">return</span> down_proj<br></code></pre></td></tr></table></figure></p>
+<ol type="1">
+<li>注意到 <code>intermediate_size = 4*hidden_size</code>
+<ul>
+<li>查資料才知道MLP是模型容量的主要來源 <del>我原本一直以為把decoder層數scale up就會有容量 我錯了</del></li>
+</ul></li>
+<li>Gated MLP
+<ul>
+<li>選擇性開關資訊流的MLP</li>
+<li>Gated MLP = token-level、連續版的 MoE</li>
+</ul></li>
+</ol>
+<h3 id="rmsnorm">RMSNorm</h3>
+<p>最後來談談 RMSNorm。</br> 跟一般 layer norm 的主要不同就是只對 vector 長度正規化，不會對方向正規劃。換句話說不會引入其他 bias。</br></p>
+<ul>
+<li>Layer Norm: [x-mean(x)]/std(x)</li>
+<li>RMS Norm: x / ||x||</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Qwen3RMSNorm</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, hidden_size, eps: <span class="hljs-built_in">float</span> = <span class="hljs-number">1e-6</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.weight = nn.Parameter(torch.ones(hidden_size))<br>        self.variance_epsilon = eps<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, hidden_states: torch.Tensor</span>) -&gt; torch.Tensor:<br>        input_dtype = hidden_states.dtype<br>        hidden_states = hidden_states.to(torch.float32)<br>        variance = hidden_states.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>).mean(-<span class="hljs-number">1</span>, keepdim=<span class="hljs-literal">True</span>)<br>        hidden_states = hidden_states * torch.rsqrt(variance + self.variance_epsilon)<br>        <span class="hljs-keyword">return</span> self.weight * hidden_states.to(input_dtype)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>注意到這邊會強制改成fp32，因為RMSNorm在低精度下會產生大誤差</li>
+<li>在現代加速引擎中這引入了一些有趣的問題：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/10692559975">RMSNorm的精度陷阱：记一次LLM推理精度调查</a></li>
+</ul>
+<h2 id="conlusion">Conlusion</h2>
+<p>原本想寫一下 MOE 的，但還是等下一篇好了，之後也會談談Flash Infer等 inference kernel，最後會去看 Sglang vLLM。可能也會看看 LoRA 等一些 MLsys 技巧。</p>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+      <div class="card-cover" background-image-lazy data-img="https://i.pinimg.com/736x/d9/53/70/d953706b57282ac752ea5a5e95245433.jpg"></div>
+    
+    <div class="card-text">
+      
+        <a href="/Blog/2026/01/02/2025-research-and-works/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">2025工作研究流水帳</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://en.gravatar.com/userimage/217528008/f2c825ba654e7cdd5a0bb677d1b4eaa0.jpg?" class="soft-size--round soft-style--box" alt="KJL">
+    
+    
+      <h2>KJL</h2>
+    
+    
+      <p>Stay Hungry, Stay Foolish.</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>22</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        8
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+
+      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+      <span>CATEGORIES</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/Blog/tags/Exchange/" style="font-size: 10px;" class="tags-cloud-0">Exchange</a> <a href="/Blog/tags/Job/" style="font-size: 12.5px;" class="tags-cloud-3">Job</a> <a href="/Blog/tags/Life/" style="font-size: 20px;" class="tags-cloud-10">Life</a> <a href="/Blog/tags/MLsys/" style="font-size: 10px;" class="tags-cloud-0">MLsys</a> <a href="/Blog/tags/Math/" style="font-size: 15px;" class="tags-cloud-5">Math</a> <a href="/Blog/tags/Research/" style="font-size: 12.5px;" class="tags-cloud-3">Research</a> <a href="/Blog/tags/School/" style="font-size: 17.5px;" class="tags-cloud-8">School</a> <a href="/Blog/tags/paper-notes/" style="font-size: 17.5px;" class="tags-cloud-8">paper_notes</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+          <a href="https://www.instagram.com/kjl0508/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-ins" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 0C372.906667 0 355.541333 0.64 300.928 3.072 246.4 5.632 209.28 14.208 176.64 26.88c-33.664 13.056-62.250667 30.592-90.709333 59.050667S39.893333 142.933333 26.88 176.64C14.208 209.28 5.589333 246.4 3.072 300.928 0.512 355.541333 0 372.906667 0 512s0.64 156.458667 3.072 211.072c2.56 54.485333 11.136 91.648 23.808 124.288a251.093333 251.093333 0 0 0 59.050667 90.709333A250.368 250.368 0 0 0 176.64 997.12c32.682667 12.629333 69.802667 21.290667 124.288 23.808C355.541333 1023.488 372.906667 1024 512 1024s156.458667-0.64 211.072-3.072c54.485333-2.56 91.648-11.178667 124.288-23.808a251.648 251.648 0 0 0 90.709333-59.050667 250.026667 250.026667 0 0 0 59.050667-90.709333c12.629333-32.64 21.290667-69.802667 23.808-124.288 2.56-54.613333 3.072-71.978667 3.072-211.072s-0.64-156.458667-3.072-211.072c-2.56-54.485333-11.178667-91.690667-23.808-124.288a251.306667 251.306667 0 0 0-59.050667-90.709333A249.472 249.472 0 0 0 847.36 26.88c-32.64-12.672-69.802667-21.290667-124.288-23.808C668.458667 0.512 651.093333 0 512 0z m0 92.16c136.661333 0 152.96 0.682667 206.933333 3.029333 49.92 2.346667 77.013333 10.624 95.018667 17.706667 23.978667 9.258667 40.96 20.352 58.965333 38.229333 17.877333 17.92 28.970667 34.944 38.229334 58.922667 6.997333 18.005333 15.36 45.098667 17.621333 95.018667 2.432 54.016 2.986667 70.229333 2.986667 206.933333s-0.64 152.96-3.157334 206.933333c-2.602667 49.92-10.922667 77.013333-17.962666 95.018667a162.56 162.56 0 0 1-38.357334 58.965333 159.744 159.744 0 0 1-58.88 38.229334c-17.92 6.997333-45.44 15.36-95.36 17.621333-54.357333 2.432-70.357333 2.986667-207.317333 2.986667-137.002667 0-153.002667-0.64-207.317333-3.157334-49.962667-2.602667-77.482667-10.922667-95.402667-17.962666a158.549333 158.549333 0 0 1-58.837333-38.357334 155.477333 155.477333 0 0 1-38.4-58.88c-7.04-17.92-15.317333-45.44-17.92-95.36-1.92-53.76-2.602667-70.357333-2.602667-206.677333 0-136.362667 0.682667-153.002667 2.602667-207.402667 2.602667-49.92 10.88-77.397333 17.92-95.317333 8.96-24.32 20.437333-40.96 38.4-58.922667 17.877333-17.877333 34.56-29.397333 58.837333-38.314666 17.92-7.082667 44.842667-15.402667 94.762667-17.962667 54.4-1.92 70.4-2.56 207.317333-2.56l1.92 1.28z m0 156.928a262.912 262.912 0 1 0 0 525.824 262.912 262.912 0 1 0 0-525.824zM512 682.666667c-94.293333 0-170.666667-76.373333-170.666667-170.666667s76.373333-170.666667 170.666667-170.666667 170.666667 76.373333 170.666667 170.666667-76.373333 170.666667-170.666667 170.666667z m334.762667-443.946667a61.482667 61.482667 0 0 1-122.88 0 61.44 61.44 0 0 1 122.88 0z"></path>
+</svg>
+
+          </a>
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/KJLdefeated" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>&copy; 2026 <a href="/" target="_blank">KJL</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  
+
+
+
+
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+<script type="text/javascript">
+	(function () {
+		function getCodeType (elem) {
+			const classs = Array.from(elem.classList.values());
+			if (classs && classs.length > 1) {
+				return classs[1];
+			}
+			return "plain";
+		}
+
+		window.addEventListener("DOMContentLoaded", () => {
+			const copyBtnClass = "copy-btn";
+			//  instantiate clipboardjs 
+			const clipboard = new ClipboardJS('.' + copyBtnClass);
+
+			clipboard.on('success', function (e) {
+				console.info('Action:', e.action);
+				console.info('Text:', e.text);
+				console.info('Trigger:', e.trigger);
+				if (e.trigger) {
+					e.trigger.classList.add("copied");
+					setTimeout(() => {
+						e.trigger.classList.remove("copied");
+					}, 3000);
+				}
+				e.clearSelection();
+			});
+
+			clipboard.on('error', function (e) {
+				console.error('Action:', e.action);
+				console.error('Trigger:', e.trigger);
+			});
+
+			document.querySelectorAll('figure.highlight').forEach((elem) => {
+				const codeContent = elem.querySelector("td.code");
+				const copyButton = document.createElement('button');
+				copyButton.setAttribute("class", copyBtnClass);
+				copyButton.setAttribute("title", "Copy Code");
+				copyButton.setAttribute("data-clipboard-text", codeContent.innerText);
+				elem.insertBefore(copyButton, elem.children[0]);
+			});
+		})
+	})();
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  <!-- Google Analytics START -->
+  <script type="text/javascript">
+    (function() {
+      if (window.location.hostname === "localhost" || window.location.hostname.startsWith("192.168")) {
+        return console.log("本地调试");
+      }
+
+      window.dataLayer = window.dataLayer || [];
+      
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      let script = document.createElement("script")
+
+      script.onload = function() {
+        gtag('js', new Date());
+        gtag('config', "G-2728M4QDJ7");
+      }
+
+      script.src = "https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(script, s);
+    })()
+  </script>
+  <!-- Google Analytics End -->
+
+  
+
+
+  
+
+
+
+
+<script src="/Blog/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
+</html>
