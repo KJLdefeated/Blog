@@ -1,479 +1,782 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#3367D6"/>
-  <link rel="apple-touch-icon" href="/icons-192.png">
-  <link rel="manifest" href="/manifest.json">
-  
-  <meta name="generator" content="Hexo 7.1.1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Kai-Jie Lin">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
 
-  
+                // Try immediately
+                if (addBodyClass()) return;
 
-  
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  
-    <meta name="author" content="KJL">
-  
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://kjldefeated.github.io/Blog/2023/06/22/交大修課心得-111-2/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="交大修課心得-111-2">
+<meta property="og:url" content="https://kjldefeated.github.io/Blog/2023/06/22/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-111-2/">
+<meta property="og:site_name" content="KJ&#39;s Blog">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kjldefeated.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2023-06-22T15:18:17.000Z">
+<meta property="article:modified_time" content="2024-06-29T07:11:43.828Z">
+<meta property="article:author" content="KJL">
+<meta property="article:tag" content="Life">
+<meta property="article:tag" content="School">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kjldefeated.github.io/images/redefine-og.webp">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-  
+        gtag('config', 'G-2728M4QDJ7');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/Blog/images/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/Blog/images/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            交大修課心得-111-2 | KJ&#39;s Blog
+        
+    </title>
 
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/Chillax/chillax.css">
 
-  <title>交大修課心得-111-2 | KJ&#39;s Blog</title>
 
-  
+    <!--- Inject Part-->
+    
 
-  
-    <link rel="shortcut icon" href="/Blog/favicon.ico">
-  
-
-  
-
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.13/index.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/monokai.min.css">
-  
-
-  
-
-  
+    
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --></head>
-<body>
-  <div class="root-container">
     
-<!-- header container -->
-<header class="header-container post">
-  
-    <div class="post-image" style="background-image: url(https://images.alphacoders.com/131/1311951.jpg)"></div>
-  
-
-  <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/Blog/">
         
-          KJ&#39;s Blog
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/Blog/">首頁</a></li>
-        
-          <li class="navbar-list-item"><a href="/Blog/about">關於</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+<link rel="stylesheet" href="/Blog/css/build/tailwind.css">
 
-  
-  
+    
 
-  
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/GeistMono/geist-mono.css">
 
-  
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/Geist/geist.css">
 
-  
-  
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
 
-  
-  
-    <div class="header-content">
-      <div class="post-text layout-block">
-        <div class="layout-margin">
-          <h1 class="title-wrap">交大修課心得-111-2</h1>
-          <h2 class="title-sub-wrap">
-            <strong>KJL</strong>
-            <span>发布于</span>
-            <time  class="article-date" datetime="2023-06-22T15:18:17.000Z" itemprop="datePublished">2023-06-22</time>
-          </h2>
-          
-            <h2 class="last-time">
-              <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-06-29T07:11:43.828Z" itemprop="dateUpdated">2024-06-29</time>
-            </h2>
-          
-          
-          <ul class="wrap-list dark">
-  
-</ul>
-          <ul class="wrap-list dark">
-  
-    <li><a href="/Blog/tags/Life/">🏷️ Life</a></li>
-  
-    <li><a href="/Blog/tags/School/">🏷️ School</a></li>
-  
-</ul>
+    <script id="hexo-configurations">
+    window.config = {"hostname":"kjldefeated.github.io","root":"/Blog/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/haykyuu.jpg","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"dark"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":true,"id":"G-2728M4QDJ7"}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/haykyuu.jpg","dark":"/images/haykyuu.jpg"},"title":"KJ's Blog","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#fff"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/KJLdefeated","instagram":null,"zhihu":null,"twitter":"https://x.com/Kjl0508Sc10","email":"linkai0508@gmail.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/Blog/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/Blog/">
+                    <img src="/Blog/images/favicon.ico" class="w-full h-full rounded-xs">
+                </a>
+            
+            <a class="logo-title" href="/Blog/">
+                
+                KJ&#39;s Blog
+                
+            </a>
         </div>
-      </div>
-    </div>
-  
 
-  
-  
-  
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/Blog/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/Blog/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">23</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
 </header>
 
-    <!-- 文章 -->
 
-<!-- 文章内容 -->
-<div class="body-container">
-  <article class="content-container layout-block post-container">
-    <div class="article-info">
-      
-      
-      
-      
-      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h5 id="背景nycu-cs-大二">背景：NYCU CS 大二</h5>
-<h2 id="必修">必修</h2>
-<h3 id="計算機組織"><a target="_blank" rel="noopener" href="https://github.com/KJLdefeated/NYCU_Computer_Organization">計算機組織</a></h3>
-<h4 id="教授蔡文錦學分3">教授：蔡文錦/學分：3</h4>
-<p>五次作業、三次考試、三次小考，從組合語言開始教起，然後是CPU架構，然後是pipeline CPU，最後講記憶體和CPU如何處理加減乘除和浮點數。 難度而言，這堂應該是三個老師裡最簡單的了，不過我感覺我還是對這種要記很多東西的課很不對盤，加上對硬體實在沒什麼興趣，所以這堂課沒有學得很好。 但經過這堂課之後，就對電腦的架構比較了解，雖然很會敲鍵盤打code，但其實對電腦內部很不熟，甚至連RAM到底是指哪一個我都不知道，這堂課之後終於有一些概念， 在挑電腦的時候也比較熟悉了。 至於推不推，畢竟計組真的蠻難的，<del>我覺得教授自己也不太會教</del> ，所以只考慮甜度的話，這堂算甜，畢竟期中末算是還容易，<del>雖然我還是考得很爛</del> ，所以還是可以推。</p>
-<h3 id="數位電路設計">數位電路設計</h3>
-<h4 id="教授范倫達學分3">教授：范倫達/學分：3</h4>
-<p>沒有作業、三次考試、兩次小考，不用寫verilog，課程先教Boolean Algebra and Logic Gates、Gate-Level Minimization和Combinational Logic，再來是 Synchronous Sequential Logic，最後是Register and Counters和Memory and Programmable Logic。 難度是三個老師裡最簡單的，畢竟考試之前都有考古可以背，雖然第二次期中考有點小翻車，但最後還是順利A+了，范教授一生推，推薦所有想要刷分的人來修。</p>
-<h3 id="離散數學">離散數學</h3>
-<h4 id="教授林政寬學分3">教授：林政寬/學分：3</h4>
-<p>兩次期中、七次作業、沒有小考，期中教了一些證明的方法和集合論之類的，有點像之前在應數系修的基礎數學，期末比較有印象的是圖論和數論， <del>不過我整學期基本上沒去上課，所以也不好說</del> ，期中末都考課本的一些練習題，確實像他說的一樣比去年難一點，讓我期末翻車了，我以為他大概會考跟考古差不多難度， 但很多課本上的東西我都沒唸，加上圖論基本忘了，所以最後沒A+，大意了沒閃。但因為應該還是有讀有分，這堂課還是甜爆。</p>
-<h2 id="選修">選修</h2>
-<h3 id="人工智慧概論"><a target="_blank" rel="noopener" href="https://github.com/KJLdefeated/NYCU_Intro_to_AI">人工智慧概論</a></h3>
-<h4 id="教授陳奕廷學分3">教授：陳奕廷/學分：3</h4>
-<p>六次作業、一次期末專題、沒有考試。主要介紹一些一些簡單的AI演算法，包括古早CV的Viola-Jones、Searching (Alpha beta pruning, MCTS)、一些DL/RL的皮毛和baysian model。 內容很多，都是入門系列的，期末還有業界人士來分享，我覺得老師教得很不錯，應該都讓大家對AI很有興趣吧。作業難度我覺得都算簡單，有名的演算法在網路上查一查都有，分數也很好拿，很推。</p>
-<h3 id="人工智慧總整與實作"><a target="_blank" rel="noopener" href="https://github.com/KJLdefeated/NYCU_AI_Capstone">人工智慧總整與實作</a></h3>
-<h4 id="教授王才沛學分3">教授：王才沛/學分：3</h4>
-<p>三次作業、一次期末專題、一次考試。主要內容好像跟上面AI概差不多（？，英文授課但是老師的口音很糊QQ，比上面多講了基因演算法和logical inference之類的東西， 作業部分很麻煩，給了一份spec然後其他東西都要全部自己寫，講得還沒有很清楚，但都算簡單，不過我要抱怨，限制程式只能寫在一個file是什麼鬼，還要打包成一個執行檔， 原本我像要用RL方法去解作業二的遊戲，但限制一個檔案就不能include參數檔，最後還是乖乖刻MCTS。總而言之沒學到什麼東西，倒是花的時間有點多，最後的考試算是有讀講義有分， 但講義也沒有寫得很好，只能上網找資料自求多福，總分數目前還沒出來，不知道給分怎麼樣，反正我個人不太推。 <del>AI學程四堂課只有第一堂能推啊。。。</del></p>
-<h3 id="正規語言概論">正規語言概論</h3>
-<h4 id="教授陳穎平學分3">教授：陳穎平/學分：3</h4>
-<p>三次考試。計算理論入門，先介紹各式各樣計算模型，DFA, NFA, PDA, Turing Machine，最後講到複雜度P與NP，是計算複雜度領域的入門課。 以前好像是資工系必修的樣子，蠻有名的。老師也教得很不錯，認真聽的話應該都聽得懂，考試也不難，有一堆考古可以練習，題型也大同小異。 這種理論數學課而且還很多證明的，基本上老師想的話可以考得非常難，但老師題型固定，跟前幾年都很像，考前讀一讀都可以應付，期末調分也蠻多的，分數很好拿。資工系難得的數學課，很推。</p>
-<h3 id="強化學習原理旁聽"><a target="_blank" rel="noopener" href="https://github.com/KJLdefeated/NYCU_RL">強化學習原理（旁聽）</a></h3>
-<h4 id="教授謝秉均學分3">教授：謝秉均/學分：3</h4>
-<p>三次作業，兩個期末project（personal/group）。從一開始MDP、Policy improvement、Policy gradient、PG家族的演算法、Q learning/DQN、distributional RL、up side down rl，內容其實非常多， 但我這堂課只有旁聽，因為撞必修離散數學，但其實我都去上RL沒去上離散XD，實驗室教授的課，當然要好好聽。 老師教得非常好，把我對RL不懂的部分都補齊了，也介紹了很多RL領域裡的神奇算法，數學也講得很清楚，作業避開實作上繁瑣的部分，只做核心演算法， 作業不難，主要時間都花在調參，為了取得比較好的結果，也讓我學會非常多，期末兩個project因為期末比較忙加上旁聽沒隊友，就沒有做了，明年再真正的修一次這堂課。</p>
-<h3 id="專題">專題</h3>
-<p>這個學期有找到教授做專題，但沒修專題課，所以實質修課學分是23+3+2（？。目前先跟學長一起做一個專題，做了整學期後最大的感想是專題真的好累啊XD， 花費課外時間去研究題目所需要的模型，實際跑模型、調參花費很多時間，況且我還有學長帶，有個人告訴自己要做些什麼，如果以後自己負責一個專題的話壓力大概會很大， 所有東西都必須自己來，程式、理論都要自己寫、自己想，每個禮拜固定meeting被教授追著進度跑，雖然如此，我還是學到非常多東西，整個過程也是很充實很棒的。 這個專題題目是關於multiobject bayesian optimization，因為關於實驗室paper我不會說太多，之後希望能夠成功投上conference，也希望我能夠找到自己有興趣的題目，自己做一份專題。</p>
-<h2 id="其他">其他</h2>
-<h3 id="國防科技概論二">國防科技概論（二）</h3>
-<h4 id="教授李永隆學分3">教授：李永隆/學分：3</h4>
-<p>課超涼，我都去教室寫作業，每節課都要點名，期中時還可以去參訪，期末就只需要寫一份幾百字的報告，不知道甜不甜，想修涼課的很推。</p>
-<h3 id="經典通識教育">經典通識教育</h3>
-<h4 id="教授王美鴻學分3">教授：王美鴻/學分：3</h4>
-<p>每週請一位專業人士還演講，內容從藝文界到政治都有，每週要交一份心得， <del>Chatgpt真的很方便</del> ，但分數沒有給得很好平均A- ~ A，推薦不急著刷分的人修。</p>
-<h3 id="高爾夫球">高爾夫球</h3>
-<h4 id="教授-張嘉洲學分0">教授： 張嘉洲/學分:0</h4>
-<p>跟上學期一樣，但這次是早十，打高爾夫好玩，但之後應該去修修看不同體育課，跑出校外真的偏麻煩。</p>
-<h3 id="未來期許">未來期許</h3>
-<p>下學期應該修20學分就好，修了三門通識，一次把通識學分補滿，下學期也沒有修AI課，主要想說補齊一些系統和網路的知識，加上專題，希望下學期不要那麼血汗。 暑假報名托福補習班了，八月底要考，用來申請交換，希望能夠破百。暑假除了讀托福做專題以外，應該也會去找找自己有興趣的題目，之後跟教授討論看看，要不要自己做一份專題。</p>
+		</div>
 
-      </section>
+		<div class="main-content-body transition-fade-up">
+			
 
-      
-      
-        <nav class="article-nav">
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-      <div class="card-cover" background-image-lazy data-img="https://images.alphacoders.com/135/1354376.jpeg"></div>
-    
-    <div class="card-text">
-      
-        <a href="/Blog/2024/06/28/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-112/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">交大修課心得-112</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
-    </div>
-  </article>
-</div>
-          
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-      <div class="card-cover" background-image-lazy data-img="https://images8.alphacoders.com/668/668124.png"></div>
-    
-    <div class="card-text">
-      
-        <a href="/Blog/2023/01/20/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-111-1/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">交大修課心得(111-1)</h2>
-        </a>
-      
-      <div class="card-text--row">Older</div>
-    </div>
-  </article>
-</div>
-          
-        </nav>
-      
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
 
-      <section class="page-message-container layout-padding">
-        
+		<div class="article-title relative w-full">
+			
+			
+			
+			<img src="https://images.alphacoders.com/131/1311951.jpg" alt="交大修課心得-111-2" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75" />
+			
+			<div class="w-full flex items-center absolute bottom-0 justify-start">
+				<h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">交大修課心得-111-2</h1>
+			</div>
+			
+		</div>
 
-
-  
-  
-
-  
-  
-
-
-      </section>
-    </div>
-    <div class="widget-info">
-      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-body">
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/Blog/images/saki.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Kai-Jie Lin</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-06-22 23:18:17</span>
+        <span class="mobile">2023-06-22 23:18:17</span>
+        <span class="hover-info">Created</span>
+    </span>
     
-      <img src="https://en.gravatar.com/userimage/217528008/f2c825ba654e7cdd5a0bb677d1b4eaa0.jpg?" class="soft-size--round soft-style--box" alt="KJL">
-    
-    
-      <h2>KJL</h2>
-    
-    
-      <p>Stay Hungry, Stay Foolish.</p>
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-06-29 15:11:43</span>
+            <span class="mobile">2024-06-29 15:11:43</span>
+            <span class="hover-info">Updated</span>
+        </span>
     
 
-    <div class="count-box">
-      <div class="count-box--item">
-        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
-</svg>
-        <span>22</span>
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-        0
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-        8
-      </div>
-    </div>
-  </div>
-</section>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/Blog/tags/Life/">Life</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/Blog/tags/School/">School</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
 
-      
-
-      
-
-      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-      <span>CATEGORIES</span>
-  </div>
-  <div class="widget-body">
-    <ul class="categories-list">
-      
-    </ul>
-  </div>
-</section>
-
-      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-    <span>TAGS</span>
-  </div>
-  <div class="widget-body">
-    <div class="tags-cloud">
-      <a href="/Blog/tags/Exchange/" style="font-size: 10px;" class="tags-cloud-0">Exchange</a> <a href="/Blog/tags/Job/" style="font-size: 12.5px;" class="tags-cloud-3">Job</a> <a href="/Blog/tags/Life/" style="font-size: 20px;" class="tags-cloud-10">Life</a> <a href="/Blog/tags/MLsys/" style="font-size: 10px;" class="tags-cloud-0">MLsys</a> <a href="/Blog/tags/Math/" style="font-size: 15px;" class="tags-cloud-5">Math</a> <a href="/Blog/tags/Research/" style="font-size: 12.5px;" class="tags-cloud-3">Research</a> <a href="/Blog/tags/School/" style="font-size: 17.5px;" class="tags-cloud-8">School</a> <a href="/Blog/tags/paper-notes/" style="font-size: 17.5px;" class="tags-cloud-8">paper_notes</a>
-    </div>
-  </div>
-</section>
-    </div>
-  </article>
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
 </div>
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <div class="social-icons">
-      
-        
-          <a href="https://www.instagram.com/kjl0508/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-ins" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M512 0C372.906667 0 355.541333 0.64 300.928 3.072 246.4 5.632 209.28 14.208 176.64 26.88c-33.664 13.056-62.250667 30.592-90.709333 59.050667S39.893333 142.933333 26.88 176.64C14.208 209.28 5.589333 246.4 3.072 300.928 0.512 355.541333 0 372.906667 0 512s0.64 156.458667 3.072 211.072c2.56 54.485333 11.136 91.648 23.808 124.288a251.093333 251.093333 0 0 0 59.050667 90.709333A250.368 250.368 0 0 0 176.64 997.12c32.682667 12.629333 69.802667 21.290667 124.288 23.808C355.541333 1023.488 372.906667 1024 512 1024s156.458667-0.64 211.072-3.072c54.485333-2.56 91.648-11.178667 124.288-23.808a251.648 251.648 0 0 0 90.709333-59.050667 250.026667 250.026667 0 0 0 59.050667-90.709333c12.629333-32.64 21.290667-69.802667 23.808-124.288 2.56-54.613333 3.072-71.978667 3.072-211.072s-0.64-156.458667-3.072-211.072c-2.56-54.485333-11.178667-91.690667-23.808-124.288a251.306667 251.306667 0 0 0-59.050667-90.709333A249.472 249.472 0 0 0 847.36 26.88c-32.64-12.672-69.802667-21.290667-124.288-23.808C668.458667 0.512 651.093333 0 512 0z m0 92.16c136.661333 0 152.96 0.682667 206.933333 3.029333 49.92 2.346667 77.013333 10.624 95.018667 17.706667 23.978667 9.258667 40.96 20.352 58.965333 38.229333 17.877333 17.92 28.970667 34.944 38.229334 58.922667 6.997333 18.005333 15.36 45.098667 17.621333 95.018667 2.432 54.016 2.986667 70.229333 2.986667 206.933333s-0.64 152.96-3.157334 206.933333c-2.602667 49.92-10.922667 77.013333-17.962666 95.018667a162.56 162.56 0 0 1-38.357334 58.965333 159.744 159.744 0 0 1-58.88 38.229334c-17.92 6.997333-45.44 15.36-95.36 17.621333-54.357333 2.432-70.357333 2.986667-207.317333 2.986667-137.002667 0-153.002667-0.64-207.317333-3.157334-49.962667-2.602667-77.482667-10.922667-95.402667-17.962666a158.549333 158.549333 0 0 1-58.837333-38.357334 155.477333 155.477333 0 0 1-38.4-58.88c-7.04-17.92-15.317333-45.44-17.92-95.36-1.92-53.76-2.602667-70.357333-2.602667-206.677333 0-136.362667 0.682667-153.002667 2.602667-207.402667 2.602667-49.92 10.88-77.397333 17.92-95.317333 8.96-24.32 20.437333-40.96 38.4-58.922667 17.877333-17.877333 34.56-29.397333 58.837333-38.314666 17.92-7.082667 44.842667-15.402667 94.762667-17.962667 54.4-1.92 70.4-2.56 207.317333-2.56l1.92 1.28z m0 156.928a262.912 262.912 0 1 0 0 525.824 262.912 262.912 0 1 0 0-525.824zM512 682.666667c-94.293333 0-170.666667-76.373333-170.666667-170.666667s76.373333-170.666667 170.666667-170.666667 170.666667 76.373333 170.666667 170.666667-76.373333 170.666667-170.666667 170.666667z m334.762667-443.946667a61.482667 61.482667 0 0 1-122.88 0 61.44 61.44 0 0 1 122.88 0z"></path>
-</svg>
+				</div>
+			</div>
+		</div>
+		
 
-          </a>
-        
-      
-        
-      
-        
-      
-        
-          <a href="https://github.com/KJLdefeated" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
-</svg>
-          </a>
-        
-      
-        
-      
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h5 id="背景：NYCU-CS-大二"><a href="#背景：NYCU-CS-大二" class="headerlink" title="背景：NYCU CS 大二"></a>背景：NYCU CS 大二</h5><h2 id="必修"><a href="#必修" class="headerlink" title="必修"></a>必修</h2><h3 id="計算機組織"><a href="#計算機組織" class="headerlink" title="計算機組織"></a><a class="link"   target="_blank" rel="noopener" href="https://github.com/KJLdefeated/NYCU_Computer_Organization" >計算機組織<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h3><h4 id="教授：蔡文錦-學分：3"><a href="#教授：蔡文錦-學分：3" class="headerlink" title="教授：蔡文錦&#x2F;學分：3"></a>教授：蔡文錦&#x2F;學分：3</h4><p>五次作業、三次考試、三次小考，從組合語言開始教起，然後是CPU架構，然後是pipeline CPU，最後講記憶體和CPU如何處理加減乘除和浮點數。<br>難度而言，這堂應該是三個老師裡最簡單的了，不過我感覺我還是對這種要記很多東西的課很不對盤，加上對硬體實在沒什麼興趣，所以這堂課沒有學得很好。<br>但經過這堂課之後，就對電腦的架構比較了解，雖然很會敲鍵盤打code，但其實對電腦內部很不熟，甚至連RAM到底是指哪一個我都不知道，這堂課之後終於有一些概念，<br>在挑電腦的時候也比較熟悉了。<br>至於推不推，畢竟計組真的蠻難的，<del>我覺得教授自己也不太會教</del> ，所以只考慮甜度的話，這堂算甜，畢竟期中末算是還容易，<del>雖然我還是考得很爛</del> ，所以還是可以推。</p>
+<h3 id="數位電路設計"><a href="#數位電路設計" class="headerlink" title="數位電路設計"></a>數位電路設計</h3><h4 id="教授：范倫達-學分：3"><a href="#教授：范倫達-學分：3" class="headerlink" title="教授：范倫達&#x2F;學分：3"></a>教授：范倫達&#x2F;學分：3</h4><p>沒有作業、三次考試、兩次小考，不用寫verilog，課程先教Boolean Algebra and Logic Gates、Gate-Level Minimization和Combinational Logic，再來是<br>Synchronous Sequential Logic，最後是Register and Counters和Memory and Programmable Logic。<br>難度是三個老師裡最簡單的，畢竟考試之前都有考古可以背，雖然第二次期中考有點小翻車，但最後還是順利A+了，范教授一生推，推薦所有想要刷分的人來修。</p>
+<h3 id="離散數學"><a href="#離散數學" class="headerlink" title="離散數學"></a>離散數學</h3><h4 id="教授：林政寬-學分：3"><a href="#教授：林政寬-學分：3" class="headerlink" title="教授：林政寬&#x2F;學分：3"></a>教授：林政寬&#x2F;學分：3</h4><p>兩次期中、七次作業、沒有小考，期中教了一些證明的方法和集合論之類的，有點像之前在應數系修的基礎數學，期末比較有印象的是圖論和數論，<br><del>不過我整學期基本上沒去上課，所以也不好說</del> ，期中末都考課本的一些練習題，確實像他說的一樣比去年難一點，讓我期末翻車了，我以為他大概會考跟考古差不多難度，<br>但很多課本上的東西我都沒唸，加上圖論基本忘了，所以最後沒A+，大意了沒閃。但因為應該還是有讀有分，這堂課還是甜爆。</p>
+<h2 id="選修"><a href="#選修" class="headerlink" title="選修"></a>選修</h2><h3 id="人工智慧概論"><a href="#人工智慧概論" class="headerlink" title="人工智慧概論"></a><a class="link"   target="_blank" rel="noopener" href="https://github.com/KJLdefeated/NYCU_Intro_to_AI" >人工智慧概論<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h3><h4 id="教授：陳奕廷-學分：3"><a href="#教授：陳奕廷-學分：3" class="headerlink" title="教授：陳奕廷&#x2F;學分：3"></a>教授：陳奕廷&#x2F;學分：3</h4><p>六次作業、一次期末專題、沒有考試。主要介紹一些一些簡單的AI演算法，包括古早CV的Viola-Jones、Searching (Alpha beta pruning, MCTS)、一些DL&#x2F;RL的皮毛和baysian model。<br>內容很多，都是入門系列的，期末還有業界人士來分享，我覺得老師教得很不錯，應該都讓大家對AI很有興趣吧。作業難度我覺得都算簡單，有名的演算法在網路上查一查都有，分數也很好拿，很推。</p>
+<h3 id="人工智慧總整與實作"><a href="#人工智慧總整與實作" class="headerlink" title="人工智慧總整與實作"></a><a class="link"   target="_blank" rel="noopener" href="https://github.com/KJLdefeated/NYCU_AI_Capstone" >人工智慧總整與實作<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h3><h4 id="教授：王才沛-學分：3"><a href="#教授：王才沛-學分：3" class="headerlink" title="教授：王才沛&#x2F;學分：3"></a>教授：王才沛&#x2F;學分：3</h4><p>三次作業、一次期末專題、一次考試。主要內容好像跟上面AI概差不多（？，英文授課但是老師的口音很糊QQ，比上面多講了基因演算法和logical inference之類的東西，<br>作業部分很麻煩，給了一份spec然後其他東西都要全部自己寫，講得還沒有很清楚，但都算簡單，不過我要抱怨，限制程式只能寫在一個file是什麼鬼，還要打包成一個執行檔，<br>原本我像要用RL方法去解作業二的遊戲，但限制一個檔案就不能include參數檔，最後還是乖乖刻MCTS。總而言之沒學到什麼東西，倒是花的時間有點多，最後的考試算是有讀講義有分，<br>但講義也沒有寫得很好，只能上網找資料自求多福，總分數目前還沒出來，不知道給分怎麼樣，反正我個人不太推。 <del>AI學程四堂課只有第一堂能推啊。。。</del></p>
+<h3 id="正規語言概論"><a href="#正規語言概論" class="headerlink" title="正規語言概論"></a>正規語言概論</h3><h4 id="教授：陳穎平-學分：3"><a href="#教授：陳穎平-學分：3" class="headerlink" title="教授：陳穎平&#x2F;學分：3"></a>教授：陳穎平&#x2F;學分：3</h4><p>三次考試。計算理論入門，先介紹各式各樣計算模型，DFA, NFA, PDA, Turing Machine，最後講到複雜度P與NP，是計算複雜度領域的入門課。<br>以前好像是資工系必修的樣子，蠻有名的。老師也教得很不錯，認真聽的話應該都聽得懂，考試也不難，有一堆考古可以練習，題型也大同小異。<br>這種理論數學課而且還很多證明的，基本上老師想的話可以考得非常難，但老師題型固定，跟前幾年都很像，考前讀一讀都可以應付，期末調分也蠻多的，分數很好拿。資工系難得的數學課，很推。</p>
+<h3 id="強化學習原理（旁聽）"><a href="#強化學習原理（旁聽）" class="headerlink" title="強化學習原理（旁聽）"></a><a class="link"   target="_blank" rel="noopener" href="https://github.com/KJLdefeated/NYCU_RL" >強化學習原理（旁聽）<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h3><h4 id="教授：謝秉均-學分：3"><a href="#教授：謝秉均-學分：3" class="headerlink" title="教授：謝秉均&#x2F;學分：3"></a>教授：謝秉均&#x2F;學分：3</h4><p>三次作業，兩個期末project（personal&#x2F;group）。從一開始MDP、Policy improvement、Policy gradient、PG家族的演算法、Q learning&#x2F;DQN、distributional RL、up side down rl，內容其實非常多，<br>但我這堂課只有旁聽，因為撞必修離散數學，但其實我都去上RL沒去上離散XD，實驗室教授的課，當然要好好聽。<br>老師教得非常好，把我對RL不懂的部分都補齊了，也介紹了很多RL領域裡的神奇算法，數學也講得很清楚，作業避開實作上繁瑣的部分，只做核心演算法，<br>作業不難，主要時間都花在調參，為了取得比較好的結果，也讓我學會非常多，期末兩個project因為期末比較忙加上旁聽沒隊友，就沒有做了，明年再真正的修一次這堂課。</p>
+<h3 id="專題"><a href="#專題" class="headerlink" title="專題"></a>專題</h3><p>這個學期有找到教授做專題，但沒修專題課，所以實質修課學分是23+3+2（？。目前先跟學長一起做一個專題，做了整學期後最大的感想是專題真的好累啊XD，<br>花費課外時間去研究題目所需要的模型，實際跑模型、調參花費很多時間，況且我還有學長帶，有個人告訴自己要做些什麼，如果以後自己負責一個專題的話壓力大概會很大，<br>所有東西都必須自己來，程式、理論都要自己寫、自己想，每個禮拜固定meeting被教授追著進度跑，雖然如此，我還是學到非常多東西，整個過程也是很充實很棒的。<br>這個專題題目是關於multiobject bayesian optimization，因為關於實驗室paper我不會說太多，之後希望能夠成功投上conference，也希望我能夠找到自己有興趣的題目，自己做一份專題。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="國防科技概論（二）"><a href="#國防科技概論（二）" class="headerlink" title="國防科技概論（二）"></a>國防科技概論（二）</h3><h4 id="教授：李永隆-學分：3"><a href="#教授：李永隆-學分：3" class="headerlink" title="教授：李永隆&#x2F;學分：3"></a>教授：李永隆&#x2F;學分：3</h4><p>課超涼，我都去教室寫作業，每節課都要點名，期中時還可以去參訪，期末就只需要寫一份幾百字的報告，不知道甜不甜，想修涼課的很推。</p>
+<h3 id="經典通識教育"><a href="#經典通識教育" class="headerlink" title="經典通識教育"></a>經典通識教育</h3><h4 id="教授：王美鴻-學分：3"><a href="#教授：王美鴻-學分：3" class="headerlink" title="教授：王美鴻&#x2F;學分：3"></a>教授：王美鴻&#x2F;學分：3</h4><p>每週請一位專業人士還演講，內容從藝文界到政治都有，每週要交一份心得， <del>Chatgpt真的很方便</del> ，但分數沒有給得很好平均A- ~ A，推薦不急著刷分的人修。</p>
+<h3 id="高爾夫球"><a href="#高爾夫球" class="headerlink" title="高爾夫球"></a>高爾夫球</h3><h4 id="教授：張嘉洲-學分-0"><a href="#教授：張嘉洲-學分-0" class="headerlink" title="教授：	張嘉洲&#x2F;學分:0"></a>教授：	張嘉洲&#x2F;學分:0</h4><p>跟上學期一樣，但這次是早十，打高爾夫好玩，但之後應該去修修看不同體育課，跑出校外真的偏麻煩。</p>
+<h3 id="未來期許"><a href="#未來期許" class="headerlink" title="未來期許"></a>未來期許</h3><p>下學期應該修20學分就好，修了三門通識，一次把通識學分補滿，下學期也沒有修AI課，主要想說補齊一些系統和網路的知識，加上專題，希望下學期不要那麼血汗。<br>暑假報名托福補習班了，八月底要考，用來申請交換，希望能夠破百。暑假除了讀托福做專題以外，應該也會去找找自己有興趣的題目，之後跟教授討論看看，要不要自己做一份專題。</p>
+
+		</div>
+
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/Life/">#Life</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/School/">#School</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/Blog/2024/06/28/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-112/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">交大修課心得-112</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/Blog/2023/01/20/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-111-1/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">交大修課心得(111-1)</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
     </div>
-     
-    <p>&copy; 2026 <a href="/" target="_blank">KJL</a></p>
-
     
 
-    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/Blog/js/libs/waline.js';
 
-    <p>
-      <a href="javascript:;" id="theme-light">🌞 浅色</a>
-      <a href="javascript:;" id="theme-dark">🌛 深色</a>
-      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
-    </p>
-  </div>
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">交大修課心得-111-2</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%85%E4%BF%AE"><span class="nav-text">必修</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%88%E7%AE%97%E6%A9%9F%E7%B5%84%E7%B9%94"><span class="nav-text">計算機組織</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B8%E4%BD%8D%E9%9B%BB%E8%B7%AF%E8%A8%AD%E8%A8%88"><span class="nav-text">數位電路設計</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%A2%E6%95%A3%E6%95%B8%E5%AD%B8"><span class="nav-text">離散數學</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%B8%E4%BF%AE"><span class="nav-text">選修</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7%E6%A6%82%E8%AB%96"><span class="nav-text">人工智慧概論</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7%E7%B8%BD%E6%95%B4%E8%88%87%E5%AF%A6%E4%BD%9C"><span class="nav-text">人工智慧總整與實作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E8%A6%8F%E8%AA%9E%E8%A8%80%E6%A6%82%E8%AB%96"><span class="nav-text">正規語言概論</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%B7%E5%8C%96%E5%AD%B8%E7%BF%92%E5%8E%9F%E7%90%86%EF%BC%88%E6%97%81%E8%81%BD%EF%BC%89"><span class="nav-text">強化學習原理（旁聽）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%88%E9%A1%8C"><span class="nav-text">專題</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%8B%E9%98%B2%E7%A7%91%E6%8A%80%E6%A6%82%E8%AB%96%EF%BC%88%E4%BA%8C%EF%BC%89"><span class="nav-text">國防科技概論（二）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B6%93%E5%85%B8%E9%80%9A%E8%AD%98%E6%95%99%E8%82%B2"><span class="nav-text">經典通識教育</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%88%BE%E5%A4%AB%E7%90%83"><span class="nav-text">高爾夫球</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AA%E4%BE%86%E6%9C%9F%E8%A8%B1"><span class="nav-text">未來期許</span></a></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/Blog/">Kai-Jie Lin</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        23 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
 </footer>
-  </div>
+		</div>
+	</div>
 
-  <div class="back-to-top-fixed soft-size--round soft-style--box">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-    </svg>
-  </div>
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
 
-  
-  
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
 
 
 
+<script src="/Blog/js/build/libs/Swup.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupSlideTheme.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupScriptsPlugin.min.js"></script>
 
-<!-- copy button  -->
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+<script src="/Blog/js/build/libs/SwupProgressPlugin.min.js"></script>
 
-<!-- https://clipboardjs.com/ -->
+<script src="/Blog/js/build/libs/SwupScrollPlugin.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupPreloadPlugin.min.js"></script>
 
-<script type="text/javascript">
-	(function () {
-		function getCodeType (elem) {
-			const classs = Array.from(elem.classList.values());
-			if (classs && classs.length > 1) {
-				return classs[1];
-			}
-			return "plain";
-		}
-
-		window.addEventListener("DOMContentLoaded", () => {
-			const copyBtnClass = "copy-btn";
-			//  instantiate clipboardjs 
-			const clipboard = new ClipboardJS('.' + copyBtnClass);
-
-			clipboard.on('success', function (e) {
-				console.info('Action:', e.action);
-				console.info('Text:', e.text);
-				console.info('Trigger:', e.trigger);
-				if (e.trigger) {
-					e.trigger.classList.add("copied");
-					setTimeout(() => {
-						e.trigger.classList.remove("copied");
-					}, 3000);
-				}
-				e.clearSelection();
-			});
-
-			clipboard.on('error', function (e) {
-				console.error('Action:', e.action);
-				console.error('Trigger:', e.trigger);
-			});
-
-			document.querySelectorAll('figure.highlight').forEach((elem) => {
-				const codeContent = elem.querySelector("td.code");
-				const copyButton = document.createElement('button');
-				copyButton.setAttribute("class", copyBtnClass);
-				copyButton.setAttribute("title", "Copy Code");
-				copyButton.setAttribute("data-clipboard-text", codeContent.innerText);
-				elem.insertBefore(copyButton, elem.children[0]);
-			});
-		})
-	})();
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
 </script>
 
 
 
 
+	
+<script src="/Blog/js/build/tools/imageViewer.js" type="module"></script>
 
+<script src="/Blog/js/build/utils.js" type="module"></script>
+
+<script src="/Blog/js/build/main.js" type="module"></script>
+
+<script src="/Blog/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/Blog/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/Blog/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/Blog/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/Blog/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/Blog/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/Blog/js/build/tools/runtime.js"></script>
+
+    
+<script src="/Blog/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/Blog/assets/odometer-theme-minimal.css">
 
 
 
 
   
-
-
-  <!-- Google Analytics START -->
-  <script type="text/javascript">
-    (function() {
-      if (window.location.hostname === "localhost" || window.location.hostname.startsWith("192.168")) {
-        return console.log("本地调试");
-      }
-
-      window.dataLayer = window.dataLayer || [];
-      
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-
-      let script = document.createElement("script")
-
-      script.onload = function() {
-        gtag('js', new Date());
-        gtag('config', "G-2728M4QDJ7");
-      }
-
-      script.src = "https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(script, s);
-    })()
-  </script>
-  <!-- Google Analytics End -->
+<script src="/Blog/js/build/libs/Typed.min.js"></script>
 
   
-
-
-  
-
+<script src="/Blog/js/build/plugins/typed.js" type="module"></script>
 
 
 
-<script src="/Blog/js/script.js"></script>
 
 
-  
-  <!-- 尾部用户自定义相关内容 -->
+
+
+
+    
+<script src="/Blog/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/Blog/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/Blog/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/Blog/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/Blog/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/Blog/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
+
 </html>

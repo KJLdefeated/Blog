@@ -1,155 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#3367D6"/>
-  <link rel="apple-touch-icon" href="/icons-192.png">
-  <link rel="manifest" href="/manifest.json">
-  
-  <meta name="generator" content="Hexo 7.1.1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Kai-Jie Lin">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
 
-  
+                // Try immediately
+                if (addBodyClass()) return;
 
-  
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  
-    <meta name="author" content="KJL">
-  
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://kjldefeated.github.io/Blog/2024/07/14/a-note-on-fine-tuning-diffusion-models-with-rl/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Note on Fine-Tuning Diffusion Models with Reinforcement Learning">
+<meta property="og:url" content="https://kjldefeated.github.io/Blog/2024/07/14/A-Note-on-Fine-Tuning-Diffusion-Models-with-RL/">
+<meta property="og:site_name" content="KJ&#39;s Blog">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kjldefeated.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2024-07-14T03:06:30.000Z">
+<meta property="article:modified_time" content="2026-01-28T06:47:44.016Z">
+<meta property="article:author" content="KJL">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="paper_notes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kjldefeated.github.io/images/redefine-og.webp">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-  
+        gtag('config', 'G-2728M4QDJ7');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/Blog/images/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/Blog/images/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            A Note on Fine-Tuning Diffusion Models with Reinforcement Learning | KJ&#39;s Blog
+        
+    </title>
 
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/Chillax/chillax.css">
 
-  <title>A Note on Fine-Tuning Diffusion Models with Reinforcement Learning | KJ&#39;s Blog</title>
 
-  
+    <!--- Inject Part-->
+    
 
-  
-    <link rel="shortcut icon" href="/Blog/favicon.ico">
-  
-
-  
-
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.13/index.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/monokai.min.css">
-  
-
-  
-
-  
+    
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --></head>
-<body>
-  <div class="root-container">
     
-<!-- header container -->
-<header class="header-container post">
-  
-    <div class="post-image" style="background-image: url(https://imgur.com/TNkt2Tv.png)"></div>
-  
-
-  <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/Blog/">
         
-          KJ&#39;s Blog
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/Blog/">首頁</a></li>
-        
-          <li class="navbar-list-item"><a href="/Blog/about">關於</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+<link rel="stylesheet" href="/Blog/css/build/tailwind.css">
 
-  
-  
+    
 
-  
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/GeistMono/geist-mono.css">
 
-  
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/Geist/geist.css">
 
-  
-  
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
 
-  
-  
-    <div class="header-content">
-      <div class="post-text layout-block">
-        <div class="layout-margin">
-          <h1 class="title-wrap">A Note on Fine-Tuning Diffusion Models with Reinforcement Learning</h1>
-          <h2 class="title-sub-wrap">
-            <strong>KJL</strong>
-            <span>发布于</span>
-            <time  class="article-date" datetime="2024-07-14T03:06:30.000Z" itemprop="datePublished">2024-07-14</time>
-          </h2>
-          
-            <h2 class="last-time">
-              <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-12-15T17:28:25.872Z" itemprop="dateUpdated">2024-12-16</time>
-            </h2>
-          
-          
-          <ul class="wrap-list dark">
-  
-</ul>
-          <ul class="wrap-list dark">
-  
-    <li><a href="/Blog/tags/paper-notes/">🏷️ paper_notes</a></li>
-  
-    <li><a href="/Blog/tags/Math/">🏷️ Math</a></li>
-  
-</ul>
+    <script id="hexo-configurations">
+    window.config = {"hostname":"kjldefeated.github.io","root":"/Blog/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/haykyuu.jpg","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"dark"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":true,"id":"G-2728M4QDJ7"}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/haykyuu.jpg","dark":"/images/haykyuu.jpg"},"title":"KJ's Blog","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#fff"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/KJLdefeated","instagram":null,"zhihu":null,"twitter":"https://x.com/Kjl0508Sc10","email":"linkai0508@gmail.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/Blog/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/Blog/">
+                    <img src="/Blog/images/favicon.ico" class="w-full h-full rounded-xs">
+                </a>
+            
+            <a class="logo-title" href="/Blog/">
+                
+                KJ&#39;s Blog
+                
+            </a>
         </div>
-      </div>
-    </div>
-  
 
-  
-  
-  
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/Blog/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/Blog/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">23</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
 </header>
 
-    <!-- 文章 -->
 
-<!-- 文章内容 -->
-<div class="body-container">
-  <article class="content-container layout-block post-container">
-    <div class="article-info">
-      
-      
-      
-      
-      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="a-note-on-fine-tuning-diffusion-models-with-rl">A Note on Fine-Tuning Diffusion Models with RL</h1>
-<p>The banner is generated by <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2311.13231">d3po</a>.</p>
-<h2 id="table-of-contents">Table of contents:</h2>
-<ul>
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			
+			
+			<img src="https://imgur.com/TNkt2Tv.png" alt="A Note on Fine-Tuning Diffusion Models with Reinforcement Learning" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75" />
+			
+			<div class="w-full flex items-center absolute bottom-0 justify-start">
+				<h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">A Note on Fine-Tuning Diffusion Models with Reinforcement Learning</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/Blog/images/saki.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Kai-Jie Lin</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-07-14 11:06:30</span>
+        <span class="mobile">2024-07-14 11:06:30</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-01-28 14:47:44</span>
+            <span class="mobile">2026-01-28 14:47:44</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/Blog/tags/paper-notes/">paper_notes</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/Blog/tags/Math/">Math</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="A-Note-on-Fine-Tuning-Diffusion-Models-with-RL"><a href="#A-Note-on-Fine-Tuning-Diffusion-Models-with-RL" class="headerlink" title="A Note on Fine-Tuning Diffusion Models with RL"></a>A Note on Fine-Tuning Diffusion Models with RL</h1><p>The banner is generated by <a class="link"   target="_blank" rel="noopener" href="https://arxiv.org/pdf/2311.13231" >d3po<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<h2 id="Table-of-contents"><a href="#Table-of-contents" class="headerlink" title="Table of contents:"></a>Table of contents:</h2><ul>
 <li><a href="#Introduction">Introduction</a></li>
 <li><a href="#Preliminaries:-Diffusion-Model">Preliminaries: Diffusion Model</a></li>
 <li><a href="#Preliminaries:-Reinforcement-Learning">Preliminaries: Reinforcement Learning</a></li>
@@ -161,430 +402,466 @@
 <li><a href="#Temporal-Diffusion-Policy-Optimization">Temporal Diffusion Policy Optimization</a></li>
 <li><a href="#Results">Results</a></li>
 </ul>
-<h2 id="introduction">Introduction</h2>
-<p>In this blog, we survey the method about Text2Image Alignment with Reinforcement Learning. This blog focus on image generation with <strong>diffusion models</strong>.</p>
-<h2 id="preliminaries-diffusion-model">Preliminaries: Diffusion Model</h2>
-<p>Diffusion models define a Markov chain of diffusion steps to slowly add random noise to data and then learn to reverse the diffusion process to construct desired data samples from the noise. <img src="Diffusion.png" /> Here we consider conditional diffusion probabilistic models, which represent a distribution <span class="math inline">\(p(x_0|c)\)</span> over a dataset of samples <span class="math inline">\(x_0\)</span> and corresponding contexts <span class="math inline">\(c\)</span>. The distribution is modeled as the reverse of a Markovian forward process <span class="math inline">\(q(x_t | x_{t−1})\)</span>, which iteratively adds noise to the data. Reversing the forward process can be accomplished by training a neural network <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="9.93ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 4389.2 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-I-1D707" d="M58 -216Q44 -216 34 -208T23 -186Q23 -176 96 116T173 414Q186 442 219 442Q231 441 239 435T249 423T251 413Q251 401 220 279T187 142Q185 131 185 107V99Q185 26 252 26Q261 26 270 27T287 31T302 38T315 45T327 55T338 65T348 77T356 88T365 100L372 110L408 253Q444 395 448 404Q461 431 491 431Q504 431 512 424T523 412T525 402L449 84Q448 79 448 68Q448 43 455 35T476 26Q485 27 496 35Q517 55 537 131Q543 151 547 152Q549 153 557 153H561Q580 153 580 144Q580 138 575 117T555 63T523 13Q510 0 491 -8Q483 -10 467 -10Q446 -10 429 -4T402 11T385 29T376 44T374 51L368 45Q362 39 350 30T324 12T288 -4T246 -11Q199 -11 153 12L129 -85Q108 -167 104 -180T92 -202Q76 -216 58 -216Z"></path><path id="MJX-1-TEX-I-1D703" d="M35 200Q35 302 74 415T180 610T319 704Q320 704 327 704T339 705Q393 701 423 656Q462 596 462 495Q462 380 417 261T302 66T168 -10H161Q125 -10 99 10T60 63T41 130T35 200ZM383 566Q383 668 330 668Q294 668 260 623T204 521T170 421T157 371Q206 370 254 370L351 371Q352 372 359 404T375 484T383 566ZM113 132Q113 26 166 26Q181 26 198 36T239 74T287 161T335 307L340 324H145Q145 321 136 286T120 208T113 132Z"></path><path id="MJX-1-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-1-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-1-TEX-I-1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path><path id="MJX-1-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-1-TEX-I-1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path id="MJX-1-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D707" xlink:href="#MJX-1-TEX-I-1D707"></use></g><g data-mml-node="mi" transform="translate(636,-150) scale(0.707)"><use data-c="1D703" xlink:href="#MJX-1-TEX-I-1D703"></use></g></g><g data-mml-node="mo" transform="translate(1017.6,0)"><use data-c="28" xlink:href="#MJX-1-TEX-N-28"></use></g><g data-mml-node="msub" transform="translate(1406.6,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-1-TEX-I-1D465"></use></g><g data-mml-node="mi" transform="translate(605,-150) scale(0.707)"><use data-c="1D461" xlink:href="#MJX-1-TEX-I-1D461"></use></g></g><g data-mml-node="mo" transform="translate(2316.9,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(2761.6,0)"><use data-c="1D450" xlink:href="#MJX-1-TEX-I-1D450"></use></g><g data-mml-node="mo" transform="translate(3194.6,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(3639.2,0)"><use data-c="1D461" xlink:href="#MJX-1-TEX-I-1D461"></use></g><g data-mml-node="mo" transform="translate(4000.2,0)"><use data-c="29" xlink:href="#MJX-1-TEX-N-29"></use></g></g></g></svg></mjx-container> with the following objective: <span class="math display">\[
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>In this blog, we survey the method about Text2Image Alignment with Reinforcement Learning. This blog focus on image generation with <strong>diffusion models</strong>.</p>
+<h2 id="Preliminaries-Diffusion-Model"><a href="#Preliminaries-Diffusion-Model" class="headerlink" title="Preliminaries: Diffusion Model"></a>Preliminaries: Diffusion Model</h2><p>Diffusion models define a Markov chain of diffusion steps to slowly add random noise to data and then learn to reverse the diffusion process to construct desired data samples from the noise.<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/Diffusion.png"
+                     
+                ><br>Here we consider conditional diffusion probabilistic models, which represent a distribution <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mi mathvariant="normal">∣</mi><mi>c</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x_0|c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathnormal">c</span><span class="mclose">)</span></span></span></span> over a dataset of samples <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">x_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> and corresponding contexts <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span>. The distribution is modeled as the reverse of a Markovian forward process <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>t</mi></msub><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">q(x_t | x_{t−1})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>, which iteratively adds noise to the data. Reversing the forward process can be accomplished by training a neural network <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>θ</mi></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mi>t</mi></msub><mo separator="true">,</mo><mi>c</mi><mo separator="true">,</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">μ_θ (x_t , c, t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span> with the following objective:</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="script">L</mi><mtext>DDPM</mtext></msub><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mo>∼</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>t</mi><mo>∼</mo><mi>U</mi><mo stretchy="false">{</mo><mn>0</mn><mo separator="true">,</mo><mi>T</mi><mo stretchy="false">}</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>t</mi></msub><mo>∼</mo><mi>q</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>t</mi></msub><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mrow></msub><mrow><mo fence="true">[</mo><mi mathvariant="normal">∥</mi><msub><mi>μ</mi><mi>θ</mi></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mi>t</mi></msub><mo separator="true">,</mo><mi>c</mi><mo separator="true">,</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><mover accent="true"><mi>μ</mi><mo>~</mo></mover><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo separator="true">,</mo><mi>t</mi><mo stretchy="false">)</mo><msup><mi mathvariant="normal">∥</mi><mn>2</mn></msup><mo fence="true">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 \mathcal{L}_{\text{DDPM}}(\theta) = \mathbb{E}_{(x_0, c) \sim p(x_0, c), t \sim U\{0, T\}, x_t \sim q(x_t | x_0)} \left[ \| \mu_{\theta}(x_t, c, t) - \tilde{\mu}(x_0, t) \|^2 \right]
-\]</span></p>
-<h2 id="preliminaries-reinforcement-learning">Preliminaries: Reinforcement Learning</h2>
-<p>In RL, an AI agent learns to make decisions by interacting with its environment. It performs actions and receives feedback in the form of rewards or penalties. The goal is to maximize the total reward over time. <img src="RL.png" /> A Markov decision process (MDP) is a formalization of sequential decision-making problems. An MDP is defined by a tuple <span class="math inline">\((S, A, ρ_0, P, R)\)</span>, in which <span class="math inline">\(S\)</span> is the state space, <span class="math inline">\(A\)</span> is the action space, <span class="math inline">\(ρ_0\)</span> is the distribution of initial states, <span class="math inline">\(P\)</span> is the transition kernel, and <span class="math inline">\(R\)</span> is the reward function. At each timestep <span class="math inline">\(t\)</span>, the agent observes a state <span class="math inline">\(s_t \in S\)</span>, takes an action <span class="math inline">\(a_t \in A\)</span>, receives a reward <span class="math inline">\(R(s_t, a_t)\)</span>, and transitions to a new state <span class="math inline">\(s_{t+1} \sim P (s_{t+1} | s_t, a_t)\)</span>. An agent acts according to a policy <span class="math inline">\(\pi(a | s)\)</span>. As the agent acts in the MDP, it produces trajectories, which are sequences of states and actions <span class="math inline">\(\tau = (s_0, a_0, s_1, a_1, . . . , s_T , a_T )\)</span>. The reinforcement learning (RL) objective is for the agent to maximize JRL(π), the expected cumulative reward over trajectories sampled from its policy: <span class="math display">\[
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathcal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">DDPM</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2193em;vertical-align:-0.3552em;"></span><span class="mord"><span class="mord mathbb">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3173em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">c</span><span class="mclose mtight">)</span><span class="mrel mtight">∼</span><span class="mord mathnormal mtight">p</span><span class="mopen mtight">(</span><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3173em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">c</span><span class="mclose mtight">)</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">t</span><span class="mrel mtight">∼</span><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span><span class="mopen mtight">{</span><span class="mord mtight">0</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span><span class="mclose mtight">}</span><span class="mpunct mtight">,</span><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mrel mtight">∼</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span><span class="mopen mtight">(</span><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mord mtight">∣</span><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3173em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3552em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">[</span></span><span class="mord">∥</span><span class="mord"><span class="mord mathnormal">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">μ</span></span><span style="top:-3.35em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2222em;"><span class="mord">~</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mord"><span class="mord">∥</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">]</span></span></span></span></span></span></span>
+
+<h2 id="Preliminaries-Reinforcement-Learning"><a href="#Preliminaries-Reinforcement-Learning" class="headerlink" title="Preliminaries: Reinforcement Learning"></a>Preliminaries: Reinforcement Learning</h2><p>In RL, an AI agent learns to make decisions by interacting with its environment. It performs actions and receives feedback in the form of rewards or penalties. The goal is to maximize the total reward over time.<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/RL.png"
+                     
+                ><br>A Markov decision process (MDP) is a formalization of sequential decision-making problems. An MDP is defined by a tuple <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>S</mi><mo separator="true">,</mo><mi>A</mi><mo separator="true">,</mo><msub><mi>ρ</mi><mn>0</mn></msub><mo separator="true">,</mo><mi>P</mi><mo separator="true">,</mo><mi>R</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(S, A, ρ_0, P, R)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">ρ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mclose">)</span></span></span></span>, in which <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span> is the state space, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> is the action space, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ρ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">ρ_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">ρ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the distribution of initial states, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span> is the transition kernel, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span> is the reward function. At each timestep <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span>, the agent observes a state <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>t</mi></msub><mo>∈</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">s_t \in S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6891em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span>, takes an action <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>t</mi></msub><mo>∈</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">a_t \in A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6891em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span>, receives a reward <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">R(s_t, a_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>, and transitions to a new state <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∼</mo><mi>P</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mi mathvariant="normal">∣</mi><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_{t+1} \sim P (s_{t+1} | s_t, a_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>. An agent acts according to a policy <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo stretchy="false">(</mo><mi>a</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\pi(a | s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mord">∣</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span>. As the agent acts in the MDP, it produces trajectories, which are sequences of states and actions <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>s</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>a</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>s</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>a</mi><mn>1</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>s</mi><mi>T</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>T</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\tau = (s_0, a_0, s_1, a_1, . . . , s_T , a_T )</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>. The reinforcement learning (RL) objective is for the agent to maximize JRL(π), the expected cumulative reward over trajectories sampled from its policy:</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="script">J</mi><mtext>RL</mtext></msub><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mrow><mi>τ</mi><mo>∼</mo><mi>p</mi><mo stretchy="false">(</mo><mi>τ</mi><mi mathvariant="normal">∣</mi><mi>π</mi><mo stretchy="false">)</mo></mrow></msub><mo stretchy="false">[</mo><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><mi>T</mi></munderover><mi>R</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">
 \mathcal{J}_{\text{RL}} = \mathbb{E}_{\tau \sim p(\tau|\pi)}[\sum_{t=0}^{T}R(s_t,a_t)]
-\]</span></p>
-<h2 id="denoising-as-a-multi-step-mdp">Denoising as a multi-step MDP</h2>
-<p><span class="math display">\[\begin{align*}
-\text{State:} &amp; \quad s_t \equiv (c, t, x_t) \\
-\text{Action:} &amp; \quad a_t \equiv x_{t-1} \\
-\text{Policy:} &amp; \quad \pi(a_t | s_t) \equiv p_{\theta}(x_{t-1} | x_t, c) \\
-\text{Initial State Distribution:} &amp; \quad \rho_0(s_0) \equiv (p(c), \delta_T, \mathcal{N}(0, I)) \\
-\text{Transition Kernel:} &amp; \quad P(s_{t+1} | s_t, a_t) \equiv (\delta_c, \delta_{t-1}, \delta_{x_{t-1}}) \\
-\text{Reward:} &amp; \quad R(s_t, a_t) \equiv 
-\begin{cases} 
-r(x_0, c) &amp; \text{if } t = 0 \\
-0 &amp; \text{otherwise} 
-\end{cases}
-\end{align*}\]</span></p>
-<h2 id="denoising-diffusion-policy-optimization"><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2305.13301">Denoising Diffusion Policy Optimization</a></h2>
-<p>Following the MDP formulation above, we can apply policy gradient method to optimize the rewards. <span class="math display">\[\begin{equation}
-\begin{aligned}
-\text{DDPO}_{\text{IS}}: \quad \nabla_{\theta} J_{\text{DDRL}} = \mathbb{E} \left[ \sum_{t=0}^{T} \frac{p_{\theta}(x_{t-1} | x_t, c)}{p_{\theta_{\text{old}}}(x_{t-1} | x_t, c)} \nabla_{\theta} \log p_{\theta}(x_{t-1} | x_t, c) \, r(x_0, c) \right]
-\end{aligned}
-\end{equation}\]</span></p>
-<h2 id="diffusion-policy-optimization-with-kl-regularization"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.16381">Diffusion Policy Optimization with KL regularization</a></h2>
-<p>The risk of fine-tuning purely based on the reward model learned from human or AI feedback is that the model may overfit to the reward and discount the “skill” of the initial diffusion model to a greater degree than warranted. To avoid this phenomenon, we can add the KL between the fine-tuned and pre-trained models as a regularizer to the objective function. <span class="math display">\[\begin{equation}
-\begin{aligned}
-\nabla_{\theta} \mathcal{L} &amp;= \mathbb{E}_{p_{\theta}(x_{0:T}|z)} \left[ -\alpha r(x_0, z) \sum_{t=1}^T \nabla_{\theta} \log p_{\theta}(x_{t-1} | x_t, z) + \beta \sum_{t=1}^T \nabla_{\theta} \text{KL} \left( p_{\theta}(x_{t-1} | x_t, z) \| p_{\text{pre}}(x_{t-1} | x_t, z) \right) \right]
-\end{aligned}
-\end{equation}\]</span></p>
-<h2 id="direct-preference-for-denoising-diffusion-policy-optimization"><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2311.13231">Direct Preference for Denoising Diffusion Policy Optimization</a></h2>
-<p>The direct preference optimization (<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.18290">DPO</a>) method, effective in fine-tuning large language models, eliminates the necessity for a reward model. While the DPO considered Bandit formulation, we can extends it to multi-step MDP. This is similar to this work: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2404.12358">From r to Q∗: Your Language Model is Secretly a Q-Function</a>. - DPO: <span class="math display">\[\begin{equation}
-L_{\text{DPO}}(\theta) = -\mathbb{E}_{(x, y_w, y_l) \sim D} \left[ \log \rho \left( \beta \log \frac{\pi_{\theta}(y_w | x)}{\pi_{\text{ref}}(y_w | x)} - \beta \log \frac{\pi_{\theta}(y_l | x)}{\pi_{\text{ref}}(y_l | x)} \right) \right]
-\end{equation}\]</span> - D3PO: <span class="math display">\[\begin{equation}
-L_i(\theta) = -\mathbb{E}_{(s_i, \sigma_w, \sigma_l)} \left[ \log \rho \left( \beta \log \frac{\pi_{\theta}(a_w^i | s_w^i)}{\pi_{\text{ref}}(a_w^i | s_w^i)} - \beta \log \frac{\pi_{\theta}(a_l^i | s_l^i)}{\pi_{\text{ref}}(a_l^i | s_l^i)} \right) \right]
-\end{equation}\]</span></p>
-<h2 id="a-dense-reward-view-on-aligning-text-to-image-diffusion"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.08265">A Dense Reward View on Aligning Text-to-Image Diffusion</a></h2>
-In the denoising MDP above, we can observe that we only get reward in the final step. The sparse reward scenario often gives low sample efficiency. This paper assumed there is a latent reward function that scores each step of the reverse chain, making the learning problem more tractable. 1. The regularized policy optimization problem is given by:
-<span class="math display">\[\begin{aligned}
-\max_{\pi} \quad &amp; \mathbb{E}_{s \sim d_{\pi_O}(s)} \left[ \mathbb{E}_{a \sim \pi(a | s)} [r(s, a)] \right] - C \cdot \mathbb{E}_{s \sim d_{\pi_O}(s)} \left[ D_{\text{KL}}(\pi(\cdot | s) \| \pi_I(\cdot | s)) \right] \\
-\text{s.t.} \quad &amp; \int_{A} \pi(a | s) \, da = 1, \quad \forall s \in S
-\end{aligned}\]</span>
-<ol start="2" type="1">
-<li>The optimal policy <span class="math inline">\(\pi^*\)</span> that maximizes the above objective is derived as:
-<span class="math display">\[\begin{aligned}
-\pi^*(a | s) = \frac{\exp\left( \frac{r(s, a)}{C} \right) \pi_I(a | s)}{Z(s)}
-\end{aligned}\]</span>
-where <span class="math inline">\(Z(s)\)</span> is the partition function given by:
-<span class="math display">\[\begin{aligned}
-Z(s) = \int_{A} \exp\left( \frac{r(s, a)}{C} \right) \pi_I(a | s) \, da
-\end{aligned}\]</span></li>
-<li>The reward function <span class="math inline">\(r(s,a)\)</span> can be expressed in terms of the optimal policy <span class="math inline">\(\pi^*\)</span>:
-<span class="math display">\[\begin{aligned} 
-r(s, a) = C \log \left( \frac{\pi^*(a | s)}{\pi_I(a | s)} \right) + C \log Z(s)
-\end{aligned}\]</span></li>
-<li>The quality<span class="math inline">\(e(\tau)\)</span> of a trajectory <span class="math inline">\(\tau\)</span> is evaluated by the expected cumulative discounted rewards:
-<span class="math display">\[\begin{aligned}
-e(\tau) = C \sum_{t=0}^{T} \gamma^t \log \left( \frac{\pi^*(a_t | s_t)}{\pi_I(a_t | s_t)} \right) + C \log Z(\tau)
-\end{aligned}\]</span></li>
-<li>Using the Bradley-Terry (BT) model, the probability of the ordering ord under <span class="math inline">\(\{e(\tau_k)\}_2^k=1\)</span> is:
-<span class="math display">\[\begin{aligned}
-\text{Pr}(\text{ord} | \pi^*, \{e(\tau_k)\}_2^k=1) = \frac{\exp \left( C \sum_{t=0}^{T} \gamma^t \log \left( \frac{\pi^*(a^1_t | s^1_t)}{\pi_I(a^1_t | s^1_t)} \right) \right) Z(\tau_1)^C}{\sum_{i=1}^{2} \exp \left( C \sum_{t=0}^{T} \gamma^t \log \left( \frac{\pi^*(a^i_t | s^i_t)}{\pi_I(a^i_t | s^i_t)} \right) \right) Z(\tau_i)^C}
-\end{aligned}\]</span></li>
-<li>To make this expression tractable, a lower bound is provided by arguing that <span class="math inline">\(Z(\tau_1)\geq Z(\tau_2)\)</span>:
-<span class="math display">\[\begin{aligned}
-\text{Pr}(\text{ord} | \pi^*, \{e(\tau_k)\}_2^k=1) \geq \frac{\exp ( C \sum_{t=0}^{T} \gamma^t \log ( \frac{\pi^*(a^1_t | s^1_t)}{\pi_I(a^1_t | s^1_t)} ) )}{\sum_{i=1}^{2} \exp ( C \sum_{t=0}^{T} \gamma^t \log \left( \frac{\pi^*(a^i_t | s^i_t)}{\pi_I(a^i_t | s^i_t)} \right)}
-\end{aligned}\]</span>
-7.Finally, the negative-log-likelihood loss function for training the policy <span class="math inline">\(\pi_\theta\)</span> is derived:
-<span class="math display">\[\begin{aligned}
-L_\gamma(\theta | \text{ord}, \{e(\tau_k)\}_2^k=1) = - \log \sigma \left( C \mathbb{E}_{t \sim \text{Cat}(\{\gamma^t\})} \left[ \log \left( \frac{\pi_\theta(a^1_t | s^1_t)}{\pi_I(a^1_t | s^1_t)} \right) - \log \left( \frac{\pi_\theta(a^2_t | s^2_t)}{\pi_I(a^2_t | s^2_t)} \right) \right] \right)
-\end{aligned}\]</span></li>
-</ol>
-<h2 id="temporal-diffusion-policy-optimization"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.08552">Temporal Diffusion Policy Optimization</a></h2>
-<strong>Reward overoptimization</strong> refers to the phenomenon where a model excessively optimizes learned or handcrafted reward functions, leading to a compromise in actual performance on the desired tasks. This occurs when the model overfits to the reward signals, which may not fully capture the true objectives or human intent behind the task. 1. Temporal Diffusion Policy Optimization (TDPO): - <strong>MDP Formulation with Temporal Rewards</strong>: By redefining the optimization process to consider rewards at each timestep of the diffusion process, rather than only at the end, the TDPO framework helps the model learn to value intermediate states that lead to high-quality outcomes. This approach inherently discourages the model from taking shortcuts that might optimize the final reward at the expense of the overall quality of the process. - <strong>Temporal Critic</strong>: The introduction of a temporal critic function allows the model to approximate intermediate rewards, providing a more continuous feedback loop during training. This method helps align the model's learning process with the temporal dynamics inherent in the task, promoting better generalization and reducing the likelihood of overfitting to end-state rewards.
-<span class="math display">\[\begin{aligned}
-T(x_t, c) \approx T_{\phi}(x_t, c) \triangleq R(x_0, c) - R_{\phi}(x_t, c)
-\end{aligned}\]</span>
-Use importance sampling to reweight the temporal rewards:
-<span class="math display">\[\begin{aligned}
-\mathbb{E}_{p(c)} \mathbb{E}_{p_{\theta}(x_{0:t} | c)} \left[ -T_{\phi}(x_t, c) \nabla_{\theta} \frac{p_{\theta}(x_{t-1} | x_t, c)}{p_{\theta_{\text{old}}}(x_{t-1} | x_t, c)} \right]
-\end{aligned}\]</span>
-Optimize the temporal critic by minimizing the following objective:
-<span class="math display">\[\begin{aligned}
-\mathbb{E}_{p(c)} \mathbb{E}_{p_{\theta}(x_{0:t} | c)} \left[ \left( \hat{R}_{\phi}(x_t, c) - R(x_0, c) \right)^2 \right]
-\end{aligned}\]</span>
-<ol start="2" type="1">
-<li>Primacy Bias and TDPO-R:
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.18472em;">J</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">RL</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.0954em;vertical-align:-1.2671em;"></span><span class="mord"><span class="mord mathbb">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span><span class="mrel mtight">∼</span><span class="mord mathnormal mtight">p</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.1132em;">τ</span><span class="mord mtight">∣</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3552em;"><span></span></span></span></span></span></span><span class="mopen">[</span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283em;"><span style="top:-1.8829em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2671em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)]</span></span></span></span></span>
+
+<h2 id="Denoising-as-a-multi-step-MDP"><a href="#Denoising-as-a-multi-step-MDP" class="headerlink" title="Denoising as a multi-step MDP"></a>Denoising as a multi-step MDP</h2><p>\begin{align*}<br>\text{State:} &amp; \quad s_t \equiv (c, t, x_t) \<br>\text{Action:} &amp; \quad a_t \equiv x_{t-1} \<br>\text{Policy:} &amp; \quad \pi(a_t | s_t) \equiv p_{\theta}(x_{t-1} | x_t, c) \<br>\text{Initial State Distribution:} &amp; \quad \rho_0(s_0) \equiv (p(c), \delta_T, \mathcal{N}(0, I)) \<br>\text{Transition Kernel:} &amp; \quad P(s_{t+1} | s_t, a_t) \equiv (\delta_c, \delta_{t-1}, \delta_{x_{t-1}}) \<br>\text{Reward:} &amp; \quad R(s_t, a_t) \equiv<br>\begin{cases}<br>r(x_0, c) &amp; \text{if } t &#x3D; 0 \<br>0 &amp; \text{otherwise}<br>\end{cases}<br>\end{align*}</p>
+<h2 id="Denoising-Diffusion-Policy-Optimization"><a href="#Denoising-Diffusion-Policy-Optimization" class="headerlink" title="Denoising Diffusion Policy Optimization"></a><a class="link"   target="_blank" rel="noopener" href="https://arxiv.org/pdf/2305.13301" >Denoising Diffusion Policy Optimization<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h2><p>Following the MDP formulation above, we can apply policy gradient method to optimize the rewards.<br>\begin{equation}<br>\begin{aligned}<br>\text{DDPO}<em>{\text{IS}}: \quad \nabla</em>{\theta} J_{\text{DDRL}} &#x3D; \mathbb{E} \left[ \sum_{t&#x3D;0}^{T} \frac{p_{\theta}(x_{t-1} | x_t, c)}{p_{\theta_{\text{old}}}(x_{t-1} | x_t, c)} \nabla_{\theta} \log p_{\theta}(x_{t-1} | x_t, c) , r(x_0, c) \right]<br>\end{aligned}<br>\end{equation}</p>
+<h2 id="Diffusion-Policy-Optimization-with-KL-regularization"><a href="#Diffusion-Policy-Optimization-with-KL-regularization" class="headerlink" title="Diffusion Policy Optimization with KL regularization"></a><a class="link"   target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.16381" >Diffusion Policy Optimization with KL regularization<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h2><p>The risk of fine-tuning purely based on the reward model learned from human or AI feedback is that the model may overfit to the reward and discount the “skill” of<br>the initial diffusion model to a greater degree than warranted. To avoid this phenomenon, we can add the KL between the fine-tuned and pre-trained models as a regularizer to the objective function.<br>\begin{equation}<br>\begin{aligned}<br>\nabla_{\theta} \mathcal{L} &amp;&#x3D; \mathbb{E}<em>{p</em>{\theta}(x_{0:T}|z)} \left[ -\alpha r(x_0, z) \sum_{t&#x3D;1}^T \nabla_{\theta} \log p_{\theta}(x_{t-1} | x_t, z) + \beta \sum_{t&#x3D;1}^T \nabla_{\theta} \text{KL} \left( p_{\theta}(x_{t-1} | x_t, z) | p_{\text{pre}}(x_{t-1} | x_t, z) \right) \right]<br>\end{aligned}<br>\end{equation}</p>
+<h2 id="Direct-Preference-for-Denoising-Diffusion-Policy-Optimization"><a href="#Direct-Preference-for-Denoising-Diffusion-Policy-Optimization" class="headerlink" title="Direct Preference for Denoising Diffusion Policy Optimization"></a><a class="link"   target="_blank" rel="noopener" href="https://arxiv.org/pdf/2311.13231" >Direct Preference for Denoising Diffusion Policy Optimization<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h2><p>The direct preference optimization (<a class="link"   target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.18290" >DPO<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>) method, effective in fine-tuning large language models, eliminates the necessity for a reward model. While the DPO considered Bandit formulation, we can extends it to multi-step MDP. This is similar to this work: <a class="link"   target="_blank" rel="noopener" href="https://arxiv.org/abs/2404.12358" >From r to Q∗: Your Language Model is Secretly a Q-Function<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
 <ul>
+<li>DPO:<br>\begin{equation}<br>L_{\text{DPO}}(\theta) &#x3D; -\mathbb{E}<em>{(x, y_w, y_l) \sim D} \left[ \log \rho \left( \beta \log \frac{\pi</em>{\theta}(y_w | x)}{\pi_{\text{ref}}(y_w | x)} - \beta \log \frac{\pi_{\theta}(y_l | x)}{\pi_{\text{ref}}(y_l | x)} \right) \right]<br>\end{equation}</li>
+<li>D3PO:<br>\begin{equation}<br>L_i(\theta) &#x3D; -\mathbb{E}<em>{(s_i, \sigma_w, \sigma_l)} \left[ \log \rho \left( \beta \log \frac{\pi</em>{\theta}(a_w^i | s_w^i)}{\pi_{\text{ref}}(a_w^i | s_w^i)} - \beta \log \frac{\pi_{\theta}(a_l^i | s_l^i)}{\pi_{\text{ref}}(a_l^i | s_l^i)} \right) \right]<br>\end{equation}</li>
+</ul>
+<h2 id="A-Dense-Reward-View-on-Aligning-Text-to-Image-Diffusion"><a href="#A-Dense-Reward-View-on-Aligning-Text-to-Image-Diffusion" class="headerlink" title="A Dense Reward View on Aligning Text-to-Image Diffusion"></a><a class="link"   target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.08265" >A Dense Reward View on Aligning Text-to-Image Diffusion<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h2><p>In the denoising MDP above, we can observe that we only get reward in the final step. The sparse reward scenario often gives low sample efficiency. This paper assumed there is a latent reward function that scores each step of the reverse chain, making the learning problem more tractable.</p>
+<ol>
+<li>The regularized policy optimization problem is given by:<br>\begin{aligned}<br>\max_{\pi} \quad &amp; \mathbb{E}<em>{s \sim d</em>{\pi_O}(s)} \left[ \mathbb{E}<em>{a \sim \pi(a | s)} [r(s, a)] \right] - C \cdot \mathbb{E}</em>{s \sim d_{\pi_O}(s)} \left[ D_{\text{KL}}(\pi(\cdot | s) | \pi_I(\cdot | s)) \right] \<br>\text{s.t.} \quad &amp; \int_{A} \pi(a | s) , da &#x3D; 1, \quad \forall s \in S<br>\end{aligned}</li>
+<li>The optimal policy <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>π</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">\pi^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6887em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span> that maximizes the above objective is derived as:<br>\begin{aligned}<br>\pi^*(a | s) &#x3D; \frac{\exp\left( \frac{r(s, a)}{C} \right) \pi_I(a | s)}{Z(s)}<br>\end{aligned}<br>where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Z(s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span> is the partition function given by:<br>\begin{aligned}<br>Z(s) &#x3D; \int_{A} \exp\left( \frac{r(s, a)}{C} \right) \pi_I(a | s) , da<br>\end{aligned}</li>
+<li>The reward function <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo stretchy="false">(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">r(s,a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">a</span><span class="mclose">)</span></span></span></span> can be expressed in terms of the optimal policy <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>π</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">\pi^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6887em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span>:<br>\begin{aligned}<br>r(s, a) &#x3D; C \log \left( \frac{\pi^*(a | s)}{\pi_I(a | s)} \right) + C \log Z(s)<br>\end{aligned}</li>
+<li>The quality<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">e(\tau)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span> of a trajectory <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span> is evaluated by the expected cumulative discounted rewards:<br>\begin{aligned}<br>e(\tau) &#x3D; C \sum_{t&#x3D;0}^{T} \gamma^t \log \left( \frac{\pi^*(a_t | s_t)}{\pi_I(a_t | s_t)} \right) + C \log Z(\tau)<br>\end{aligned}</li>
+<li>Using the Bradley-Terry (BT) model, the probability of the ordering<br>ord under <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><mi>e</mi><mo stretchy="false">(</mo><msub><mi>τ</mi><mi>k</mi></msub><mo stretchy="false">)</mo><msubsup><mo stretchy="false">}</mo><mn>2</mn><mi>k</mi></msubsup><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\{e(\tau_k)\}_2^k=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0991em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose"><span class="mclose">}</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-2.4519em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2481em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> is:<br>\begin{aligned}<br>\text{Pr}(\text{ord} | \pi^<em>, {e(\tau_k)}<em>2^k&#x3D;1) &#x3D; \frac{\exp \left( C \sum</em>{t&#x3D;0}^{T} \gamma^t \log \left( \frac{\pi^</em>(a^1_t | s^1_t)}{\pi_I(a^1_t | s^1_t)} \right) \right) Z(\tau_1)^C}{\sum_{i&#x3D;1}^{2} \exp \left( C \sum_{t&#x3D;0}^{T} \gamma^t \log \left( \frac{\pi^*(a^i_t | s^i_t)}{\pi_I(a^i_t | s^i_t)} \right) \right) Z(\tau_i)^C}<br>\end{aligned}</li>
+<li>To make this expression tractable, a lower bound is provided by arguing that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo stretchy="false">(</mo><msub><mi>τ</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>≥</mo><mi>Z</mi><mo stretchy="false">(</mo><msub><mi>τ</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Z(\tau_1)\geq Z(\tau_2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>:<br>\begin{aligned}<br>\text{Pr}(\text{ord} | \pi^<em>, {e(\tau_k)}<em>2^k&#x3D;1) \geq \frac{\exp ( C \sum</em>{t&#x3D;0}^{T} \gamma^t \log ( \frac{\pi^</em>(a^1_t | s^1_t)}{\pi_I(a^1_t | s^1_t)} ) )}{\sum_{i&#x3D;1}^{2} \exp ( C \sum_{t&#x3D;0}^{T} \gamma^t \log \left( \frac{\pi^*(a^i_t | s^i_t)}{\pi_I(a^i_t | s^i_t)} \right)}<br>\end{aligned}<br>7.Finally, the negative-log-likelihood loss function for training the policy <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>θ</mi></msub></mrow><annotation encoding="application/x-tex">\pi_\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is derived:<br>\begin{aligned}<br>L_\gamma(\theta | \text{ord}, {e(\tau_k)}<em>2^k&#x3D;1) &#x3D; - \log \sigma \left( C \mathbb{E}</em>{t \sim \text{Cat}({\gamma^t})} \left[ \log \left( \frac{\pi_\theta(a^1_t | s^1_t)}{\pi_I(a^1_t | s^1_t)} \right) - \log \left( \frac{\pi_\theta(a^2_t | s^2_t)}{\pi_I(a^2_t | s^2_t)} \right) \right] \right)<br>\end{aligned}</li>
+</ol>
+<h2 id="Temporal-Diffusion-Policy-Optimization"><a href="#Temporal-Diffusion-Policy-Optimization" class="headerlink" title="Temporal Diffusion Policy Optimization"></a><a class="link"   target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.08552" >Temporal Diffusion Policy Optimization<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h2><p><strong>Reward overoptimization</strong> refers to the phenomenon where a model excessively optimizes learned or handcrafted reward functions, leading to a compromise in actual performance on the desired tasks. This occurs when the model overfits to the reward signals, which may not fully capture the true objectives or human intent behind the task.</p>
+<ol>
+<li>Temporal Diffusion Policy Optimization (TDPO):<ul>
+<li><strong>MDP Formulation with Temporal Rewards</strong>: By redefining the optimization process to consider rewards at each timestep of the diffusion process, rather than only at the end, the TDPO framework helps the model learn to value intermediate states that lead to high-quality outcomes. This approach inherently discourages the model from taking shortcuts that might optimize the final reward at the expense of the overall quality of the process.</li>
+<li><strong>Temporal Critic</strong>: The introduction of a temporal critic function allows the model to approximate intermediate rewards, providing a more continuous feedback loop during training. This method helps align the model’s learning process with the temporal dynamics inherent in the task, promoting better generalization and reducing the likelihood of overfitting to end-state rewards.<br>\begin{aligned}<br>T(x_t, c) \approx T_{\phi}(x_t, c) \triangleq R(x_0, c) - R_{\phi}(x_t, c)<br>\end{aligned}<br>Use importance sampling to reweight the temporal rewards:<br>\begin{aligned}<br>\mathbb{E}<em>{p(c)} \mathbb{E}</em>{p_{\theta}(x_{0:t} | c)} \left[ -T_{\phi}(x_t, c) \nabla_{\theta} \frac{p_{\theta}(x_{t-1} | x_t, c)}{p_{\theta_{\text{old}}}(x_{t-1} | x_t, c)} \right]<br>\end{aligned}<br>Optimize the temporal critic by minimizing the following objective:<br>\begin{aligned}<br>\mathbb{E}<em>{p(c)} \mathbb{E}</em>{p_{\theta}(x_{0:t} | c)} \left[ \left( \hat{R}_{\phi}(x_t, c) - R(x_0, c) \right)^2 \right]<br>\end{aligned}</li>
+</ul>
+</li>
+<li>Primacy Bias and TDPO-R:<ul>
 <li><strong>Primacy Bias</strong>: Refers to the tendency of deep RL agents to overfit early training experiences. This can contribute to reward overoptimization by locking the model into suboptimal behaviors based on initial training data.</li>
 <li><strong>Neuron Activation States</strong>: The model differentiates between active and dormant neurons. Dormant neurons act as a regularization mechanism, while active neurons reflect primacy bias.</li>
 <li><strong>Reset Strategy</strong>: Periodically resetting active neurons in the critic model mitigates primacy bias and prevents the model from overfitting to the reward signals. This approach encourages the model to learn new regularization patterns without forgetting crucial past regularization.</li>
-<li>Equation for Neuron Mask:
-<span class="math display">\[\begin{aligned}
-\text{Mask}^m = \left[ A^m_n &gt; 0 \right]^{N_m}_{n=1}
-\end{aligned}\]</span></li>
-</ul></li>
+<li>Equation for Neuron Mask:<br>\begin{aligned}<br>\text{Mask}^m &#x3D; \left[ A^m_n &gt; 0 \right]^{N_m}_{n&#x3D;1}<br>\end{aligned}</li>
+</ul>
+</li>
 </ol>
 <p>By incorporating these strategies, the paper demonstrates that TDPO-R effectively mitigates reward overoptimization, enhances sample efficiency, and improves cross-reward generalization, leading to more reliable and robust diffusion models that better align with human preferences and intended outcomes.</p>
-<h2 id="results">Results</h2>
-<h3 id="ddpo">DDPO:</h3>
-<p><img src="DDPO.png" /></p>
-<h3 id="dpok">DPOK:</h3>
-<p><img src="DPOK.png" /></p>
-<h3 id="d3po">D3PO:</h3>
-<p><img src="D3PO.png" /></p>
-<h3 id="dpo-with-explicit-dense-reward">DPO with explicit dense reward:</h3>
-<p><img src="DPO_dense.png" /></p>
-<h3 id="tdpo">TDPO:</h3>
-<p><img src="TDPO.png" /></p>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><h3 id="DDPO"><a href="#DDPO" class="headerlink" title="DDPO:"></a>DDPO:</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/DDPO.png"
+                     
+                ></p>
+<h3 id="DPOK"><a href="#DPOK" class="headerlink" title="DPOK:"></a>DPOK:</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/DPOK.png"
+                     
+                ></p>
+<h3 id="D3PO"><a href="#D3PO" class="headerlink" title="D3PO:"></a>D3PO:</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/D3PO.png"
+                     
+                ></p>
+<h3 id="DPO-with-explicit-dense-reward"><a href="#DPO-with-explicit-dense-reward" class="headerlink" title="DPO with explicit dense reward:"></a>DPO with explicit dense reward:</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/DPO_dense.png"
+                     
+                ></p>
+<h3 id="TDPO"><a href="#TDPO" class="headerlink" title="TDPO:"></a>TDPO:</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/TDPO.png"
+                     
+                ></p>
 
-      </section>
+		</div>
 
-      
-      
-        <nav class="article-nav">
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-      <div class="card-cover" background-image-lazy data-img="https://imgur.com/Io3muri.png"></div>
-    
-    <div class="card-text">
-      
-        <a href="/Blog/2024/12/14/UIUC-Exchange/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">UIUC Exchange Guide (2024 FA)</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/paper-notes/">#paper_notes</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/Math/">#Math</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/Blog/2024/12/14/UIUC-Exchange/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">UIUC Exchange Guide (2024 FA)</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/Blog/2024/06/28/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-112/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">交大修課心得-112</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
     </div>
-  </article>
-</div>
-          
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
-      <div class="card-cover" background-image-lazy data-img="https://images.alphacoders.com/135/1354376.jpeg"></div>
-    
-    <div class="card-text">
-      
-        <a href="/Blog/2024/06/28/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97-112/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">交大修課心得-112</h2>
-        </a>
-      
-      <div class="card-text--row">Older</div>
-    </div>
-  </article>
-</div>
-          
-        </nav>
-      
 
-      <section class="page-message-container layout-padding">
         
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/Blog/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
 
 
-  
-  
 
-  
-  
-
-
-      </section>
-    </div>
-    <div class="widget-info">
-      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-body">
+        
     
-      <img src="https://en.gravatar.com/userimage/217528008/f2c825ba654e7cdd5a0bb677d1b4eaa0.jpg?" class="soft-size--round soft-style--box" alt="KJL">
-    
-    
-      <h2>KJL</h2>
-    
-    
-      <p>Stay Hungry, Stay Foolish.</p>
-    
-
-    <div class="count-box">
-      <div class="count-box--item">
-        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
-</svg>
-        <span>22</span>
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-        0
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-        8
-      </div>
-    </div>
-  </div>
-</section>
-
-      
-
-      
-
-      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-      <span>CATEGORIES</span>
-  </div>
-  <div class="widget-body">
-    <ul class="categories-list">
-      
-    </ul>
-  </div>
-</section>
-
-      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-    <span>TAGS</span>
-  </div>
-  <div class="widget-body">
-    <div class="tags-cloud">
-      <a href="/Blog/tags/Exchange/" style="font-size: 10px;" class="tags-cloud-0">Exchange</a> <a href="/Blog/tags/Job/" style="font-size: 12.5px;" class="tags-cloud-3">Job</a> <a href="/Blog/tags/Life/" style="font-size: 20px;" class="tags-cloud-10">Life</a> <a href="/Blog/tags/MLsys/" style="font-size: 10px;" class="tags-cloud-0">MLsys</a> <a href="/Blog/tags/Math/" style="font-size: 15px;" class="tags-cloud-5">Math</a> <a href="/Blog/tags/Research/" style="font-size: 12.5px;" class="tags-cloud-3">Research</a> <a href="/Blog/tags/School/" style="font-size: 17.5px;" class="tags-cloud-8">School</a> <a href="/Blog/tags/paper-notes/" style="font-size: 17.5px;" class="tags-cloud-8">paper_notes</a>
-    </div>
-  </div>
-</section>
-    </div>
-  </article>
 </div>
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <div class="social-icons">
-      
-        
-          <a href="https://www.instagram.com/kjl0508/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-ins" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M512 0C372.906667 0 355.541333 0.64 300.928 3.072 246.4 5.632 209.28 14.208 176.64 26.88c-33.664 13.056-62.250667 30.592-90.709333 59.050667S39.893333 142.933333 26.88 176.64C14.208 209.28 5.589333 246.4 3.072 300.928 0.512 355.541333 0 372.906667 0 512s0.64 156.458667 3.072 211.072c2.56 54.485333 11.136 91.648 23.808 124.288a251.093333 251.093333 0 0 0 59.050667 90.709333A250.368 250.368 0 0 0 176.64 997.12c32.682667 12.629333 69.802667 21.290667 124.288 23.808C355.541333 1023.488 372.906667 1024 512 1024s156.458667-0.64 211.072-3.072c54.485333-2.56 91.648-11.178667 124.288-23.808a251.648 251.648 0 0 0 90.709333-59.050667 250.026667 250.026667 0 0 0 59.050667-90.709333c12.629333-32.64 21.290667-69.802667 23.808-124.288 2.56-54.613333 3.072-71.978667 3.072-211.072s-0.64-156.458667-3.072-211.072c-2.56-54.485333-11.178667-91.690667-23.808-124.288a251.306667 251.306667 0 0 0-59.050667-90.709333A249.472 249.472 0 0 0 847.36 26.88c-32.64-12.672-69.802667-21.290667-124.288-23.808C668.458667 0.512 651.093333 0 512 0z m0 92.16c136.661333 0 152.96 0.682667 206.933333 3.029333 49.92 2.346667 77.013333 10.624 95.018667 17.706667 23.978667 9.258667 40.96 20.352 58.965333 38.229333 17.877333 17.92 28.970667 34.944 38.229334 58.922667 6.997333 18.005333 15.36 45.098667 17.621333 95.018667 2.432 54.016 2.986667 70.229333 2.986667 206.933333s-0.64 152.96-3.157334 206.933333c-2.602667 49.92-10.922667 77.013333-17.962666 95.018667a162.56 162.56 0 0 1-38.357334 58.965333 159.744 159.744 0 0 1-58.88 38.229334c-17.92 6.997333-45.44 15.36-95.36 17.621333-54.357333 2.432-70.357333 2.986667-207.317333 2.986667-137.002667 0-153.002667-0.64-207.317333-3.157334-49.962667-2.602667-77.482667-10.922667-95.402667-17.962666a158.549333 158.549333 0 0 1-58.837333-38.357334 155.477333 155.477333 0 0 1-38.4-58.88c-7.04-17.92-15.317333-45.44-17.92-95.36-1.92-53.76-2.602667-70.357333-2.602667-206.677333 0-136.362667 0.682667-153.002667 2.602667-207.402667 2.602667-49.92 10.88-77.397333 17.92-95.317333 8.96-24.32 20.437333-40.96 38.4-58.922667 17.877333-17.877333 34.56-29.397333 58.837333-38.314666 17.92-7.082667 44.842667-15.402667 94.762667-17.962667 54.4-1.92 70.4-2.56 207.317333-2.56l1.92 1.28z m0 156.928a262.912 262.912 0 1 0 0 525.824 262.912 262.912 0 1 0 0-525.824zM512 682.666667c-94.293333 0-170.666667-76.373333-170.666667-170.666667s76.373333-170.666667 170.666667-170.666667 170.666667 76.373333 170.666667 170.666667-76.373333 170.666667-170.666667 170.666667z m334.762667-443.946667a61.482667 61.482667 0 0 1-122.88 0 61.44 61.44 0 0 1 122.88 0z"></path>
-</svg>
+		</div>
+		
+	</div>
 
-          </a>
-        
-      
-        
-      
-        
-      
-        
-          <a href="https://github.com/KJLdefeated" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
-</svg>
-          </a>
-        
-      
-        
-      
-    </div>
-     
-    <p>&copy; 2026 <a href="/" target="_blank">KJL</a></p>
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">A Note on Fine-Tuning Diffusion Models with Reinforcement Learning</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-Note-on-Fine-Tuning-Diffusion-Models-with-RL"><span class="nav-text">A Note on Fine-Tuning Diffusion Models with RL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-of-contents"><span class="nav-text">Table of contents:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preliminaries-Diffusion-Model"><span class="nav-text">Preliminaries: Diffusion Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preliminaries-Reinforcement-Learning"><span class="nav-text">Preliminaries: Reinforcement Learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Denoising-as-a-multi-step-MDP"><span class="nav-text">Denoising as a multi-step MDP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Denoising-Diffusion-Policy-Optimization"><span class="nav-text">Denoising Diffusion Policy Optimization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Diffusion-Policy-Optimization-with-KL-regularization"><span class="nav-text">Diffusion Policy Optimization with KL regularization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Direct-Preference-for-Denoising-Diffusion-Policy-Optimization"><span class="nav-text">Direct Preference for Denoising Diffusion Policy Optimization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Dense-Reward-View-on-Aligning-Text-to-Image-Diffusion"><span class="nav-text">A Dense Reward View on Aligning Text-to-Image Diffusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Temporal-Diffusion-Policy-Optimization"><span class="nav-text">Temporal Diffusion Policy Optimization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Results"><span class="nav-text">Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DDPO"><span class="nav-text">DDPO:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DPOK"><span class="nav-text">DPOK:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#D3PO"><span class="nav-text">D3PO:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DPO-with-explicit-dense-reward"><span class="nav-text">DPO with explicit dense reward:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TDPO"><span class="nav-text">TDPO:</span></a></li></ol></li></ol></li></ol>
 
-    
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
 
-    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+			
+		</div>
 
-    <p>
-      <a href="javascript:;" id="theme-light">🌞 浅色</a>
-      <a href="javascript:;" id="theme-dark">🌛 深色</a>
-      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
-    </p>
-  </div>
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/Blog/">Kai-Jie Lin</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        23 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
 </footer>
-  </div>
+		</div>
+	</div>
 
-  <div class="back-to-top-fixed soft-size--round soft-style--box">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-    </svg>
-  </div>
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
 
-  
-  
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
 
 
 
- 
-<!-- mathjax -->
+<script src="/Blog/js/build/libs/Swup.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/Blog/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/Blog/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/Blog/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/Blog/js/build/libs/SwupPreloadPlugin.min.js"></script>
 
 <script>
-MathJax = {
-    tex: {
-    inlineMath: 
-    [
-    
-        ['\\(','\\)'],
-    
-    ]
-    }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-
-
-
-
-
-<!-- copy button  -->
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
-
-<!-- https://clipboardjs.com/ -->
-
-
-<script type="text/javascript">
-	(function () {
-		function getCodeType (elem) {
-			const classs = Array.from(elem.classList.values());
-			if (classs && classs.length > 1) {
-				return classs[1];
-			}
-			return "plain";
-		}
-
-		window.addEventListener("DOMContentLoaded", () => {
-			const copyBtnClass = "copy-btn";
-			//  instantiate clipboardjs 
-			const clipboard = new ClipboardJS('.' + copyBtnClass);
-
-			clipboard.on('success', function (e) {
-				console.info('Action:', e.action);
-				console.info('Text:', e.text);
-				console.info('Trigger:', e.trigger);
-				if (e.trigger) {
-					e.trigger.classList.add("copied");
-					setTimeout(() => {
-						e.trigger.classList.remove("copied");
-					}, 3000);
-				}
-				e.clearSelection();
-			});
-
-			clipboard.on('error', function (e) {
-				console.error('Action:', e.action);
-				console.error('Trigger:', e.trigger);
-			});
-
-			document.querySelectorAll('figure.highlight').forEach((elem) => {
-				const codeContent = elem.querySelector("td.code");
-				const copyButton = document.createElement('button');
-				copyButton.setAttribute("class", copyBtnClass);
-				copyButton.setAttribute("title", "Copy Code");
-				copyButton.setAttribute("data-clipboard-text", codeContent.innerText);
-				elem.insertBefore(copyButton, elem.children[0]);
-			});
-		})
-	})();
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
 </script>
 
 
 
 
+	
+<script src="/Blog/js/build/tools/imageViewer.js" type="module"></script>
 
+<script src="/Blog/js/build/utils.js" type="module"></script>
+
+<script src="/Blog/js/build/main.js" type="module"></script>
+
+<script src="/Blog/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/Blog/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/Blog/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/Blog/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/Blog/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/Blog/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/Blog/js/build/tools/runtime.js"></script>
+
+    
+<script src="/Blog/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/Blog/assets/odometer-theme-minimal.css">
 
 
 
 
   
-
-
-  <!-- Google Analytics START -->
-  <script type="text/javascript">
-    (function() {
-      if (window.location.hostname === "localhost" || window.location.hostname.startsWith("192.168")) {
-        return console.log("本地调试");
-      }
-
-      window.dataLayer = window.dataLayer || [];
-      
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-
-      let script = document.createElement("script")
-
-      script.onload = function() {
-        gtag('js', new Date());
-        gtag('config', "G-2728M4QDJ7");
-      }
-
-      script.src = "https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(script, s);
-    })()
-  </script>
-  <!-- Google Analytics End -->
+<script src="/Blog/js/build/libs/Typed.min.js"></script>
 
   
-
-
-  
-
+<script src="/Blog/js/build/plugins/typed.js" type="module"></script>
 
 
 
-<script src="/Blog/js/script.js"></script>
 
 
-  
-  <!-- 尾部用户自定义相关内容 -->
+
+
+
+    
+<script src="/Blog/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/Blog/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/Blog/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/Blog/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/Blog/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/Blog/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
+
 </html>

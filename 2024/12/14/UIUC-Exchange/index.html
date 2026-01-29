@@ -1,174 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#3367D6"/>
-  <link rel="apple-touch-icon" href="/icons-192.png">
-  <link rel="manifest" href="/manifest.json">
-  
-  <meta name="generator" content="Hexo 7.1.1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Kai-Jie Lin">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
 
-  
+                // Try immediately
+                if (addBodyClass()) return;
 
-  
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  
-    <meta name="author" content="KJL">
-  
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://kjldefeated.github.io/Blog/2024/12/14/uiuc-exchange/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UIUC Exchange Guide (2024 FA)">
+<meta property="og:url" content="https://kjldefeated.github.io/Blog/2024/12/14/UIUC-Exchange/">
+<meta property="og:site_name" content="KJ&#39;s Blog">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kjldefeated.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2024-12-14T05:11:04.000Z">
+<meta property="article:modified_time" content="2026-01-29T04:04:36.721Z">
+<meta property="article:author" content="KJL">
+<meta property="article:tag" content="Exchange">
+<meta property="article:tag" content="Life">
+<meta property="article:tag" content="School">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kjldefeated.github.io/images/redefine-og.webp">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-  
+        gtag('config', 'G-2728M4QDJ7');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/Blog/images/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/Blog/images/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            UIUC Exchange Guide (2024 FA) | KJ&#39;s Blog
+        
+    </title>
 
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/Chillax/chillax.css">
 
-  <title>UIUC Exchange Guide (2024 FA) | KJ&#39;s Blog</title>
 
-  
+    <!--- Inject Part-->
+    
 
-  
-    <link rel="shortcut icon" href="/Blog/favicon.ico">
-  
-
-  
-
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.13/index.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/monokai.min.css">
-  
-
-  
-
-  
+    
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --></head>
-<body>
-  <div class="root-container">
     
-<!-- header container -->
-<header class="header-container post">
-  
-    <div class="post-image" style="background-image: url(https://imgur.com/Io3muri.png)"></div>
-  
-
-  <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/Blog/">
         
-          KJ&#39;s Blog
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/Blog/">首頁</a></li>
-        
-          <li class="navbar-list-item"><a href="/Blog/about">關於</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+<link rel="stylesheet" href="/Blog/css/build/tailwind.css">
 
-  
-  
+    
 
-  
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/GeistMono/geist-mono.css">
 
-  
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/Geist/geist.css">
 
-  
-  
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
 
-  
-  
-    <div class="header-content">
-      <div class="post-text layout-block">
-        <div class="layout-margin">
-          <h1 class="title-wrap">UIUC Exchange Guide (2024 FA)</h1>
-          <h2 class="title-sub-wrap">
-            <strong>KJL</strong>
-            <span>发布于</span>
-            <time  class="article-date" datetime="2024-12-14T05:11:04.000Z" itemprop="datePublished">2024-12-14</time>
-          </h2>
-          
-            <h2 class="last-time">
-              <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-12-18T19:18:52.972Z" itemprop="dateUpdated">2024-12-19</time>
-            </h2>
-          
-          
-          <ul class="wrap-list dark">
-  
-</ul>
-          <ul class="wrap-list dark">
-  
-    <li><a href="/Blog/tags/Life/">🏷️ Life</a></li>
-  
-    <li><a href="/Blog/tags/School/">🏷️ School</a></li>
-  
-    <li><a href="/Blog/tags/Exchange/">🏷️ Exchange</a></li>
-  
-</ul>
+    <script id="hexo-configurations">
+    window.config = {"hostname":"kjldefeated.github.io","root":"/Blog/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/haykyuu.jpg","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"dark"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":true,"id":"G-2728M4QDJ7"}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/haykyuu.jpg","dark":"/images/haykyuu.jpg"},"title":"KJ's Blog","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#fff"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/KJLdefeated","instagram":null,"zhihu":null,"twitter":"https://x.com/Kjl0508Sc10","email":"linkai0508@gmail.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/Blog/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/Blog/">
+                    <img src="/Blog/images/favicon.ico" class="w-full h-full rounded-xs">
+                </a>
+            
+            <a class="logo-title" href="/Blog/">
+                
+                KJ&#39;s Blog
+                
+            </a>
         </div>
-      </div>
-    </div>
-  
 
-  
-  
-  
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/Blog/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/Blog/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">23</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
 </header>
 
-    <!-- 文章 -->
 
-<!-- 文章内容 -->
-<div class="body-container">
-  <article class="content-container layout-block post-container">
-    <div class="article-info">
-      
-      
-      
-      
-      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="uiuc-交換教戰手冊-fa2024">UIUC 交換教戰手冊 FA'2024</h1>
-<p>這篇是交給國際處的交戰手冊。<br/> 先感謝前輩們的詳細教戰手冊，出國前我每個都讀了不下10次:<br/> <a target="_blank" rel="noopener" href="https://jackcyc.notion.site/Guidebook-of-Exchange-Life-in-UIUC-FA-2021-312e2336b45540be81bec3187019d209">Guidebook 2021</a><br/> <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/10HDYel_ogEPgLUGhOQKYUg8DUo5jzoeI/view">Guidebook 2022</a><br/> 國際處的心得文也幫助我在出國前了解這間學校。</p>
-<h1 id="交換申請">交換申請</h1>
-<ul>
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			
+			
+			<img src="https://imgur.com/Io3muri.png" alt="UIUC Exchange Guide (2024 FA)" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75" />
+			
+			<div class="w-full flex items-center absolute bottom-0 justify-start">
+				<h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">UIUC Exchange Guide (2024 FA)</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/Blog/images/saki.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Kai-Jie Lin</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-12-14 13:11:04</span>
+        <span class="mobile">2024-12-14 13:11:04</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-01-29 12:04:36</span>
+            <span class="mobile">2026-01-29 12:04:36</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/Blog/tags/Life/">Life</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/Blog/tags/School/">School</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/Blog/tags/Exchange/">Exchange</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="UIUC-交換教戰手冊-FA’2024"><a href="#UIUC-交換教戰手冊-FA’2024" class="headerlink" title="UIUC 交換教戰手冊 FA’2024"></a>UIUC 交換教戰手冊 FA’2024</h1><p>這篇是交給國際處的交戰手冊。<br/><br>先感謝前輩們的詳細教戰手冊，出國前我每個都讀了不下10次:<br/><br><a class="link"   target="_blank" rel="noopener" href="https://jackcyc.notion.site/Guidebook-of-Exchange-Life-in-UIUC-FA-2021-312e2336b45540be81bec3187019d209" >Guidebook 2021<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br/><br><a class="link"   target="_blank" rel="noopener" href="https://drive.google.com/file/d/10HDYel_ogEPgLUGhOQKYUg8DUo5jzoeI/view" >Guidebook 2022<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br/><br>國際處的心得文也幫助我在出國前了解這間學校。</p>
+<h1 id="交換申請"><a href="#交換申請" class="headerlink" title="交換申請"></a>交換申請</h1><ul>
 <li>從國際處申請，在要交換的那個學期的前一年開始申請 ex.112-1申請113-1的交換</li>
 <li>主要看在校成績，語言成績達標就好(TOEFL 100)</li>
 <li>TOEFL超過100或接近100應該都可以（我只有考99）</li>
 <li>100不好考，可以提早準備</li>
-<li>國際處和電機資訊學院都有獎學金可以申請 交大這邊結果大概學期末會公布，UIUC會在三月開始請你填一些申請資料和準備要修的課之類的。</li>
+<li>國際處和電機資訊學院都有獎學金可以申請<br>交大這邊結果大概學期末會公布，UIUC會在三月開始請你填一些申請資料和準備要修的課之類的。</li>
 </ul>
-<h1 id="簽證">簽證</h1>
-<p>確認可以去UIUC之後學校會寄給你DS2019，可以開始進行美簽的申請流程：</p>
-<p><a target="_blank" rel="noopener" href="https://www.ustraveldocs.com/">美簽申請官網</a> <br/> <a target="_blank" rel="noopener" href="https://taiwaneseyuyu.com/how-to-apply-a-us-student-visa-1/">攻略1</a><br/> <a target="_blank" rel="noopener" href="https://taiwaneseyuyu.com/how-to-apply-a-us-student-visa-2/">攻略2</a><br/> <a target="_blank" rel="noopener" href="https://jackcyc.notion.site/6f9da668f46340b8acda51b58540194b">學長的非常好攻略</a><br/></p>
-<h2 id="流程">流程</h2>
-<ul>
+<h1 id="簽證"><a href="#簽證" class="headerlink" title="簽證"></a>簽證</h1><p>確認可以去UIUC之後學校會寄給你DS2019，可以開始進行美簽的申請流程：</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.ustraveldocs.com/" >美簽申請官網<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> <br/><br><a class="link"   target="_blank" rel="noopener" href="https://taiwaneseyuyu.com/how-to-apply-a-us-student-visa-1/" >攻略1<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br/><br><a class="link"   target="_blank" rel="noopener" href="https://taiwaneseyuyu.com/how-to-apply-a-us-student-visa-2/" >攻略2<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br/><br><a class="link"   target="_blank" rel="noopener" href="https://jackcyc.notion.site/6f9da668f46340b8acda51b58540194b" >學長的非常好攻略<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br/></p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><ul>
 <li>填寫簽證申請表DS-160</li>
 <li>申請SEVIS I-901並上網繳費（可以刷卡）</li>
 <li>預約面談時間、申請J1(六月七月是申請季，可以盡量提早搞定)</li>
 <li>繳交J1簽證費及資料處理費</li>
-<li>備好文件面試，包含
-<ul>
+<li>備好文件面試，包含<ul>
 <li>DS-160確認單</li>
 <li>預約確認單</li>
 <li>繳費收據</li>
@@ -179,346 +420,487 @@
 <li>美簽規格的大頭照</li>
 <li>若改過名要帶戶籍謄本（我改過名但我忘記帶，他還是讓我過了）</li>
 <li>在校成績單和托福成績單</li>
-</ul></li>
 </ul>
-<p>上面的東西我好像只用到護照和DS-160，建議可以提早到美國在台協會，不然會很多人要排隊，手機會被沒收一直站著發呆很無聊QQ， 我當時還遲到排在最後一個，很多人都西裝鼻挺，但我只有穿短褲短袖，我還蠻緊張會不會被趕出去，但其實沒差，面試官只問了一下去那邊讀什麼，誰資助你之類的，最後他會把你的護照收走，過幾天就可以拿到有簽證的護照了。</p>
-<h1 id="交通">交通</h1>
-<p><img src="map.png" /> <a target="_blank" rel="noopener" href="https://paper.dropbox.com/doc/--BhgqM0d07BHK2D7~h7IWwD0OAg-dqz2La8zJybDR0HAfTzXp">如何前往玉米田</a> <br/> UIUC學校本身在美國中部遍東伊利諾州的香檳城市（如上圖），被廣大的玉米田包圍。去香檳比起東西岸的那些城市來說非常麻煩，我來的時候花了24小時在通勤，先坐飛機11小時到舊金山，再搭國內線4小時到芝加哥，再搭巴士4小時才終於到香檳。</p>
-<ol type="1">
-<li><p>飛機:<br/> 飛機可以挑要轉機還是直飛芝加哥，轉機通常比較便宜，不過可能偏累。</p></li>
-<li><p>Chicago 2 Champaign:<br/> 火車：一張票$40-50，火車蠻舒服的，位置很大，不過從火車站到學校還要一段路。<br/> 巴士：一張票$40-50，位置比較小，但路程會繞到芝加哥市中心，很繞，兩個半小時的車程被他開成五小時，不過是直接送到學校裡面。<br/> Uber：行情價大概$300，如果有很多人一起分會比較划算，因為行李拖來拖去真的很麻煩。<br/> 朋友載：頂級朋友，還可以去芝加哥玩一玩，可惜我沒有這種朋友。<br/></p></li>
+</li>
+</ul>
+<p>上面的東西我好像只用到護照和DS-160，建議可以提早到美國在台協會，不然會很多人要排隊，手機會被沒收一直站著發呆很無聊QQ，<br>我當時還遲到排在最後一個，很多人都西裝鼻挺，但我只有穿短褲短袖，我還蠻緊張會不會被趕出去，但其實沒差，面試官只問了一下去那邊讀什麼，誰資助你之類的，最後他會把你的護照收走，過幾天就可以拿到有簽證的護照了。</p>
+<h1 id="交通"><a href="#交通" class="headerlink" title="交通"></a>交通</h1><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/images/map.png"
+                     
+                ><br><a class="link"   target="_blank" rel="noopener" href="https://paper.dropbox.com/doc/--BhgqM0d07BHK2D7~h7IWwD0OAg-dqz2La8zJybDR0HAfTzXp" >如何前往玉米田<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> <br/><br>UIUC學校本身在美國中部遍東伊利諾州的香檳城市（如上圖），被廣大的玉米田包圍。去香檳比起東西岸的那些城市來說非常麻煩，我來的時候花了24小時在通勤，先坐飛機11小時到舊金山，再搭國內線4小時到芝加哥，再搭巴士4小時才終於到香檳。</p>
+<ol>
+<li><p>飛機:<br/><br>飛機可以挑要轉機還是直飛芝加哥，轉機通常比較便宜，不過可能偏累。</p>
+</li>
+<li><p>Chicago 2 Champaign:<br/><br>火車：一張票<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40</mn><mo>−</mo><mn>50</mn><mtext>，火車蠻舒服的，位置很大，不過從火車站到學校還要一段路。</mtext><mo>&lt;</mo><mi>b</mi><mi>r</mi><mi mathvariant="normal">/</mi><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">40-50，火車蠻舒服的，位置很大，不過從火車站到學校還要一段路。&lt;br/&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">40</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord">50</span><span class="mord cjk_fallback">，火車蠻舒服的，位置很大，不過從火車站到學校還要一段路。</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord">/</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span></span></span></span>巴士：一張票<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40</mn><mo>−</mo><mn>50</mn><mtext>，位置比較小，但路程會繞到芝加哥市中心，很繞，兩個半小時的車程被他開成五小時，不過是直接送到學校裡面。</mtext><mo>&lt;</mo><mi>b</mi><mi>r</mi><mi mathvariant="normal">/</mi><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">40-50，位置比較小，但路程會繞到芝加哥市中心，很繞，兩個半小時的車程被他開成五小時，不過是直接送到學校裡面。&lt;br/&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">40</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord">50</span><span class="mord cjk_fallback">，位置比較小，但路程會繞到芝加哥市中心，很繞，兩個半小時的車程被他開成五小時，不過是直接送到學校裡面。</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord">/</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span></span></span></span>Uber：行情價大概<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>300</mn><mtext>，如果有很多人一起分會比較划算，因為行李拖來拖去真的很麻煩。</mtext><mo>&lt;</mo><mi>b</mi><mi>r</mi><mi mathvariant="normal">/</mi><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">300，如果有很多人一起分會比較划算，因為行李拖來拖去真的很麻煩。&lt;br/&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord">300</span><span class="mord cjk_fallback">，如果有很多人一起分會比較划算，因為行李拖來拖去真的很麻煩。</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord">/</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span></span></span></span>朋友載：頂級朋友，還可以去芝加哥玩一玩，可惜我沒有這種朋友。<br/></p>
+</li>
 </ol>
 <p>更詳細內容可以參考我上面貼的連結，對於怎麼去UIUC有完整的分析。</p>
-<h1 id="money">Money</h1>
-<p><a target="_blank" rel="noopener" href="https://paper.dropbox.com/doc/NVrjpoODSEHckHkxAvq4t">跟錢有關的那些事</a></p>
-<h2 id="換外幣">換外幣</h2>
-<p>換大概$500以內就好，這裡大部分時候都刷卡。</p>
-<h2 id="銀行帳戶">銀行帳戶</h2>
-<ul>
+<h1 id="Money"><a href="#Money" class="headerlink" title="Money"></a>Money</h1><p><a class="link"   target="_blank" rel="noopener" href="https://paper.dropbox.com/doc/NVrjpoODSEHckHkxAvq4t" >跟錢有關的那些事<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h2 id="換外幣"><a href="#換外幣" class="headerlink" title="換外幣"></a>換外幣</h2><p>換大概<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>500</mn><mtext>以內就好，這裡大部分時候都刷卡。</mtext></mrow><annotation encoding="application/x-tex">500以內就好，這裡大部分時候都刷卡。</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">500</span><span class="mord cjk_fallback">以內就好，這裡大部分時候都刷卡。</span></span></span></span></p>
+<h2 id="銀行帳戶"><a href="#銀行帳戶" class="headerlink" title="銀行帳戶"></a>銀行帳戶</h2><ul>
 <li>PNC:領學生證的時候旁邊就會有個PNC專櫃直接一條龍辦好，辦好之後就可以請爸媽轉錢，就可以用Apple Pay買東西了。</li>
 <li>Chase Bank:Chase在美國服務範圍比較廣，學校附近也有銀行可以直接辦，我們當時很幸運遇到中國專員幫我們直接辦好，可以說中文真幸福。</li>
 </ul>
-<h2 id="總共要花多少錢">總共要花多少錢？</h2>
-<p>以我的Case: <br/> 學費費一學期$12000 + 房租水電 $700 * 5 + 生活費 $400 * 5 + 出去玩(?) = Approximately $20000. <br/> 也就是說，這趟美國交換花了差不多64萬台幣。非常感謝我的家人。<br/> 如果你成績好獎學金還可以到十幾二十萬，省更多。</p>
-<h1 id="住宿">住宿</h1>
-<p><a target="_blank" rel="noopener" href="https://paper.dropbox.com/doc/PhhqTNni4Oj346MaZbmFh">香檳找房</a></p>
-<h3 id="學校宿舍">學校宿舍</h3>
-<p>一個月$1000的樣子，會綁一些學校的學餐費，平時生活更有機會接觸到美國人。</p>
-<h3 id="租屋">租屋</h3>
-<p>可以參考上面貼的找房資料，我這邊就稍微講一下自己的經驗。我是在<a target="_blank" rel="noopener" href="https://ugroupcu.com/building-map/">UG</a>上面找的，在電機資訊系館附近有很多房型，我是找比較舊的2B1B(兩房一衛)，一個月加水電下來要$700，比較新的房型大概要$1200左右。住起來長下面這樣： <img src="home1.png" alt="fall" width="500"/> <img src="home2.png" alt="fall" width="500"/> 住起來的感覺是很不錯的，離資工系系館(Siebel Center)也很近，走五分鐘就到了。我只有住一學期，但簽了一年的lease，下學期就轉讓給別人。除了在leasing網站上找，去台灣人在香檳的社團上也很多人在轉租，UIUC的台灣人真的很多！除了UG之外，我也蠻推薦也是在附近的<a target="_blank" rel="noopener" href="https://g.co/kgs/8BqH42u">Campus Circle</a>，雖然一個月要$1000，但整體很新，有很多公設（健身房、游泳池、讀書室），認識的很多台灣人都住在那裡。 <img src="CC.png" alt="fall" width="400"/></p>
-<h1 id="天氣和衣服">天氣和衣服</h1>
-<p>如果是Fall來交換，一開始來天氣很熱，但不會像台灣那麼熱，比較乾燥涼爽，短袖短褲就可以了，大概10月11月開始變冷，很像台灣那種乾乾涼涼的冬天，白天太陽很大，曬一曬其實不會冷，到12月就真的很冷了，氣溫通常在0-10度之間，甚至有時候會下雪，到零下10度，不過室內暖氣都開到爆，可以穿短袖短褲，出門再包多一點就好。聽說這裡1月是最冷的，會下大雪，積雪積很多，聽說會到-40度，Spring才來交換的同學多保重，因為我已經回台灣了。</p>
-<p>第一次看到楓葉，台灣都看不到： <img src="Fall.png" alt="fall" width="400"/> 下雪了： <img src="Snow.png" /></p>
-<h1 id="食">食</h1>
-<p>我們大部分時間都是在家自己煮，這樣最省，一週伙食費大概$100，去Costco或是其他超市買，也可以用Wiee!訂亞洲生鮮。如果是外食，一餐就差不多$15-20，一週下來餐餐外食的話差不多要$300-400，很貴而且也沒有到很好吃。學著自己煮可以省很多。順帶一提，學校有很多活動提供免費食物讓我們去蹭，非常好學校。</p>
-<p>Costco長得跟台灣差不多，但他們熱食區居然沒有賣巧達濃湯，也沒有牛肉捲，點點點 <img src="costco.png" alt="fall" width="400"/> 自己煮的義大利麵 <img src="Food.png" alt="fall" width="400"/></p>
-<p>當然，外食的話還是有好吃的，我個人是那種沒有亞洲菜(東亞)活得下去的人，所以這邊來推薦最頂的中東料理<a target="_blank" rel="noopener" href="https://www.shawarmajoints.com/">Shawarma Joint</a>，大碗又不會到很貴，非常好牛肉皮塔： <img src="pita.png" alt="fall" width="400"/></p>
-<p>學校的免費披薩，<a target="_blank" rel="noopener" href="https://www.acm.illinois.edu/">ACM@UIUC</a>有很多活動可以關注一下 <img src="Pizza.png" alt="fall" width="400"/></p>
-<h1 id="行">行</h1>
-<p>UIUC的校園很大，教室和居住的地方可能走路需要十幾二十分鐘，搞個腳踏車或電動滑板車應該蠻方便的，不過冬天下雪可能就不太方便。學校裡有公車，學生可以免費搭，不過路線對我們來說不太方便。聽說二手車只需要台幣不到十萬就可以整到一台，有車就是自由，也可以考慮一下，尤其玉米田特別無聊，開車出去晃晃應該蠻棒的。</p>
-<h1 id="樂">樂</h1>
-<p>我沒有去Club或Bar之類的，不過倒是有去過社團，可以提供點意見。UIUC的社團非常非常多，大學部學生也很熱衷社團，在這裏讀大學應該非常好玩，因為有很多社團可以參加，大家也很熱情。我有去Electronic Music Club，也就是電音社，參加過幾次社課，大家都很友善，而且美國當地人居多，跟在電資學院修課的人種組成（東亞印度人）不一樣，社團裡比較多金髮碧眼、黑人，在這裏體驗當地社交、英文口說的機會比較多，很推薦大家去找幾個來參加。</p>
-<p>社團博覽會，人超級多： <img src="clubs.png" alt="fall" width="400"/></p>
-<p>UIUC EMC，社課很專業，大家都有機會碰到專業DJ器材： <img src="emc.png" alt="fall" width="400"/> <img src="ddj.png" alt="fall" width="400"/></p>
-<h1 id="修課">修課</h1>
-<p><a target="_blank" rel="noopener" href="https://courses.illinois.edu/schedule/2024/fall/CS">選課</a>，UIUC用課號代表課程，如CS123, CS408...，課號開頭分為1, 2, 3, 4, 5，通常1,2給大一二修，3,4給大二三修，4和5給研究所的修，大四呢？唉本科大四早就去實習了誰跟你修課（誤），不過我這學期體感大四生真的比較少（除了交換生），對於交換生而言，因為沒有prerequisite，所以選課上可能會被擋修，不過開學前UIUC的國際處會幫大家選到自己想修的課，不過5開頭就比較麻煩，因為需要老師和系所確認，被一直寄信問說確定要不要修，害我以為loading會很大之類的，但其實修下來還好。這學期修的分別是CS341、CS483、CS542。標題連結是Course work的Github。</p>
-<h3 id="cs342-system-programming"><a target="_blank" rel="noopener" href="https://github.com/KJLdefeated/UIUC_System_Programming">CS342</a> System Programming</h3>
-<p>主要是教OS的概念和實作，內容有C語言、Memory Allocation、Processes、Threads、Virtual Memory、File System和Networking，是很扎實的System入門課，對沒有相關經驗的人應該很硬，因為這堂課每週有兩次作業，一次Lab一次Machine Problem，都是要實作OS裡面的某個概念(ex. malloc, TLB, file system)，作業設計得很好，助教只讓學生實作核心演算法的部分，其他部分是打包好的，除了一些MP要從頭自己刻以外，其他都有包好只需要做TODO。老師上課很生動有趣，不像以往的課程老師都是站在講台邊講解，這門課的老師上課就像一場表演，他會很熱情的跟你介紹C語言是什麼，指標是什麼，好像非常神奇非常有趣，老師上課時也會活蹦亂跳跑來跑去點人問問題，這大概是我很culture shock的一個地方，因為我第一次見到這種上課模式。對於大學部的學生而言，這是蠻有名也蠻硬的一堂課，因為我跟其他人聊天時，聊到我有修341，他們都會wow你修了341，那是不是很難？但我整學期修下來感覺不會很難，類比交大的網路程式設計那種感覺吧，就是很實作的課，但感覺也沒有NASA和高等Unix那麼難。總之是堂很好的課，讓我複習了OS的概念和實作，這堂課的<a target="_blank" rel="noopener" href="https://cs341.cs.illinois.edu/">Course Website</a>也很好，提供了很多資源。順帶一提，我也參加了這堂課的Honor Section，他會講一些更進階的東西（Distributed System, Kernel Programming, Embedded System），期末要做出一個有關Embedded System的Projet，我們這組搞了一個File system，去抓Course Explorer的資料，我跟一個印度大二和台裔美國大二組隊，他們感覺都好電，我負責躺平。</p>
-<h3 id="cs483-applied-parallel-programming"><a target="_blank" rel="noopener" href="https://github.com/KJLdefeated/UIUC_Applied_Parallel_Programming">CS483</a> Applied Parallel Programming</h3>
-<p>這堂課主要專注在NVIDIA CUDA上的應用優化，各種CUDA的技巧(Matrix Multiplication, Convolution的Optimization)，其他Parallel Programming (like POSIX threads)的東西不會碰，修課的台灣人很多，這堂課我看以前很多來交換的人都會修，讀MCS的人也會修，大家可以一起抱團取暖，但我個人覺得這堂課沒有到那麼頂，以老師上課方式來說，上課方式跟台灣比較像，就是依照投影片講解，很少課堂上的Demo和與學生互動，作業方面，總共有八次lab，我個人覺得比較無聊一點，參考一下講義就可以寫，而且跟前幾年差不多，沒什麼變化的感覺，但我還是從這堂課上學到很多，CUDA現在是顯學，大家都在用，學一下不會虧，像我在找下學期實習的面試就剛好用到了。修了這堂課讓我更了解GPU的work，也了解Deep Learning System想考量的地方，比方說kernel和memory之間data transfer的overheads，感覺是個可以繼續學習的領域。</p>
-<h3 id="cs542-statistical-reinforcement-learning"><a target="_blank" rel="noopener" href="https://github.com/KJLdefeated/UIUC_CS542_Statistical_RL">CS542</a> Statistical Reinforcement Learning</h3>
-<p>神課，我就是為了這堂課來交換的（誤）。Reinforcement Learning Theory的課，雖然開在CS，但根本是數學課，老師第一堂課屆就說了「Zero implementation. Only mathematical proof.」，這堂課詳細介紹RL理論的入門，從Offline RL到Online RL的分析，讓我們從數學的角度去看RL，這堂課有點像Theory Computer Science，就是計算理論，我們會分析演算法的Sample Complexity，也就是要採樣幾次演算法才會收斂？我們的data需要什麼假設，Learning才有辦法converge？什麼Case可以讓當今最強的RL演算法都沒辦法work？我之前是做Empirical RL相關的研究，修完這堂課之後知道理論RL在做什麼，考量的點跟Empirical有多麽不一樣，也知道我大概不喜歡做理論XD。雖然如此，但上課還是非常有趣，老師是中國人，講解非常有邏輯，一個自己讀起來非常難的概念，他就是能講解得非常直覺非常trivial，因為是數學課，老師上課會直接demo理論證明分析，一步一步地推導都很trivial，讓人全程都能跟上。修這堂課之前我的數學基礎算是很薄弱的，我只修過微積分、線代、機率和Empirical的RL，這堂課雖然包含一點Statics，但我覺得只需要機率和線代就非常夠用！Course works包含四次作業，只需要線代和機率就寫得出來了，Final Project是要reproduce一篇paper，我是選Offline RL Theory，也讓我知道我可能不太適合寫paper XD。總而言之，雖然我在這堂課學到的不算是什麼通用的skill，也沒有做出特別厲害的project，但還是很開心能夠學習到這些。</p>
+<h2 id="總共要花多少錢？"><a href="#總共要花多少錢？" class="headerlink" title="總共要花多少錢？"></a>總共要花多少錢？</h2><p>以我的Case: <br/><br>學費費一學期<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>12000</mn><mo>+</mo><mtext>房租水電</mtext></mrow><annotation encoding="application/x-tex">12000 + 房租水電 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">12000</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">房租水電</span></span></span></span>700 * 5 + 生活費 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>400</mn><mo>∗</mo><mn>5</mn><mo>+</mo><mtext>出去玩</mtext><mo stretchy="false">(</mo><mo stretchy="false">?</mo><mo stretchy="false">)</mo><mo>=</mo><mi>A</mi><mi>p</mi><mi>p</mi><mi>r</mi><mi>o</mi><mi>x</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>l</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">400 * 5 + 出去玩(?) = Approximately </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">400</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">出去玩</span><span class="mopen">(</span><span class="mclose">?)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">pp</span><span class="mord mathnormal">ro</span><span class="mord mathnormal">x</span><span class="mord mathnormal">ima</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span>20000. <br/><br>也就是說，這趟美國交換花了差不多64萬台幣。非常感謝我的家人。<br/><br>如果你成績好獎學金還可以到十幾二十萬，省更多。</p>
+<h1 id="住宿"><a href="#住宿" class="headerlink" title="住宿"></a>住宿</h1><p><a class="link"   target="_blank" rel="noopener" href="https://paper.dropbox.com/doc/PhhqTNni4Oj346MaZbmFh" >香檳找房<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="學校宿舍"><a href="#學校宿舍" class="headerlink" title="學校宿舍"></a>學校宿舍</h3><p>一個月<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1000</mn><mtext>的樣子，會綁一些學校的學餐費，平時生活更有機會接觸到美國人。</mtext></mrow><annotation encoding="application/x-tex">1000的樣子，會綁一些學校的學餐費，平時生活更有機會接觸到美國人。</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">1000</span><span class="mord cjk_fallback">的樣子，會綁一些學校的學餐費，平時生活更有機會接觸到美國人。</span></span></span></span></p>
+<h3 id="租屋"><a href="#租屋" class="headerlink" title="租屋"></a>租屋</h3><p>可以參考上面貼的找房資料，我這邊就稍微講一下自己的經驗。我是在<a class="link"   target="_blank" rel="noopener" href="https://ugroupcu.com/building-map/" >UG<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>上面找的，在電機資訊系館附近有很多房型，我是找比較舊的2B1B(兩房一衛)，一個月加水電下來要<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>700</mn><mtext>，比較新的房型大概要</mtext></mrow><annotation encoding="application/x-tex">700，比較新的房型大概要</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">700</span><span class="mord cjk_fallback">，比較新的房型大概要</span></span></span></span>1200左右。住起來長下面這樣：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="home1.png"
+                      alt="fall" width="500"
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="home2.png"
+                      alt="fall" width="500"
+                ><br>住起來的感覺是很不錯的，離資工系系館(Siebel Center)也很近，走五分鐘就到了。我只有住一學期，但簽了一年的lease，下學期就轉讓給別人。除了在leasing網站上找，去台灣人在香檳的社團上也很多人在轉租，UIUC的台灣人真的很多！除了UG之外，我也蠻推薦也是在附近的<a class="link"   target="_blank" rel="noopener" href="https://g.co/kgs/8BqH42u" >Campus Circle<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，雖然一個月要<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1000</mn><mtext>，但整體很新，有很多公設（健身房、游泳池、讀書室），認識的很多台灣人都住在那裡。</mtext></mrow><annotation encoding="application/x-tex">1000，但整體很新，有很多公設（健身房、游泳池、讀書室），認識的很多台灣人都住在那裡。</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">1000</span><span class="mord cjk_fallback">，但整體很新，有很多公設（健身房、游泳池、讀書室），認識的很多台灣人都住在那裡。</span></span></span></span><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="CC.png"
+                      alt="fall" width="400"
+                ></p>
+<h1 id="天氣和衣服"><a href="#天氣和衣服" class="headerlink" title="天氣和衣服"></a>天氣和衣服</h1><p>如果是Fall來交換，一開始來天氣很熱，但不會像台灣那麼熱，比較乾燥涼爽，短袖短褲就可以了，大概10月11月開始變冷，很像台灣那種乾乾涼涼的冬天，白天太陽很大，曬一曬其實不會冷，到12月就真的很冷了，氣溫通常在0-10度之間，甚至有時候會下雪，到零下10度，不過室內暖氣都開到爆，可以穿短袖短褲，出門再包多一點就好。聽說這裡1月是最冷的，會下大雪，積雪積很多，聽說會到-40度，Spring才來交換的同學多保重，因為我已經回台灣了。</p>
+<p>第一次看到楓葉，台灣都看不到：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="Fall.png"
+                      alt="fall" width="400"
+                ><br>下雪了：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Blog/images/Snow.png"
+                     
+                ></p>
+<h1 id="食"><a href="#食" class="headerlink" title="食"></a>食</h1><p>我們大部分時間都是在家自己煮，這樣最省，一週伙食費大概<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mtext>，去</mtext><mi>C</mi><mi>o</mi><mi>s</mi><mi>t</mi><mi>c</mi><mi>o</mi><mtext>或是其他超市買，也可以用</mtext><mi>W</mi><mi>i</mi><mi>e</mi><mi>e</mi><mo stretchy="false">!</mo><mtext>訂亞洲生鮮。如果是外食，一餐就差不多</mtext></mrow><annotation encoding="application/x-tex">100，去Costco或是其他超市買，也可以用Wiee!訂亞洲生鮮。如果是外食，一餐就差不多</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord">100</span><span class="mord cjk_fallback">，去</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">os</span><span class="mord mathnormal">t</span><span class="mord mathnormal">co</span><span class="mord cjk_fallback">或是其他超市買，也可以用</span><span class="mord mathnormal">Wi</span><span class="mord mathnormal">ee</span><span class="mclose">!</span><span class="mord cjk_fallback">訂亞洲生鮮。如果是外食，一餐就差不多</span></span></span></span>15-20，一週下來餐餐外食的話差不多要<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>300</mn><mo>−</mo><mn>400</mn><mtext>，很貴而且也沒有到很好吃。學著自己煮可以省很多。順帶一提，學校有很多活動提供免費食物讓我們去蹭，非常好學校。</mtext></mrow><annotation encoding="application/x-tex">300-400，很貴而且也沒有到很好吃。學著自己煮可以省很多。順帶一提，學校有很多活動提供免費食物讓我們去蹭，非常好學校。</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">300</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">400</span><span class="mord cjk_fallback">，很貴而且也沒有到很好吃。學著自己煮可以省很多。順帶一提，學校有很多活動提供免費食物讓我們去蹭，非常好學校。</span></span></span></span><br>Costco長得跟台灣差不多，但他們熱食區居然沒有賣巧達濃湯，也沒有牛肉捲，點點點<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="costco.png"
+                      alt="fall" width="400"
+                ><br>自己煮的義大利麵<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="Food.png"
+                      alt="fall" width="400"
+                ></p>
+<p>當然，外食的話還是有好吃的，我個人是那種沒有亞洲菜(東亞)活得下去的人，所以這邊來推薦最頂的中東料理<a class="link"   target="_blank" rel="noopener" href="https://www.shawarmajoints.com/" >Shawarma Joint<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，大碗又不會到很貴，非常好牛肉皮塔：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="pita.png"
+                      alt="fall" width="400"
+                ></p>
+<p>學校的免費披薩，<a class="link"   target="_blank" rel="noopener" href="https://www.acm.illinois.edu/" >ACM@UIUC<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>有很多活動可以關注一下<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="Pizza.png"
+                      alt="fall" width="400"
+                ></p>
+<h1 id="行"><a href="#行" class="headerlink" title="行"></a>行</h1><p>UIUC的校園很大，教室和居住的地方可能走路需要十幾二十分鐘，搞個腳踏車或電動滑板車應該蠻方便的，不過冬天下雪可能就不太方便。學校裡有公車，學生可以免費搭，不過路線對我們來說不太方便。聽說二手車只需要台幣不到十萬就可以整到一台，有車就是自由，也可以考慮一下，尤其玉米田特別無聊，開車出去晃晃應該蠻棒的。</p>
+<h1 id="樂"><a href="#樂" class="headerlink" title="樂"></a>樂</h1><p>我沒有去Club或Bar之類的，不過倒是有去過社團，可以提供點意見。UIUC的社團非常非常多，大學部學生也很熱衷社團，在這裏讀大學應該非常好玩，因為有很多社團可以參加，大家也很熱情。我有去Electronic Music Club，也就是電音社，參加過幾次社課，大家都很友善，而且美國當地人居多，跟在電資學院修課的人種組成（東亞印度人）不一樣，社團裡比較多金髮碧眼、黑人，在這裏體驗當地社交、英文口說的機會比較多，很推薦大家去找幾個來參加。</p>
+<p>社團博覽會，人超級多：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="clubs.png"
+                      alt="fall" width="400"
+                ></p>
+<p>UIUC EMC，社課很專業，大家都有機會碰到專業DJ器材：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="emc.png"
+                      alt="fall" width="400"
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="ddj.png"
+                      alt="fall" width="400"
+                ></p>
+<h1 id="修課"><a href="#修課" class="headerlink" title="修課"></a>修課</h1><p><a class="link"   target="_blank" rel="noopener" href="https://courses.illinois.edu/schedule/2024/fall/CS" >選課<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，UIUC用課號代表課程，如CS123, CS408…，課號開頭分為1, 2, 3, 4, 5，通常1,2給大一二修，3,4給大二三修，4和5給研究所的修，大四呢？唉本科大四早就去實習了誰跟你修課（誤），不過我這學期體感大四生真的比較少（除了交換生），對於交換生而言，因為沒有prerequisite，所以選課上可能會被擋修，不過開學前UIUC的國際處會幫大家選到自己想修的課，不過5開頭就比較麻煩，因為需要老師和系所確認，被一直寄信問說確定要不要修，害我以為loading會很大之類的，但其實修下來還好。這學期修的分別是CS341、CS483、CS542。標題連結是Course work的Github。</p>
+<h3 id="CS342-System-Programming"><a href="#CS342-System-Programming" class="headerlink" title="CS342 System Programming"></a><a class="link"   target="_blank" rel="noopener" href="https://github.com/KJLdefeated/UIUC_System_Programming" >CS342<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> System Programming</h3><p>主要是教OS的概念和實作，內容有C語言、Memory Allocation、Processes、Threads、Virtual Memory、File System和Networking，是很扎實的System入門課，對沒有相關經驗的人應該很硬，因為這堂課每週有兩次作業，一次Lab一次Machine Problem，都是要實作OS裡面的某個概念(ex. malloc, TLB, file system)，作業設計得很好，助教只讓學生實作核心演算法的部分，其他部分是打包好的，除了一些MP要從頭自己刻以外，其他都有包好只需要做TODO。老師上課很生動有趣，不像以往的課程老師都是站在講台邊講解，這門課的老師上課就像一場表演，他會很熱情的跟你介紹C語言是什麼，指標是什麼，好像非常神奇非常有趣，老師上課時也會活蹦亂跳跑來跑去點人問問題，這大概是我很culture shock的一個地方，因為我第一次見到這種上課模式。對於大學部的學生而言，這是蠻有名也蠻硬的一堂課，因為我跟其他人聊天時，聊到我有修341，他們都會wow你修了341，那是不是很難？但我整學期修下來感覺不會很難，類比交大的網路程式設計那種感覺吧，就是很實作的課，但感覺也沒有NASA和高等Unix那麼難。總之是堂很好的課，讓我複習了OS的概念和實作，這堂課的<a class="link"   target="_blank" rel="noopener" href="https://cs341.cs.illinois.edu/" >Course Website<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>也很好，提供了很多資源。順帶一提，我也參加了這堂課的Honor Section，他會講一些更進階的東西（Distributed System, Kernel Programming, Embedded System），期末要做出一個有關Embedded System的Projet，我們這組搞了一個File system，去抓Course Explorer的資料，我跟一個印度大二和台裔美國大二組隊，他們感覺都好電，我負責躺平。</p>
+<h3 id="CS483-Applied-Parallel-Programming"><a href="#CS483-Applied-Parallel-Programming" class="headerlink" title="CS483 Applied Parallel Programming"></a><a class="link"   target="_blank" rel="noopener" href="https://github.com/KJLdefeated/UIUC_Applied_Parallel_Programming" >CS483<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> Applied Parallel Programming</h3><p>這堂課主要專注在NVIDIA CUDA上的應用優化，各種CUDA的技巧(Matrix Multiplication, Convolution的Optimization)，其他Parallel Programming (like POSIX threads)的東西不會碰，修課的台灣人很多，這堂課我看以前很多來交換的人都會修，讀MCS的人也會修，大家可以一起抱團取暖，但我個人覺得這堂課沒有到那麼頂，以老師上課方式來說，上課方式跟台灣比較像，就是依照投影片講解，很少課堂上的Demo和與學生互動，作業方面，總共有八次lab，我個人覺得比較無聊一點，參考一下講義就可以寫，而且跟前幾年差不多，沒什麼變化的感覺，但我還是從這堂課上學到很多，CUDA現在是顯學，大家都在用，學一下不會虧，像我在找下學期實習的面試就剛好用到了。修了這堂課讓我更了解GPU的work，也了解Deep Learning System想考量的地方，比方說kernel和memory之間data transfer的overheads，感覺是個可以繼續學習的領域。</p>
+<h3 id="CS542-Statistical-Reinforcement-Learning"><a href="#CS542-Statistical-Reinforcement-Learning" class="headerlink" title="CS542 Statistical Reinforcement Learning"></a><a class="link"   target="_blank" rel="noopener" href="https://github.com/KJLdefeated/UIUC_CS542_Statistical_RL" >CS542<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> Statistical Reinforcement Learning</h3><p>神課，我就是為了這堂課來交換的（誤）。Reinforcement Learning Theory的課，雖然開在CS，但根本是數學課，老師第一堂課屆就說了「Zero implementation. Only mathematical proof.」，這堂課詳細介紹RL理論的入門，從Offline RL到Online RL的分析，讓我們從數學的角度去看RL，這堂課有點像Theory Computer Science，就是計算理論，我們會分析演算法的Sample Complexity，也就是要採樣幾次演算法才會收斂？我們的data需要什麼假設，Learning才有辦法converge？什麼Case可以讓當今最強的RL演算法都沒辦法work？我之前是做Empirical RL相關的研究，修完這堂課之後知道理論RL在做什麼，考量的點跟Empirical有多麽不一樣，也知道我大概不喜歡做理論XD。雖然如此，但上課還是非常有趣，老師是中國人，講解非常有邏輯，一個自己讀起來非常難的概念，他就是能講解得非常直覺非常trivial，因為是數學課，老師上課會直接demo理論證明分析，一步一步地推導都很trivial，讓人全程都能跟上。修這堂課之前我的數學基礎算是很薄弱的，我只修過微積分、線代、機率和Empirical的RL，這堂課雖然包含一點Statics，但我覺得只需要機率和線代就非常夠用！Course works包含四次作業，只需要線代和機率就寫得出來了，Final Project是要reproduce一篇paper，我是選Offline RL Theory，也讓我知道我可能不太適合寫paper XD。總而言之，雖然我在這堂課學到的不算是什麼通用的skill，也沒有做出特別厲害的project，但還是很開心能夠學習到這些。</p>
 <p>總結下來，我覺得UIUC的課程都很棒，加上Faculty數量比交大多很多，有很多領域都有開課，像Theory方面的課就比交大多很多，不愧是全美Top5的CS School，課程品質也很不錯，很注重實作，也很就業導向，在大學部修課很多人都在討論就業面試相關的話題，不過我覺得跟交大比較的話，交大還是不會輸的，交大的課程水準也很不錯的。</p>
 
-      </section>
+		</div>
 
-      
-      
-        <nav class="article-nav">
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-      <div class="card-cover" background-image-lazy data-img="https://images5.alphacoders.com/131/thumb-1920-1311994.jpeg"></div>
-    
-    <div class="card-text">
-      
-        <a href="/Blog/2025/01/10/2024-finding-job/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">2024 實習找工心得</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
-    </div>
-  </article>
-</div>
-          
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-      <div class="card-cover" background-image-lazy data-img="https://imgur.com/TNkt2Tv.png"></div>
-    
-    <div class="card-text">
-      
-        <a href="/Blog/2024/07/14/A-Note-on-Fine-Tuning-Diffusion-Models-with-RL/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">A Note on Fine-Tuning Diffusion Models with Reinforcement Learning</h2>
-        </a>
-      
-      <div class="card-text--row">Older</div>
-    </div>
-  </article>
-</div>
-          
-        </nav>
-      
+		
 
-      <section class="page-message-container layout-padding">
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/Life/">#Life</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/School/">#School</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/Exchange/">#Exchange</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/Blog/2025/01/10/2024-finding-job/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">2024 實習找工心得</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/Blog/2024/07/14/A-Note-on-Fine-Tuning-Diffusion-Models-with-RL/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">A Note on Fine-Tuning Diffusion Models with Reinforcement Learning</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
         
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/Blog/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
 
 
-  
-  
 
-  
-  
-
-
-      </section>
-    </div>
-    <div class="widget-info">
-      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-body">
+        
     
-      <img src="https://en.gravatar.com/userimage/217528008/f2c825ba654e7cdd5a0bb677d1b4eaa0.jpg?" class="soft-size--round soft-style--box" alt="KJL">
-    
-    
-      <h2>KJL</h2>
-    
-    
-      <p>Stay Hungry, Stay Foolish.</p>
-    
-
-    <div class="count-box">
-      <div class="count-box--item">
-        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
-</svg>
-        <span>22</span>
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-        0
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-        8
-      </div>
-    </div>
-  </div>
-</section>
-
-      
-
-      
-
-      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-      <span>CATEGORIES</span>
-  </div>
-  <div class="widget-body">
-    <ul class="categories-list">
-      
-    </ul>
-  </div>
-</section>
-
-      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-    <span>TAGS</span>
-  </div>
-  <div class="widget-body">
-    <div class="tags-cloud">
-      <a href="/Blog/tags/Exchange/" style="font-size: 10px;" class="tags-cloud-0">Exchange</a> <a href="/Blog/tags/Job/" style="font-size: 12.5px;" class="tags-cloud-3">Job</a> <a href="/Blog/tags/Life/" style="font-size: 20px;" class="tags-cloud-10">Life</a> <a href="/Blog/tags/MLsys/" style="font-size: 10px;" class="tags-cloud-0">MLsys</a> <a href="/Blog/tags/Math/" style="font-size: 15px;" class="tags-cloud-5">Math</a> <a href="/Blog/tags/Research/" style="font-size: 12.5px;" class="tags-cloud-3">Research</a> <a href="/Blog/tags/School/" style="font-size: 17.5px;" class="tags-cloud-8">School</a> <a href="/Blog/tags/paper-notes/" style="font-size: 17.5px;" class="tags-cloud-8">paper_notes</a>
-    </div>
-  </div>
-</section>
-    </div>
-  </article>
 </div>
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <div class="social-icons">
-      
-        
-          <a href="https://www.instagram.com/kjl0508/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-ins" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M512 0C372.906667 0 355.541333 0.64 300.928 3.072 246.4 5.632 209.28 14.208 176.64 26.88c-33.664 13.056-62.250667 30.592-90.709333 59.050667S39.893333 142.933333 26.88 176.64C14.208 209.28 5.589333 246.4 3.072 300.928 0.512 355.541333 0 372.906667 0 512s0.64 156.458667 3.072 211.072c2.56 54.485333 11.136 91.648 23.808 124.288a251.093333 251.093333 0 0 0 59.050667 90.709333A250.368 250.368 0 0 0 176.64 997.12c32.682667 12.629333 69.802667 21.290667 124.288 23.808C355.541333 1023.488 372.906667 1024 512 1024s156.458667-0.64 211.072-3.072c54.485333-2.56 91.648-11.178667 124.288-23.808a251.648 251.648 0 0 0 90.709333-59.050667 250.026667 250.026667 0 0 0 59.050667-90.709333c12.629333-32.64 21.290667-69.802667 23.808-124.288 2.56-54.613333 3.072-71.978667 3.072-211.072s-0.64-156.458667-3.072-211.072c-2.56-54.485333-11.178667-91.690667-23.808-124.288a251.306667 251.306667 0 0 0-59.050667-90.709333A249.472 249.472 0 0 0 847.36 26.88c-32.64-12.672-69.802667-21.290667-124.288-23.808C668.458667 0.512 651.093333 0 512 0z m0 92.16c136.661333 0 152.96 0.682667 206.933333 3.029333 49.92 2.346667 77.013333 10.624 95.018667 17.706667 23.978667 9.258667 40.96 20.352 58.965333 38.229333 17.877333 17.92 28.970667 34.944 38.229334 58.922667 6.997333 18.005333 15.36 45.098667 17.621333 95.018667 2.432 54.016 2.986667 70.229333 2.986667 206.933333s-0.64 152.96-3.157334 206.933333c-2.602667 49.92-10.922667 77.013333-17.962666 95.018667a162.56 162.56 0 0 1-38.357334 58.965333 159.744 159.744 0 0 1-58.88 38.229334c-17.92 6.997333-45.44 15.36-95.36 17.621333-54.357333 2.432-70.357333 2.986667-207.317333 2.986667-137.002667 0-153.002667-0.64-207.317333-3.157334-49.962667-2.602667-77.482667-10.922667-95.402667-17.962666a158.549333 158.549333 0 0 1-58.837333-38.357334 155.477333 155.477333 0 0 1-38.4-58.88c-7.04-17.92-15.317333-45.44-17.92-95.36-1.92-53.76-2.602667-70.357333-2.602667-206.677333 0-136.362667 0.682667-153.002667 2.602667-207.402667 2.602667-49.92 10.88-77.397333 17.92-95.317333 8.96-24.32 20.437333-40.96 38.4-58.922667 17.877333-17.877333 34.56-29.397333 58.837333-38.314666 17.92-7.082667 44.842667-15.402667 94.762667-17.962667 54.4-1.92 70.4-2.56 207.317333-2.56l1.92 1.28z m0 156.928a262.912 262.912 0 1 0 0 525.824 262.912 262.912 0 1 0 0-525.824zM512 682.666667c-94.293333 0-170.666667-76.373333-170.666667-170.666667s76.373333-170.666667 170.666667-170.666667 170.666667 76.373333 170.666667 170.666667-76.373333 170.666667-170.666667 170.666667z m334.762667-443.946667a61.482667 61.482667 0 0 1-122.88 0 61.44 61.44 0 0 1 122.88 0z"></path>
-</svg>
+		</div>
+		
+	</div>
 
-          </a>
-        
-      
-        
-      
-        
-      
-        
-          <a href="https://github.com/KJLdefeated" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
-</svg>
-          </a>
-        
-      
-        
-      
-    </div>
-     
-    <p>&copy; 2026 <a href="/" target="_blank">KJL</a></p>
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">UIUC Exchange Guide (2024 FA)</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UIUC-%E4%BA%A4%E6%8F%9B%E6%95%99%E6%88%B0%E6%89%8B%E5%86%8A-FA%E2%80%992024"><span class="nav-text">UIUC 交換教戰手冊 FA’2024</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%A4%E6%8F%9B%E7%94%B3%E8%AB%8B"><span class="nav-text">交換申請</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B0%BD%E8%AD%89"><span class="nav-text">簽證</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B"><span class="nav-text">流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%A4%E9%80%9A"><span class="nav-text">交通</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Money"><span class="nav-text">Money</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%9B%E5%A4%96%E5%B9%A3"><span class="nav-text">換外幣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%8A%80%E8%A1%8C%E5%B8%B3%E6%88%B6"><span class="nav-text">銀行帳戶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E5%85%B1%E8%A6%81%E8%8A%B1%E5%A4%9A%E5%B0%91%E9%8C%A2%EF%BC%9F"><span class="nav-text">總共要花多少錢？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%8F%E5%AE%BF"><span class="nav-text">住宿</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%B8%E6%A0%A1%E5%AE%BF%E8%88%8D"><span class="nav-text">學校宿舍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%9F%E5%B1%8B"><span class="nav-text">租屋</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A9%E6%B0%A3%E5%92%8C%E8%A1%A3%E6%9C%8D"><span class="nav-text">天氣和衣服</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A3%9F"><span class="nav-text">食</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%8C"><span class="nav-text">行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%82"><span class="nav-text">樂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E8%AA%B2"><span class="nav-text">修課</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CS342-System-Programming"><span class="nav-text">CS342 System Programming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CS483-Applied-Parallel-Programming"><span class="nav-text">CS483 Applied Parallel Programming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CS542-Statistical-Reinforcement-Learning"><span class="nav-text">CS542 Statistical Reinforcement Learning</span></a></li></ol></li></ol>
 
-    
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
 
-    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+			
+		</div>
 
-    <p>
-      <a href="javascript:;" id="theme-light">🌞 浅色</a>
-      <a href="javascript:;" id="theme-dark">🌛 深色</a>
-      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
-    </p>
-  </div>
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/Blog/">Kai-Jie Lin</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        23 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
 </footer>
-  </div>
+		</div>
+	</div>
 
-  <div class="back-to-top-fixed soft-size--round soft-style--box">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-    </svg>
-  </div>
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
 
-  
-  
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
 
 
 
+<script src="/Blog/js/build/libs/Swup.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupSlideTheme.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupScriptsPlugin.min.js"></script>
 
-<!-- copy button  -->
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+<script src="/Blog/js/build/libs/SwupProgressPlugin.min.js"></script>
 
-<!-- https://clipboardjs.com/ -->
+<script src="/Blog/js/build/libs/SwupScrollPlugin.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupPreloadPlugin.min.js"></script>
 
-<script type="text/javascript">
-	(function () {
-		function getCodeType (elem) {
-			const classs = Array.from(elem.classList.values());
-			if (classs && classs.length > 1) {
-				return classs[1];
-			}
-			return "plain";
-		}
-
-		window.addEventListener("DOMContentLoaded", () => {
-			const copyBtnClass = "copy-btn";
-			//  instantiate clipboardjs 
-			const clipboard = new ClipboardJS('.' + copyBtnClass);
-
-			clipboard.on('success', function (e) {
-				console.info('Action:', e.action);
-				console.info('Text:', e.text);
-				console.info('Trigger:', e.trigger);
-				if (e.trigger) {
-					e.trigger.classList.add("copied");
-					setTimeout(() => {
-						e.trigger.classList.remove("copied");
-					}, 3000);
-				}
-				e.clearSelection();
-			});
-
-			clipboard.on('error', function (e) {
-				console.error('Action:', e.action);
-				console.error('Trigger:', e.trigger);
-			});
-
-			document.querySelectorAll('figure.highlight').forEach((elem) => {
-				const codeContent = elem.querySelector("td.code");
-				const copyButton = document.createElement('button');
-				copyButton.setAttribute("class", copyBtnClass);
-				copyButton.setAttribute("title", "Copy Code");
-				copyButton.setAttribute("data-clipboard-text", codeContent.innerText);
-				elem.insertBefore(copyButton, elem.children[0]);
-			});
-		})
-	})();
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
 </script>
 
 
 
 
+	
+<script src="/Blog/js/build/tools/imageViewer.js" type="module"></script>
 
+<script src="/Blog/js/build/utils.js" type="module"></script>
+
+<script src="/Blog/js/build/main.js" type="module"></script>
+
+<script src="/Blog/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/Blog/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/Blog/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/Blog/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/Blog/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/Blog/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/Blog/js/build/tools/runtime.js"></script>
+
+    
+<script src="/Blog/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/Blog/assets/odometer-theme-minimal.css">
 
 
 
 
   
-
-
-  <!-- Google Analytics START -->
-  <script type="text/javascript">
-    (function() {
-      if (window.location.hostname === "localhost" || window.location.hostname.startsWith("192.168")) {
-        return console.log("本地调试");
-      }
-
-      window.dataLayer = window.dataLayer || [];
-      
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-
-      let script = document.createElement("script")
-
-      script.onload = function() {
-        gtag('js', new Date());
-        gtag('config', "G-2728M4QDJ7");
-      }
-
-      script.src = "https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(script, s);
-    })()
-  </script>
-  <!-- Google Analytics End -->
+<script src="/Blog/js/build/libs/Typed.min.js"></script>
 
   
-
-
-  
-
+<script src="/Blog/js/build/plugins/typed.js" type="module"></script>
 
 
 
-<script src="/Blog/js/script.js"></script>
 
 
-  
-  <!-- 尾部用户自定义相关内容 -->
+
+
+
+    
+<script src="/Blog/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/Blog/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/Blog/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/Blog/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/Blog/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/Blog/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
+
 </html>

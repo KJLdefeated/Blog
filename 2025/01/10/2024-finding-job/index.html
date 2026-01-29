@@ -1,464 +1,782 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#3367D6"/>
-  <link rel="apple-touch-icon" href="/icons-192.png">
-  <link rel="manifest" href="/manifest.json">
-  
-  <meta name="generator" content="Hexo 7.1.1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Kai-Jie Lin">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
 
-  
+                // Try immediately
+                if (addBodyClass()) return;
 
-  
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  
-    <meta name="author" content="KJL">
-  
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://kjldefeated.github.io/Blog/2025/01/10/2024-finding-job/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024 實習找工心得">
+<meta property="og:url" content="https://kjldefeated.github.io/Blog/2025/01/10/2024-finding-job/">
+<meta property="og:site_name" content="KJ&#39;s Blog">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kjldefeated.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-01-10T11:16:08.000Z">
+<meta property="article:modified_time" content="2026-01-02T13:18:49.938Z">
+<meta property="article:author" content="KJL">
+<meta property="article:tag" content="Job">
+<meta property="article:tag" content="Life">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kjldefeated.github.io/images/redefine-og.webp">
+    
+    
+        <!-- Google tag (gtag.js) -->
+        <script src="https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-  
+        gtag('config', 'G-2728M4QDJ7');
+        </script>
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/Blog/images/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/Blog/images/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            2024 實習找工心得 | KJ&#39;s Blog
+        
+    </title>
 
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/Chillax/chillax.css">
 
-  <title>2024 實習找工心得 | KJ&#39;s Blog</title>
 
-  
+    <!--- Inject Part-->
+    
 
-  
-    <link rel="shortcut icon" href="/Blog/favicon.ico">
-  
-
-  
-
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.13/index.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/monokai.min.css">
-  
-
-  
-
-  
+    
 <link rel="stylesheet" href="/Blog/css/style.css">
 
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --></head>
-<body>
-  <div class="root-container">
     
-<!-- header container -->
-<header class="header-container post">
-  
-    <div class="post-image" style="background-image: url(https://images5.alphacoders.com/131/thumb-1920-1311994.jpeg)"></div>
-  
-
-  <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/Blog/">
         
-          KJ&#39;s Blog
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/Blog/">首頁</a></li>
-        
-          <li class="navbar-list-item"><a href="/Blog/about">關於</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+<link rel="stylesheet" href="/Blog/css/build/tailwind.css">
 
-  
-  
+    
 
-  
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/GeistMono/geist-mono.css">
 
-  
-  
+    
+<link rel="stylesheet" href="/Blog/fonts/Geist/geist.css">
 
-  
-  
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
 
-  
-  
-    <div class="header-content">
-      <div class="post-text layout-block">
-        <div class="layout-margin">
-          <h1 class="title-wrap">2024 實習找工心得</h1>
-          <h2 class="title-sub-wrap">
-            <strong>KJL</strong>
-            <span>发布于</span>
-            <time  class="article-date" datetime="2025-01-10T11:16:08.000Z" itemprop="datePublished">2025-01-10</time>
-          </h2>
-          
-            <h2 class="last-time">
-              <span>最后更新于</span>
-              <time  class="article-updated" datetime="2026-01-02T13:18:49.938Z" itemprop="dateUpdated">2026-01-02</time>
-            </h2>
-          
-          
-          <ul class="wrap-list dark">
-  
-</ul>
-          <ul class="wrap-list dark">
-  
-    <li><a href="/Blog/tags/Life/">🏷️ Life</a></li>
-  
-    <li><a href="/Blog/tags/Job/">🏷️ Job</a></li>
-  
-</ul>
+    <script id="hexo-configurations">
+    window.config = {"hostname":"kjldefeated.github.io","root":"/Blog/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/haykyuu.jpg","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"dark"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":true,"id":"G-2728M4QDJ7"}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/haykyuu.jpg","dark":"/images/haykyuu.jpg"},"title":"KJ's Blog","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#fff"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/KJLdefeated","instagram":null,"zhihu":null,"twitter":"https://x.com/Kjl0508Sc10","email":"linkai0508@gmail.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/Blog/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/Blog/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/Blog/">
+                    <img src="/Blog/images/favicon.ico" class="w-full h-full rounded-xs">
+                </a>
+            
+            <a class="logo-title" href="/Blog/">
+                
+                KJ&#39;s Blog
+                
+            </a>
         </div>
-      </div>
-    </div>
-  
 
-  
-  
-  
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/Blog/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/Blog/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/Blog/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">23</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
 </header>
 
-    <!-- 文章 -->
 
-<!-- 文章内容 -->
-<div class="body-container">
-  <article class="content-container layout-block post-container">
-    <div class="article-info">
-      
-      
-      
-      
-      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="找工面試心得">2024 找工面試心得</h1>
-<h3 id="back-ground">Back Ground</h3>
-<p>NYCU CS 大四 有接觸過競程但很不強，leet code刷了快兩百題。 主要找學期中的實習，其中一個是暑假的。</p>
-<h2 id="google-tw-swe-intern-reject">2024/1/8 Google TW SWE Intern (Reject)</h2>
-<p>第一場： 給定字串sorted陣列和request字串 找出有幾個字串在陣列裡且他的prefix是request 一開始先暴力 後來用二分搜 Easy-Medium2024/11/10 我現在才發現這題其實是Trie，難怪我沒上==</p>
-<p>第二場： 一個外國人 英文面試 先問一個連續陣列中找free space的問題 簡單來說就是OS的first fit Follow up也沒什麼 加一個request size而已 最後他好像沒東西可以問了就問我vector operation的複雜度 甚至還提早結束 挖勒</p>
-<h2 id="google-tw-swe-newgrad-no-news">2024/11/19 Google TW SWE NewGrad (No news)</h2>
-<p>Mount View 印度裔工程師面試 給定K, sequence of numbers 實作兩個function: input, get_average input就是在sequence 後面加一個element get_average要計算最後K個element平均 Follow up: 給定一個x% (ex: 20%) 去掉前x%大的number計算剩下的平均。 難度medium~hard 解法：follow up之前的解法是maintain 一個queue和sum，input和get_average兩個function可以到O(1) Follow up的時候想不太出來，interviewer提示說可以維護一個有序的資料結構，並且可以架設我們能夠簡單得到x% largest numbers（不管語法），所以我就用map，雖然感覺很怪但interviewer感覺很滿意，因為map的key是ordered，我也架設map有個get_20_largest的function，這樣就可以實作了。 Drawbacks: 剛開始溝通題意時有點卡，我有點怕理解錯題意問了比較多次。Follow up出來一開始沒想到，畢竟作法也不是平常刷題會有的，被他提示了一下才慢慢寫出來，中間有提出錯的作法一次，總體來說有點不夠flexible ，而且出錯後變得有點緊張。 多練習英文解說、更彈性的思考方式。</p>
-<h2 id="gofreight-sdet-intern-1120-reject">GoFreight SDET Intern 11/20 (Reject)</h2>
-<p>簡單聊一下之後實習時間，問了之前OA的問題與解法，都是簡單python語法，後來問了一些選擇題也是簡單python語法。 後來問了一下這個team在尬麻，主要是用python來測試RD team寫的code</p>
-<h2 id="wistron-omniverse-digital-twin-assistant-engineer-intern-1128-reject">Wistron Omniverse Digital Twin Assistant Engineer Intern 11/28 (Reject)</h2>
-<p>一個做工廠模擬，用的工具是NVIDIA的Omniverse，Digital Twin簡單來說就是Simulator，這個team的目的就是去建工廠的Digital Twin。面試前被要求做關於Digital Twin的簡報，介紹自己對Digital Twin的理解和本身經歷的連結。面試兩個小時，前面一個小時給了一份程式作業，其他面試官看著你做，一題蠻簡單的一題leetcode的trap rain II一題實作圈圈叉叉，後面一小時聊了一下這個職位在做什麼，跟自己做過的專題有什麼關聯之類的，感覺他們是第一次開這個role，整個流程他們也不太熟的感覺，面試起來有點讓人尷尬。</p>
-<h2 id="wistron-data-analyst-assistant-engineer-intern-124-offer">Wistron Data Analyst Assistant Engineer Intern 12/4 (Offer)</h2>
-<p>一小時跟主管聊天，一開始介紹一下自己做過什麼，然後主管介紹｀這個部門做什麼，聽起來跟我想得Data Analyst不太一樣？我以為的是搞資料分析和SQL那些，但據主管所說跟AI掛鉤的都會牽扯？聽起來沒有很specific，主管本人感覺起來就像老教授一樣，不過跟他聊RL他也知道並且也用過相關應用，感覺蠻厲害的。後來我自己推掉了。</p>
-<h2 id="synology-surveillance-product-developer-intern-1211-reject">Synology Surveillance Product Developer Intern 12/11 (Reject)</h2>
-<p>HR告知說要預留三小時，但面試兩個小時結束就被告知不用繼續面試了 一開始HR聊天，後來另一個應該是工程師，一開始也是自我介紹聊天，然後實作一個binary tree DFS 的問題，被提醒一些粗心錯誤，後來問了一些OS和OOP的問題，大概跟網路上看到的差不多，virtual function不會，static不會，其他算是有答出來 Rejected</p>
-<h2 id="vici-holdings-c-swe-intern-1215-reject">VICI Holdings C++ SWE intern 12/15 (Reject)</h2>
-<p>一間做高頻交易的公司，面的職位是做infra的C++ SWE intern。 投遞履歷後收到take home assignment，內容有四題，前兩題算是modern C++的語法應用題，第三題是做hash，第四題比較有趣是做parallel programming優化，剛好這學期學了CUDA就用上了。寫完之後收到他們的review建議assignment可以怎麼改，改完之後收到面試了。 面試總共兩小時，工程師-&gt;主管-&gt;HR，工程師比較年輕感覺比較好聊，因為我履歷上都是AI的相關經歷，就會被問為什麼來投system的職位，我回答說是因為也對system有興趣，大學除了AI相關修得最多就是system相關的課了，跟他們聊RL，感覺他們也接觸過，跟有經驗的人解釋BOFormer在做什麼就是比較輕鬆呀...。後來就問了一些take home assignment的問題。後來是主管，也是聊履歷上的內容，說了可能之後會想infra部門怎麼加入AI的發展之類的。 最後是HR，聊一下生涯規劃和興趣發展，也聊了一下來美國交換的心得。 總體而言，雖然因為時差關係我在半夜面試，大家都很友善也很好聊。</p>
-<h2 id="appier-llm-research-scientist-intern-1217-reject">Appier LLM Research Scientist Intern 12/17 (Reject)</h2>
-<p>他們的team主要是做LLMs (behaviour study, agentic design)，有兩個researcher來面我，主要是聊我之前做的work跟LLM的connection和有沒有LLM相關的經驗，因為我LLM相關的經驗也很少，主要就往RLHF的方向聊，不過我還是對這個方向的development較少，不過兩位researcher還是很親切地跟我聊一些研究方向，但感覺research interest還是不太一樣，所以就被reject了。</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>總結來說想要的都沒有上，緯創那個後來想想一週每天都要去加上資訊很少和我還需要修課就想說算了拒絕掉了，短期內我還是以做一些對申請研究所有幫助的事比較好。面了算蠻多間的一些反省，我原本認為我的能力綽綽有餘，但面完之後我發現我很依賴run code來試錯debug，code寫完很容易粗心有bug，沒辦法一次就寫對，這對面試來說有點致命，因為如果自己沒發現錯誤，讓面試官來提醒是蠻扣分的行為，以後應該要多多練習dry run。</p>
-<p>大學最後一學期的安排： 先繼續當個大學生吧，實驗室那邊應該找點題目來做，把課修完畢業，應該會繼續找看看暑假的實習或正職，平時練練刷題這樣，然後要開始準備GRE和TOEFL了，希望考一次就好。</p>
+		</div>
 
-      </section>
+		<div class="main-content-body transition-fade-up">
+			
 
-      
-      
-        <nav class="article-nav">
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-      <div class="card-cover" background-image-lazy data-img="https://i.pinimg.com/736x/5a/5c/99/5a5c99625791a36022e588bc18797bcb.jpg"></div>
-    
-    <div class="card-text">
-      
-        <a href="/Blog/2026/01/02/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97113-2/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">交大修課心得-113-2</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
-    </div>
-  </article>
-</div>
-          
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-      <div class="card-cover" background-image-lazy data-img="https://imgur.com/Io3muri.png"></div>
-    
-    <div class="card-text">
-      
-        <a href="/Blog/2024/12/14/UIUC-Exchange/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">UIUC Exchange Guide (2024 FA)</h2>
-        </a>
-      
-      <div class="card-text--row">Older</div>
-    </div>
-  </article>
-</div>
-          
-        </nav>
-      
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
 
-      <section class="page-message-container layout-padding">
-        
+		<div class="article-title relative w-full">
+			
+			
+			
+			<img src="https://images5.alphacoders.com/131/thumb-1920-1311994.jpeg" alt="2024 實習找工心得" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75" />
+			
+			<div class="w-full flex items-center absolute bottom-0 justify-start">
+				<h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">2024 實習找工心得</h1>
+			</div>
+			
+		</div>
 
-
-  
-  
-
-  
-  
-
-
-      </section>
-    </div>
-    <div class="widget-info">
-      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-body">
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/Blog/images/saki.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Kai-Jie Lin</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-01-10 19:16:08</span>
+        <span class="mobile">2025-01-10 19:16:08</span>
+        <span class="hover-info">Created</span>
+    </span>
     
-      <img src="https://en.gravatar.com/userimage/217528008/f2c825ba654e7cdd5a0bb677d1b4eaa0.jpg?" class="soft-size--round soft-style--box" alt="KJL">
-    
-    
-      <h2>KJL</h2>
-    
-    
-      <p>Stay Hungry, Stay Foolish.</p>
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-01-02 21:18:49</span>
+            <span class="mobile">2026-01-02 21:18:49</span>
+            <span class="hover-info">Updated</span>
+        </span>
     
 
-    <div class="count-box">
-      <div class="count-box--item">
-        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
-</svg>
-        <span>22</span>
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-        0
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-        8
-      </div>
-    </div>
-  </div>
-</section>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/Blog/tags/Life/">Life</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/Blog/tags/Job/">Job</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
 
-      
-
-      
-
-      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-      <span>CATEGORIES</span>
-  </div>
-  <div class="widget-body">
-    <ul class="categories-list">
-      
-    </ul>
-  </div>
-</section>
-
-      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-    <span>TAGS</span>
-  </div>
-  <div class="widget-body">
-    <div class="tags-cloud">
-      <a href="/Blog/tags/Exchange/" style="font-size: 10px;" class="tags-cloud-0">Exchange</a> <a href="/Blog/tags/Job/" style="font-size: 12.5px;" class="tags-cloud-3">Job</a> <a href="/Blog/tags/Life/" style="font-size: 20px;" class="tags-cloud-10">Life</a> <a href="/Blog/tags/MLsys/" style="font-size: 10px;" class="tags-cloud-0">MLsys</a> <a href="/Blog/tags/Math/" style="font-size: 15px;" class="tags-cloud-5">Math</a> <a href="/Blog/tags/Research/" style="font-size: 12.5px;" class="tags-cloud-3">Research</a> <a href="/Blog/tags/School/" style="font-size: 17.5px;" class="tags-cloud-8">School</a> <a href="/Blog/tags/paper-notes/" style="font-size: 17.5px;" class="tags-cloud-8">paper_notes</a>
-    </div>
-  </div>
-</section>
-    </div>
-  </article>
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
 </div>
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <div class="social-icons">
-      
-        
-          <a href="https://www.instagram.com/kjl0508/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-ins" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M512 0C372.906667 0 355.541333 0.64 300.928 3.072 246.4 5.632 209.28 14.208 176.64 26.88c-33.664 13.056-62.250667 30.592-90.709333 59.050667S39.893333 142.933333 26.88 176.64C14.208 209.28 5.589333 246.4 3.072 300.928 0.512 355.541333 0 372.906667 0 512s0.64 156.458667 3.072 211.072c2.56 54.485333 11.136 91.648 23.808 124.288a251.093333 251.093333 0 0 0 59.050667 90.709333A250.368 250.368 0 0 0 176.64 997.12c32.682667 12.629333 69.802667 21.290667 124.288 23.808C355.541333 1023.488 372.906667 1024 512 1024s156.458667-0.64 211.072-3.072c54.485333-2.56 91.648-11.178667 124.288-23.808a251.648 251.648 0 0 0 90.709333-59.050667 250.026667 250.026667 0 0 0 59.050667-90.709333c12.629333-32.64 21.290667-69.802667 23.808-124.288 2.56-54.613333 3.072-71.978667 3.072-211.072s-0.64-156.458667-3.072-211.072c-2.56-54.485333-11.178667-91.690667-23.808-124.288a251.306667 251.306667 0 0 0-59.050667-90.709333A249.472 249.472 0 0 0 847.36 26.88c-32.64-12.672-69.802667-21.290667-124.288-23.808C668.458667 0.512 651.093333 0 512 0z m0 92.16c136.661333 0 152.96 0.682667 206.933333 3.029333 49.92 2.346667 77.013333 10.624 95.018667 17.706667 23.978667 9.258667 40.96 20.352 58.965333 38.229333 17.877333 17.92 28.970667 34.944 38.229334 58.922667 6.997333 18.005333 15.36 45.098667 17.621333 95.018667 2.432 54.016 2.986667 70.229333 2.986667 206.933333s-0.64 152.96-3.157334 206.933333c-2.602667 49.92-10.922667 77.013333-17.962666 95.018667a162.56 162.56 0 0 1-38.357334 58.965333 159.744 159.744 0 0 1-58.88 38.229334c-17.92 6.997333-45.44 15.36-95.36 17.621333-54.357333 2.432-70.357333 2.986667-207.317333 2.986667-137.002667 0-153.002667-0.64-207.317333-3.157334-49.962667-2.602667-77.482667-10.922667-95.402667-17.962666a158.549333 158.549333 0 0 1-58.837333-38.357334 155.477333 155.477333 0 0 1-38.4-58.88c-7.04-17.92-15.317333-45.44-17.92-95.36-1.92-53.76-2.602667-70.357333-2.602667-206.677333 0-136.362667 0.682667-153.002667 2.602667-207.402667 2.602667-49.92 10.88-77.397333 17.92-95.317333 8.96-24.32 20.437333-40.96 38.4-58.922667 17.877333-17.877333 34.56-29.397333 58.837333-38.314666 17.92-7.082667 44.842667-15.402667 94.762667-17.962667 54.4-1.92 70.4-2.56 207.317333-2.56l1.92 1.28z m0 156.928a262.912 262.912 0 1 0 0 525.824 262.912 262.912 0 1 0 0-525.824zM512 682.666667c-94.293333 0-170.666667-76.373333-170.666667-170.666667s76.373333-170.666667 170.666667-170.666667 170.666667 76.373333 170.666667 170.666667-76.373333 170.666667-170.666667 170.666667z m334.762667-443.946667a61.482667 61.482667 0 0 1-122.88 0 61.44 61.44 0 0 1 122.88 0z"></path>
-</svg>
+				</div>
+			</div>
+		</div>
+		
 
-          </a>
-        
-      
-        
-      
-        
-      
-        
-          <a href="https://github.com/KJLdefeated" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
-</svg>
-          </a>
-        
-      
-        
-      
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="2024-找工面試心得"><a href="#2024-找工面試心得" class="headerlink" title="2024 找工面試心得"></a>2024 找工面試心得</h1><h3 id="Back-Ground"><a href="#Back-Ground" class="headerlink" title="Back Ground"></a>Back Ground</h3><p>NYCU CS 大四<br>有接觸過競程但很不強，leet code刷了快兩百題。<br>主要找學期中的實習，其中一個是暑假的。</p>
+<h2 id="2024-1-8-Google-TW-SWE-Intern-Reject"><a href="#2024-1-8-Google-TW-SWE-Intern-Reject" class="headerlink" title="2024&#x2F;1&#x2F;8 Google TW SWE Intern (Reject)"></a>2024&#x2F;1&#x2F;8 Google TW SWE Intern (Reject)</h2><p>第一場：<br>給定字串sorted陣列和request字串<br>找出有幾個字串在陣列裡且他的prefix是request<br>一開始先暴力<br>後來用二分搜<br>Easy-Medium2024&#x2F;11&#x2F;10 我現在才發現這題其實是Trie，難怪我沒上&#x3D;&#x3D;</p>
+<p>第二場：<br>一個外國人 英文面試<br>先問一個連續陣列中找free space的問題<br>簡單來說就是OS的first fit<br>Follow up也沒什麼 加一個request size而已<br>最後他好像沒東西可以問了就問我vector operation的複雜度<br>甚至還提早結束 挖勒</p>
+<h2 id="2024-11-19-Google-TW-SWE-NewGrad-No-news"><a href="#2024-11-19-Google-TW-SWE-NewGrad-No-news" class="headerlink" title="2024&#x2F;11&#x2F;19 Google TW SWE NewGrad (No news)"></a>2024&#x2F;11&#x2F;19 Google TW SWE NewGrad (No news)</h2><p>Mount View 印度裔工程師面試<br>給定K, sequence of numbers<br>實作兩個function: input, get_average<br>input就是在sequence 後面加一個element<br>get_average要計算最後K個element平均<br>Follow up: 給定一個x% (ex: 20%) 去掉前x%大的number計算剩下的平均。<br>難度medium~hard<br>解法：follow up之前的解法是maintain 一個queue和sum，input和get_average兩個function可以到O(1)<br>Follow up的時候想不太出來，interviewer提示說可以維護一個有序的資料結構，並且可以架設我們能夠簡單得到x% largest numbers（不管語法），所以我就用map，雖然感覺很怪但interviewer感覺很滿意，因為map的key是ordered，我也架設map有個get_20_largest的function，這樣就可以實作了。<br>Drawbacks: 剛開始溝通題意時有點卡，我有點怕理解錯題意問了比較多次。Follow up出來一開始沒想到，畢竟作法也不是平常刷題會有的，被他提示了一下才慢慢寫出來，中間有提出錯的作法一次，總體來說有點不夠flexible ，而且出錯後變得有點緊張。<br>多練習英文解說、更彈性的思考方式。</p>
+<h2 id="GoFreight-SDET-Intern-11-20-Reject"><a href="#GoFreight-SDET-Intern-11-20-Reject" class="headerlink" title="GoFreight SDET Intern 11&#x2F;20 (Reject)"></a>GoFreight SDET Intern 11&#x2F;20 (Reject)</h2><p>簡單聊一下之後實習時間，問了之前OA的問題與解法，都是簡單python語法，後來問了一些選擇題也是簡單python語法。<br>後來問了一下這個team在尬麻，主要是用python來測試RD team寫的code</p>
+<h2 id="Wistron-Omniverse-Digital-Twin-Assistant-Engineer-Intern-11-28-Reject"><a href="#Wistron-Omniverse-Digital-Twin-Assistant-Engineer-Intern-11-28-Reject" class="headerlink" title="Wistron Omniverse Digital Twin Assistant Engineer Intern 11&#x2F;28 (Reject)"></a>Wistron Omniverse Digital Twin Assistant Engineer Intern 11&#x2F;28 (Reject)</h2><p>一個做工廠模擬，用的工具是NVIDIA的Omniverse，Digital Twin簡單來說就是Simulator，這個team的目的就是去建工廠的Digital Twin。面試前被要求做關於Digital Twin的簡報，介紹自己對Digital Twin的理解和本身經歷的連結。面試兩個小時，前面一個小時給了一份程式作業，其他面試官看著你做，一題蠻簡單的一題leetcode的trap rain II一題實作圈圈叉叉，後面一小時聊了一下這個職位在做什麼，跟自己做過的專題有什麼關聯之類的，感覺他們是第一次開這個role，整個流程他們也不太熟的感覺，面試起來有點讓人尷尬。</p>
+<h2 id="Wistron-Data-Analyst-Assistant-Engineer-Intern-12-4-Offer"><a href="#Wistron-Data-Analyst-Assistant-Engineer-Intern-12-4-Offer" class="headerlink" title="Wistron Data Analyst Assistant Engineer Intern 12&#x2F;4 (Offer)"></a>Wistron Data Analyst Assistant Engineer Intern 12&#x2F;4 (Offer)</h2><p>一小時跟主管聊天，一開始介紹一下自己做過什麼，然後主管介紹｀這個部門做什麼，聽起來跟我想得Data Analyst不太一樣？我以為的是搞資料分析和SQL那些，但據主管所說跟AI掛鉤的都會牽扯？聽起來沒有很specific，主管本人感覺起來就像老教授一樣，不過跟他聊RL他也知道並且也用過相關應用，感覺蠻厲害的。後來我自己推掉了。</p>
+<h2 id="Synology-Surveillance-Product-Developer-Intern-12-11-Reject"><a href="#Synology-Surveillance-Product-Developer-Intern-12-11-Reject" class="headerlink" title="Synology Surveillance Product Developer Intern 12&#x2F;11 (Reject)"></a>Synology Surveillance Product Developer Intern 12&#x2F;11 (Reject)</h2><p>HR告知說要預留三小時，但面試兩個小時結束就被告知不用繼續面試了<br>一開始HR聊天，後來另一個應該是工程師，一開始也是自我介紹聊天，然後實作一個binary tree DFS 的問題，被提醒一些粗心錯誤，後來問了一些OS和OOP的問題，大概跟網路上看到的差不多，virtual function不會，static不會，其他算是有答出來<br>Rejected</p>
+<h2 id="VICI-Holdings-C-SWE-intern-12-15-Reject"><a href="#VICI-Holdings-C-SWE-intern-12-15-Reject" class="headerlink" title="VICI Holdings C++ SWE intern 12&#x2F;15 (Reject)"></a>VICI Holdings C++ SWE intern 12&#x2F;15 (Reject)</h2><p>一間做高頻交易的公司，面的職位是做infra的C++ SWE intern。<br>投遞履歷後收到take home assignment，內容有四題，前兩題算是modern C++的語法應用題，第三題是做hash，第四題比較有趣是做parallel programming優化，剛好這學期學了CUDA就用上了。寫完之後收到他們的review建議assignment可以怎麼改，改完之後收到面試了。<br>面試總共兩小時，工程師-&gt;主管-&gt;HR，工程師比較年輕感覺比較好聊，因為我履歷上都是AI的相關經歷，就會被問為什麼來投system的職位，我回答說是因為也對system有興趣，大學除了AI相關修得最多就是system相關的課了，跟他們聊RL，感覺他們也接觸過，跟有經驗的人解釋BOFormer在做什麼就是比較輕鬆呀…。後來就問了一些take home assignment的問題。後來是主管，也是聊履歷上的內容，說了可能之後會想infra部門怎麼加入AI的發展之類的。<br>最後是HR，聊一下生涯規劃和興趣發展，也聊了一下來美國交換的心得。<br>總體而言，雖然因為時差關係我在半夜面試，大家都很友善也很好聊。</p>
+<h2 id="Appier-LLM-Research-Scientist-Intern-12-17-Reject"><a href="#Appier-LLM-Research-Scientist-Intern-12-17-Reject" class="headerlink" title="Appier LLM Research Scientist Intern 12&#x2F;17 (Reject)"></a>Appier LLM Research Scientist Intern 12&#x2F;17 (Reject)</h2><p>他們的team主要是做LLMs (behaviour study, agentic design)，有兩個researcher來面我，主要是聊我之前做的work跟LLM的connection和有沒有LLM相關的經驗，因為我LLM相關的經驗也很少，主要就往RLHF的方向聊，不過我還是對這個方向的development較少，不過兩位researcher還是很親切地跟我聊一些研究方向，但感覺research interest還是不太一樣，所以就被reject了。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>總結來說想要的都沒有上，緯創那個後來想想一週每天都要去加上資訊很少和我還需要修課就想說算了拒絕掉了，短期內我還是以做一些對申請研究所有幫助的事比較好。面了算蠻多間的一些反省，我原本認為我的能力綽綽有餘，但面完之後我發現我很依賴run code來試錯debug，code寫完很容易粗心有bug，沒辦法一次就寫對，這對面試來說有點致命，因為如果自己沒發現錯誤，讓面試官來提醒是蠻扣分的行為，以後應該要多多練習dry run。</p>
+<p>大學最後一學期的安排：<br>先繼續當個大學生吧，實驗室那邊應該找點題目來做，把課修完畢業，應該會繼續找看看暑假的實習或正職，平時練練刷題這樣，然後要開始準備GRE和TOEFL了，希望考一次就好。</p>
+
+		</div>
+
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/Life/">#Life</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/Blog/tags/Job/">#Job</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/Blog/2026/01/02/%E4%BA%A4%E5%A4%A7%E4%BF%AE%E8%AA%B2%E5%BF%83%E5%BE%97113-2/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">交大修課心得-113-2</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/Blog/2024/12/14/UIUC-Exchange/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">UIUC Exchange Guide (2024 FA)</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
     </div>
-     
-    <p>&copy; 2026 <a href="/" target="_blank">KJL</a></p>
-
     
 
-    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/Blog/js/libs/waline.js';
 
-    <p>
-      <a href="javascript:;" id="theme-light">🌞 浅色</a>
-      <a href="javascript:;" id="theme-dark">🌛 深色</a>
-      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
-    </p>
-  </div>
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">2024 實習找工心得</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2024-%E6%89%BE%E5%B7%A5%E9%9D%A2%E8%A9%A6%E5%BF%83%E5%BE%97"><span class="nav-text">2024 找工面試心得</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Back-Ground"><span class="nav-text">Back Ground</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2024-1-8-Google-TW-SWE-Intern-Reject"><span class="nav-text">2024&#x2F;1&#x2F;8 Google TW SWE Intern (Reject)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2024-11-19-Google-TW-SWE-NewGrad-No-news"><span class="nav-text">2024&#x2F;11&#x2F;19 Google TW SWE NewGrad (No news)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GoFreight-SDET-Intern-11-20-Reject"><span class="nav-text">GoFreight SDET Intern 11&#x2F;20 (Reject)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wistron-Omniverse-Digital-Twin-Assistant-Engineer-Intern-11-28-Reject"><span class="nav-text">Wistron Omniverse Digital Twin Assistant Engineer Intern 11&#x2F;28 (Reject)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wistron-Data-Analyst-Assistant-Engineer-Intern-12-4-Offer"><span class="nav-text">Wistron Data Analyst Assistant Engineer Intern 12&#x2F;4 (Offer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Synology-Surveillance-Product-Developer-Intern-12-11-Reject"><span class="nav-text">Synology Surveillance Product Developer Intern 12&#x2F;11 (Reject)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VICI-Holdings-C-SWE-intern-12-15-Reject"><span class="nav-text">VICI Holdings C++ SWE intern 12&#x2F;15 (Reject)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appier-LLM-Research-Scientist-Intern-12-17-Reject"><span class="nav-text">Appier LLM Research Scientist Intern 12&#x2F;17 (Reject)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-text">Conclusion</span></a></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/Blog/">Kai-Jie Lin</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        23 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
 </footer>
-  </div>
+		</div>
+	</div>
 
-  <div class="back-to-top-fixed soft-size--round soft-style--box">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-    </svg>
-  </div>
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
 
-  
-  
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
 
 
 
+<script src="/Blog/js/build/libs/Swup.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupSlideTheme.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupScriptsPlugin.min.js"></script>
 
-<!-- copy button  -->
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+<script src="/Blog/js/build/libs/SwupProgressPlugin.min.js"></script>
 
-<!-- https://clipboardjs.com/ -->
+<script src="/Blog/js/build/libs/SwupScrollPlugin.min.js"></script>
 
+<script src="/Blog/js/build/libs/SwupPreloadPlugin.min.js"></script>
 
-<script type="text/javascript">
-	(function () {
-		function getCodeType (elem) {
-			const classs = Array.from(elem.classList.values());
-			if (classs && classs.length > 1) {
-				return classs[1];
-			}
-			return "plain";
-		}
-
-		window.addEventListener("DOMContentLoaded", () => {
-			const copyBtnClass = "copy-btn";
-			//  instantiate clipboardjs 
-			const clipboard = new ClipboardJS('.' + copyBtnClass);
-
-			clipboard.on('success', function (e) {
-				console.info('Action:', e.action);
-				console.info('Text:', e.text);
-				console.info('Trigger:', e.trigger);
-				if (e.trigger) {
-					e.trigger.classList.add("copied");
-					setTimeout(() => {
-						e.trigger.classList.remove("copied");
-					}, 3000);
-				}
-				e.clearSelection();
-			});
-
-			clipboard.on('error', function (e) {
-				console.error('Action:', e.action);
-				console.error('Trigger:', e.trigger);
-			});
-
-			document.querySelectorAll('figure.highlight').forEach((elem) => {
-				const codeContent = elem.querySelector("td.code");
-				const copyButton = document.createElement('button');
-				copyButton.setAttribute("class", copyBtnClass);
-				copyButton.setAttribute("title", "Copy Code");
-				copyButton.setAttribute("data-clipboard-text", codeContent.innerText);
-				elem.insertBefore(copyButton, elem.children[0]);
-			});
-		})
-	})();
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
 </script>
 
 
 
 
+	
+<script src="/Blog/js/build/tools/imageViewer.js" type="module"></script>
 
+<script src="/Blog/js/build/utils.js" type="module"></script>
+
+<script src="/Blog/js/build/main.js" type="module"></script>
+
+<script src="/Blog/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/Blog/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/Blog/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/Blog/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/Blog/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/Blog/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/Blog/js/build/tools/runtime.js"></script>
+
+    
+<script src="/Blog/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/Blog/assets/odometer-theme-minimal.css">
 
 
 
 
   
-
-
-  <!-- Google Analytics START -->
-  <script type="text/javascript">
-    (function() {
-      if (window.location.hostname === "localhost" || window.location.hostname.startsWith("192.168")) {
-        return console.log("本地调试");
-      }
-
-      window.dataLayer = window.dataLayer || [];
-      
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-
-      let script = document.createElement("script")
-
-      script.onload = function() {
-        gtag('js', new Date());
-        gtag('config', "G-2728M4QDJ7");
-      }
-
-      script.src = "https://www.googletagmanager.com/gtag/js?id=G-2728M4QDJ7"
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(script, s);
-    })()
-  </script>
-  <!-- Google Analytics End -->
+<script src="/Blog/js/build/libs/Typed.min.js"></script>
 
   
-
-
-  
-
+<script src="/Blog/js/build/plugins/typed.js" type="module"></script>
 
 
 
-<script src="/Blog/js/script.js"></script>
 
 
-  
-  <!-- 尾部用户自定义相关内容 -->
+
+
+
+    
+<script src="/Blog/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/Blog/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/Blog/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/Blog/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/Blog/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/Blog/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
+
 </html>
